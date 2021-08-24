@@ -1,4 +1,4 @@
-// pages/p/[id].tsx
+//後で消す
 
 import React from "react";
 import { GetServerSideProps } from "next";

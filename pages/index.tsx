@@ -4,6 +4,7 @@ import { getSession, useSession } from "next-auth/client";
 import { PostProps } from "../components/Post";
 import prisma from "./../lib/prisma";
 import { GetServerSideProps } from "next";
+import Router from "next/router";
 
 //ユーザーのスケジュールを全取得
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
@@ -30,6 +31,13 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   };
 };
 
+async function deleteAllPost(): Promise<void> {
+  await fetch(`http://localhost:3000/api/delete`, {
+    method: "DELETE",
+  });
+  Router.push("/");
+}
+
 type Props = {
   subjects: PostProps[];
 };
@@ -45,6 +53,7 @@ const Top: React.VFC<Props> = (props) => {
   }
   return (
     <Layout>
+      <button onClick={() => deleteAllPost()}>Delete</button>
       <div>課題管理がここでできる</div>
       {props.subjects.map((subject) => {
         return (
