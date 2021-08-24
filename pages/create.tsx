@@ -3,13 +3,16 @@
 import React, { useState } from "react";
 import Layout from "../components/Layout";
 import Router from "next/router";
+import { useSession } from "next-auth/client";
 
-const Draft: React.FC = () => {
+const CreateNewScheduler: React.FC = () => {
+  const [session] = useSession();
   const [title, setTitle] = useState("");
   const [status, setStatus] = useState(Number);
   const [memo, setMemo] = useState("");
 
-  const submitData = async (e: React.SyntheticEvent) => {
+  //スケジュール新規作成
+  const createNewSchedule = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     try {
       const body = { title, status, memo };
@@ -18,16 +21,24 @@ const Draft: React.FC = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-      await Router.push("/drafts");
     } catch (error) {
       console.error(error);
     }
   };
 
+  if (!session) {
+    return (
+      <Layout>
+        <div>You need to be authenticated to view this page.</div>
+      </Layout>
+    );
+  }
+
   return (
     <Layout>
+      <div>スケジュールの新規作成がここでできる</div>
       <div>
-        <form onSubmit={submitData}>
+        <form onSubmit={createNewSchedule}>
           <h1>New Draft</h1>
           <input
             autoFocus
@@ -96,4 +107,4 @@ const Draft: React.FC = () => {
   );
 };
 
-export default Draft;
+export default CreateNewScheduler;

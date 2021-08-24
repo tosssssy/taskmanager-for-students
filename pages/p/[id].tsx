@@ -30,8 +30,8 @@ async function publishPost(id: number): Promise<void> {
   });
   await Router.push("/");
 }
-async function deletePost(id: number): Promise<void> {
-  await fetch(`http://localhost:3000/api/post/${id}`, {
+async function deleteAllPost(id: number): Promise<void> {
+  await fetch(`http://localhost:3000/api/post/deleteall`, {
     method: "DELETE",
   });
   Router.push("/");
@@ -60,7 +60,7 @@ const Post: React.FC<PostProps> = (props) => {
           <button onClick={() => publishPost(props.id)}>Publish</button>
         )}
         {userHasValidSession && postBelongsToUser && (
-          <button onClick={() => deletePost(props.id)}>Delete</button>
+          <button onClick={() => deleteAllPost(props.id)}>Delete</button>
         )}
       </div>
       <style jsx>{`

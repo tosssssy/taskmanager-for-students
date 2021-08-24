@@ -1,54 +1,76 @@
 import React from "react";
-import { GetStaticProps } from "next";
 import Layout from "../components/Layout";
-import Post, { PostProps } from "../components/Post";
-import prisma from "../lib/prisma";
+import { getSession, useSession } from "next-auth/client";
+import { PostProps } from "../components/Post";
+import prisma from "./../lib/prisma";
+import { GetServerSideProps } from "next";
 
-export const getStaticProps: GetStaticProps = async () => {
-  const feed = await prisma.post.findMany({
-    where: { published: true },
-    include: {
-      author: {
-        select: { name: true },
+//ユーザーのスケジュールを全取得
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const session = await getSession({ req });
+  if (session) {
+    //ユーザーのスケジュール（postのリスト）
+    const subjects = await prisma.post.findMany({
+      where: {
+        author: { email: session.user.email },
       },
-    },
-  });
-  return { props: { feed } };
+      include: {
+        author: {
+          select: { name: true },
+        },
+      },
+    });
+
+    return {
+      props: { subjects },
+    };
+  }
+  return {
+    props: { subjects: [] },
+  };
 };
 
 type Props = {
-  feed: PostProps[];
+  subjects: PostProps[];
 };
 
-const Blog: React.FC<Props> = (props) => {
+const Top: React.VFC<Props> = (props) => {
+  const [session] = useSession();
+  if (!session) {
+    return (
+      <Layout>
+        <div>ログインしてください</div>
+      </Layout>
+    );
+  }
   return (
     <Layout>
-      <div className="page">
-        <h1>Public Feed</h1>
-        <main>
-          {props.feed.map((post) => (
-            <div key={post.id} className="post">
-              <Post post={post} />
+      <div>課題管理がここでできる</div>
+      {props.subjects.map((subject) => {
+        return (
+          <>
+            <div className="subject" key={subject.id}>
+              <div>{subject.author.name}</div>
+              <div>{`subjectid=${subject.id}`}</div>
+              <div>{`status=${subject.status}`}</div>
+              <div>{`title=${subject.title}`}</div>
+              <div>{subject.memo}</div>
             </div>
-          ))}
-        </main>
-      </div>
-      <style jsx>{`
-        .post {
-          background: white;
-          transition: box-shadow 0.1s ease-in;
-        }
-
-        .post:hover {
-          box-shadow: 1px 1px 3px #aaa;
-        }
-
-        .post + .post {
-          margin-top: 2rem;
-        }
-      `}</style>
+            <style jsx>
+              {`
+                .subject {
+                  display: flex;
+                  flex-direction: column;
+                  margin: 20px;
+                  background-color: white;
+                }
+              `}
+            </style>
+          </>
+        );
+      })}
     </Layout>
   );
 };
 
-export default Blog;
+export default Top;
