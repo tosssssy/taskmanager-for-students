@@ -12,11 +12,6 @@ const Header: React.FC = () => {
 
   let left = (
     <div className="left">
-      <Link href="/">
-        <a className="bold" data-active={isActive("/")}>
-          Feed
-        </a>
-      </Link>
       <style jsx>{`
         .bold {
           font-weight: bold;
@@ -44,11 +39,6 @@ const Header: React.FC = () => {
   if (loading) {
     left = (
       <div className="left">
-        <Link href="/">
-          <a className="bold" data-active={isActive("/")}>
-            Feed
-          </a>
-        </Link>
         <style jsx>{`
           .bold {
             font-weight: bold;
@@ -116,14 +106,6 @@ const Header: React.FC = () => {
   if (session) {
     left = (
       <div className="left">
-        <Link href="/">
-          <a className="bold" data-active={isActive("/")}>
-            Feed
-          </a>
-        </Link>
-        <Link href="/drafts">
-          <a data-active={isActive("/drafts")}>My drafts</a>
-        </Link>
         <style jsx>{`
           .bold {
             font-weight: bold;

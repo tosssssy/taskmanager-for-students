@@ -1,54 +1,72 @@
 import React from "react";
-import { GetStaticProps } from "next";
 import Layout from "../components/Layout";
-import Post, { PostProps } from "../components/Post";
-import prisma from "../lib/prisma";
+import { getSession, useSession } from "next-auth/client";
+import Subject, { SubjectProps } from "../components/Subject";
+import prisma from "./../lib/prisma";
+import { GetServerSideProps } from "next";
+import Router from "next/router";
 
-export const getStaticProps: GetStaticProps = async () => {
-  const feed = await prisma.post.findMany({
-    where: { published: true },
-    include: {
-      author: {
-        select: { name: true },
+//ユーザーのスケジュールを全取得
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const session = await getSession({ req });
+  if (session) {
+    //ユーザーのスケジュール（postのリスト）
+    const subjects = await prisma.subject.findMany({
+      where: {
+        author: { email: session.user.email },
       },
-    },
-  });
-  return { props: { feed } };
+      include: {
+        author: {
+          select: { name: true },
+        },
+      },
+    });
+
+    return {
+      props: { subjects },
+    };
+  }
+  return {
+    props: { subjects: [] },
+  };
 };
+
+//仮
+async function deleteAllPost(): Promise<void> {
+  await fetch(`http://localhost:3000/api/delete`, {
+    method: "DELETE",
+  });
+  Router.push("/");
+}
 
 type Props = {
-  feed: PostProps[];
+  subjects: SubjectProps[];
 };
 
-const Blog: React.FC<Props> = (props) => {
+const Top: React.VFC<Props> = (props) => {
+  const [session] = useSession();
+  // const [status, setStatus] = useState(Number);
+  // const [memo, setMemo] = useState("");
+  if (!session) {
+    return (
+      <Layout>
+        <div>ログインしてください</div>
+      </Layout>
+    );
+  }
   return (
     <Layout>
-      <div className="page">
-        <h1>Public Feed</h1>
-        <main>
-          {props.feed.map((post) => (
-            <div key={post.id} className="post">
-              <Post post={post} />
-            </div>
-          ))}
-        </main>
-      </div>
-      <style jsx>{`
-        .post {
-          background: white;
-          transition: box-shadow 0.1s ease-in;
-        }
-
-        .post:hover {
-          box-shadow: 1px 1px 3px #aaa;
-        }
-
-        .post + .post {
-          margin-top: 2rem;
-        }
-      `}</style>
+      <button onClick={() => deleteAllPost()}>Delete</button>
+      <div>課題管理がここでできる</div>
+      {props.subjects.map((subject) => {
+        return (
+          <>
+            <Subject {...subject} />
+          </>
+        );
+      })}
     </Layout>
   );
 };
 
-export default Blog;
+export default Top;

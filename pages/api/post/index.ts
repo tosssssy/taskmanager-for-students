@@ -4,15 +4,17 @@ import { getSession } from "next-auth/client";
 import prisma from "../../../lib/prisma";
 
 export default async function handle(req, res) {
-  const { title, status, memo } = req.body;
+  //TODO subjectのオブジェクトを受け取り、一気に登録する処理に変更
+  const { subject, week, period, day } = req.body;
 
   const session = await getSession({ req });
-  const result = await prisma.post.create({
+  const result = await prisma.subject.create({
     data: {
-      title: title,
-      status: status,
-      memo: memo,
-      author: { connect: { email: session?.user?.email || undefined } },
+      subject: subject,
+      week: week,
+      period: period,
+      day: day,
+      author: { connect: { email: session.user.email } },
     },
   });
   res.json(result);

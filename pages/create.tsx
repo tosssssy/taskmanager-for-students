@@ -3,59 +3,84 @@
 import React, { useState } from "react";
 import Layout from "../components/Layout";
 import Router from "next/router";
+import { useSession } from "next-auth/client";
+import { SubjectProps } from "../components/Subject";
+import SubjectCreator from "./../components/create/SubjectCreator";
 
-const Draft: React.FC = () => {
-  const [title, setTitle] = useState("");
-  const [status, setStatus] = useState(Number);
-  const [memo, setMemo] = useState("");
+// export type NewSubjectProps = {
+//   newSubject: Pick<SubjectProps, "subject" | "period" | "day">
+// }
 
-  const submitData = async (e: React.SyntheticEvent) => {
-    e.preventDefault();
-    try {
-      const body = { title, status, memo };
-      await fetch("/api/post", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-      await Router.push("/drafts");
-    } catch (error) {
-      console.error(error);
-    }
+export type NewSubjectProps = {
+  newSubject: Pick<SubjectProps, "subject" | "week" | "period" | "day">;
+};
+
+const CreateNewScheduler: React.FC = () => {
+  const [session] = useSession();
+  const [newSubjects, setNewSubjects] = useState<Array<NewSubjectProps>>([]);
+
+  //スケジュール新規作成
+  const createNewSchedule = async () => {
+    // e.preventDefault();
+    // try {
+    //   const body = newSubjects;
+    //   await fetch("/api/post", {
+    //     method: "POST",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify(body),
+    //   });
+    // } catch (error) {
+    //   console.error(error);
+    // }
+    console.log(newSubjects);
   };
+
+  if (!session) {
+    return (
+      <Layout>
+        <div>ログインしてください</div>
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
+      <SubjectCreator
+        newSubjects={newSubjects}
+        setNewSubjects={setNewSubjects}
+        createNewSchedule={createNewSchedule}
+      />
+      {/* <div>スケジュールの新規作成がここでできる</div>
       <div>
-        <form onSubmit={submitData}>
+        <form onSubmit={createNewSchedule}>
           <h1>New Draft</h1>
           <input
             autoFocus
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="Title"
+            onChange={(e) => setSubject(e.target.value)}
+            placeholder="subject"
             type="text"
-            value={title}
+            value={subject}
           />
           <input
-            onChange={(e) => setStatus(e.target.valueAsNumber)}
-            placeholder="Status"
+            onChange={(e) => setPeriod(e.target.valueAsNumber)}
+            placeholder="Period"
             type="number"
-            value={status}
+            value={period}
           />
           <textarea
             cols={50}
-            onChange={(e) => setMemo(e.target.value)}
-            placeholder="Memo"
+            onChange={(e) => setDay(e.target.value)}
+            placeholder="Day"
             rows={1}
-            value={memo}
+            value={day}
           />
-          <input disabled={!status || !title} type="submit" value="Create" />
+          <input disabled={!status || !subject} type="submit" value="Create" />
           <a className="back" href="#" onClick={() => Router.push("/")}>
             or Cancel
           </a>
         </form>
-      </div>
-      <style jsx>{`
+      </div> */}
+      {/* <style jsx>{`
         .page {
           background: white;
           padding: 3rem;
@@ -91,9 +116,9 @@ const Draft: React.FC = () => {
         .back {
           margin-left: 1rem;
         }
-      `}</style>
+      `}</style> */}
     </Layout>
   );
 };
 
-export default Draft;
+export default CreateNewScheduler;
