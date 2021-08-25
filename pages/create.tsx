@@ -29,7 +29,7 @@ const CreateNewScheduler: React.FC = () => {
   if (!session) {
     return (
       <Layout>
-        <div>You need to be authenticated to view this page.</div>
+        <div>ログインしてください</div>
       </Layout>
     );
   }
