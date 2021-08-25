@@ -13,10 +13,11 @@ generator client {
 model Subject {
   id        Int     @default(autoincrement()) @id
   subject   String
+  week      Int
   period    Int
   day       String
-  status    Int
-  memo      String?
+  status    Int     @default(0)
+  memo      String? @default("")
   author    User?   @relation(fields: [authorId], references: [id])
   authorId  Int?
 }
