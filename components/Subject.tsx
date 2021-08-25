@@ -8,6 +8,7 @@ export type SubjectProps = {
     email: string;
   } | null;
   subject: string;
+  week: number;
   period: number;
   day: string;
   status: number;

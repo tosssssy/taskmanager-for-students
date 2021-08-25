@@ -5,13 +5,14 @@ import Layout from "../components/Layout";
 import Router from "next/router";
 import { useSession } from "next-auth/client";
 import { SubjectProps } from "../components/Subject";
+import SubjectCreator from "./../components/create/SubjectCreator";
 
 // export type NewSubjectProps = {
 //   newSubject: Pick<SubjectProps, "subject" | "period" | "day">
 // }
 
 export type NewSubjectProps = {
-  newSubject: Pick<SubjectProps, "subject" | "period" | "day">;
+  newSubject: Pick<SubjectProps, "subject" | "week" | "period" | "day">;
 };
 
 const CreateNewScheduler: React.FC = () => {
@@ -21,16 +22,17 @@ const CreateNewScheduler: React.FC = () => {
   //スケジュール新規作成
   const createNewSchedule = async () => {
     // e.preventDefault();
-    try {
-      const body = newSubjects;
-      await fetch("/api/post", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-    } catch (error) {
-      console.error(error);
-    }
+    // try {
+    //   const body = newSubjects;
+    //   await fetch("/api/post", {
+    //     method: "POST",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify(body),
+    //   });
+    // } catch (error) {
+    //   console.error(error);
+    // }
+    console.log(newSubjects);
   };
 
   if (!session) {
@@ -43,6 +45,11 @@ const CreateNewScheduler: React.FC = () => {
 
   return (
     <Layout>
+      <SubjectCreator
+        newSubjects={newSubjects}
+        setNewSubjects={setNewSubjects}
+        createNewSchedule={createNewSchedule}
+      />
       {/* <div>スケジュールの新規作成がここでできる</div>
       <div>
         <form onSubmit={createNewSchedule}>
@@ -73,7 +80,7 @@ const CreateNewScheduler: React.FC = () => {
           </a>
         </form>
       </div> */}
-      <style jsx>{`
+      {/* <style jsx>{`
         .page {
           background: white;
           padding: 3rem;
@@ -109,7 +116,7 @@ const CreateNewScheduler: React.FC = () => {
         .back {
           margin-left: 1rem;
         }
-      `}</style>
+      `}</style> */}
     </Layout>
   );
 };
