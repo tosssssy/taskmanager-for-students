@@ -7,7 +7,9 @@ import { useSession } from "next-auth/client";
 
 const CreateNewScheduler: React.FC = () => {
   const [session] = useSession();
-  const [title, setTitle] = useState("");
+  const [subject, setSubject] = useState("");
+  const [period, setPeriod] = useState(Number);
+  const [day, setDay] = useState("");
   const [status, setStatus] = useState(Number);
   const [memo, setMemo] = useState("");
 
@@ -15,7 +17,7 @@ const CreateNewScheduler: React.FC = () => {
   const createNewSchedule = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     try {
-      const body = { title, status, memo };
+      const body = { subject, period, day, status, memo };
       await fetch("/api/post", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -42,10 +44,23 @@ const CreateNewScheduler: React.FC = () => {
           <h1>New Draft</h1>
           <input
             autoFocus
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="Title"
+            onChange={(e) => setSubject(e.target.value)}
+            placeholder="subject"
             type="text"
-            value={title}
+            value={subject}
+          />
+          <input
+            onChange={(e) => setPeriod(e.target.valueAsNumber)}
+            placeholder="Period"
+            type="number"
+            value={period}
+          />
+          <textarea
+            cols={50}
+            onChange={(e) => setDay(e.target.value)}
+            placeholder="Day"
+            rows={1}
+            value={day}
           />
           <input
             onChange={(e) => setStatus(e.target.valueAsNumber)}
@@ -60,7 +75,7 @@ const CreateNewScheduler: React.FC = () => {
             rows={1}
             value={memo}
           />
-          <input disabled={!status || !title} type="submit" value="Create" />
+          <input disabled={!status || !subject} type="submit" value="Create" />
           <a className="back" href="#" onClick={() => Router.push("/")}>
             or Cancel
           </a>

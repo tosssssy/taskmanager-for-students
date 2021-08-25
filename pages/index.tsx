@@ -1,7 +1,7 @@
 import React from "react";
 import Layout from "../components/Layout";
 import { getSession, useSession } from "next-auth/client";
-import { PostProps } from "../components/Post";
+import Subject, { SubjectProps } from "../components/Subject";
 import prisma from "./../lib/prisma";
 import { GetServerSideProps } from "next";
 import Router from "next/router";
@@ -11,7 +11,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await getSession({ req });
   if (session) {
     //ユーザーのスケジュール（postのリスト）
-    const subjects = await prisma.post.findMany({
+    const subjects = await prisma.subject.findMany({
       where: {
         author: { email: session.user.email },
       },
@@ -31,6 +31,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   };
 };
 
+//仮
 async function deleteAllPost(): Promise<void> {
   await fetch(`http://localhost:3000/api/delete`, {
     method: "DELETE",
@@ -39,7 +40,7 @@ async function deleteAllPost(): Promise<void> {
 }
 
 type Props = {
-  subjects: PostProps[];
+  subjects: SubjectProps[];
 };
 
 const Top: React.VFC<Props> = (props) => {
@@ -58,23 +59,7 @@ const Top: React.VFC<Props> = (props) => {
       {props.subjects.map((subject) => {
         return (
           <>
-            <div className="subject" key={subject.id}>
-              <div>{subject.author.name}</div>
-              <div>{`subjectid=${subject.id}`}</div>
-              <div>{`status=${subject.status}`}</div>
-              <div>{`title=${subject.title}`}</div>
-              <div>{subject.memo}</div>
-            </div>
-            <style jsx>
-              {`
-                .subject {
-                  display: flex;
-                  flex-direction: column;
-                  margin: 20px;
-                  background-color: white;
-                }
-              `}
-            </style>
+            <Subject {...subject} />
           </>
         );
       })}

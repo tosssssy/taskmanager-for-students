@@ -7,10 +7,10 @@ import { getSession } from "next-auth/client";
 export default async function handle(req, res) {
   const session = await getSession({ req });
   if (req.method === "DELETE") {
-    const post = await prisma.post.deleteMany({
+    const subject = await prisma.subject.deleteMany({
       where: { author: { email: session.user.email } },
     });
-    res.json(post);
+    res.json(subject);
   } else {
     throw new Error(
       `The HTTP ${req.method} method is not supported at this route.`

@@ -4,12 +4,12 @@ import React from "react";
 import { GetServerSideProps } from "next";
 import Layout from "../../components/Layout";
 import Router from "next/router";
-import { PostProps } from "../../components/Post";
+import { SubjectProps } from "../../components/Subject";
 import { useSession } from "next-auth/client";
 import prisma from "../../lib/prisma";
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  const post = await prisma.post.findUnique({
+  const post = await prisma.subject.findUnique({
     where: {
       id: Number(params?.id) || -1,
     },
@@ -37,26 +37,23 @@ async function deleteAllPost(id: number): Promise<void> {
   Router.push("/");
 }
 
-const Post: React.FC<PostProps> = (props) => {
+const Post: React.FC<SubjectProps> = (props) => {
   const [session, loading] = useSession();
   if (loading) {
     return <div>Authenticating ...</div>;
   }
   const userHasValidSession = Boolean(session);
   const postBelongsToUser = session?.user?.email === props.author?.email;
-  let title = props.title;
-  if (!props.published) {
-    title = `${title} (Draft)`;
-  }
+  let subject = props.subject;
 
   return (
     <Layout>
       <div>
-        <h2>{title}</h2>
+        <h2>{subject}</h2>
         <p>By {props?.author?.name || "Unknown author"}</p>
         <div>`status=${props.status}`</div>
         <div>`memo=${props.memo}`</div>
-        {!props.published && userHasValidSession && postBelongsToUser && (
+        {userHasValidSession && postBelongsToUser && (
           <button onClick={() => publishPost(props.id)}>Publish</button>
         )}
         {userHasValidSession && postBelongsToUser && (
