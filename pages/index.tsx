@@ -45,6 +45,8 @@ type Props = {
 
 const Top: React.VFC<Props> = (props) => {
   const [session] = useSession();
+  // const [status, setStatus] = useState(Number);
+  // const [memo, setMemo] = useState("");
   if (!session) {
     return (
       <Layout>

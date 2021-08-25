@@ -4,20 +4,25 @@ import React, { useState } from "react";
 import Layout from "../components/Layout";
 import Router from "next/router";
 import { useSession } from "next-auth/client";
+import { SubjectProps } from "../components/Subject";
+
+// export type NewSubjectProps = {
+//   newSubject: Pick<SubjectProps, "subject" | "period" | "day">
+// }
+
+export type NewSubjectProps = {
+  newSubject: Pick<SubjectProps, "subject" | "period" | "day">;
+};
 
 const CreateNewScheduler: React.FC = () => {
   const [session] = useSession();
-  const [subject, setSubject] = useState("");
-  const [period, setPeriod] = useState(Number);
-  const [day, setDay] = useState("");
-  const [status, setStatus] = useState(Number);
-  const [memo, setMemo] = useState("");
+  const [newSubjects, setNewSubjects] = useState<Array<NewSubjectProps>>([]);
 
   //スケジュール新規作成
-  const createNewSchedule = async (e: React.SyntheticEvent) => {
-    e.preventDefault();
+  const createNewSchedule = async () => {
+    // e.preventDefault();
     try {
-      const body = { subject, period, day, status, memo };
+      const body = newSubjects;
       await fetch("/api/post", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -38,7 +43,7 @@ const CreateNewScheduler: React.FC = () => {
 
   return (
     <Layout>
-      <div>スケジュールの新規作成がここでできる</div>
+      {/* <div>スケジュールの新規作成がここでできる</div>
       <div>
         <form onSubmit={createNewSchedule}>
           <h1>New Draft</h1>
@@ -62,25 +67,12 @@ const CreateNewScheduler: React.FC = () => {
             rows={1}
             value={day}
           />
-          <input
-            onChange={(e) => setStatus(e.target.valueAsNumber)}
-            placeholder="Status"
-            type="number"
-            value={status}
-          />
-          <textarea
-            cols={50}
-            onChange={(e) => setMemo(e.target.value)}
-            placeholder="Memo"
-            rows={1}
-            value={memo}
-          />
           <input disabled={!status || !subject} type="submit" value="Create" />
           <a className="back" href="#" onClick={() => Router.push("/")}>
             or Cancel
           </a>
         </form>
-      </div>
+      </div> */}
       <style jsx>{`
         .page {
           background: white;
