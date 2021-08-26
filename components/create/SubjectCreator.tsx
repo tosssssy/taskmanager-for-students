@@ -10,7 +10,7 @@ type Props = {
   createNewSchedule: () => Promise<void>;
 };
 
-const SubjectCreator: React.FC<Props> = (props) => {
+const SubjectCreator = (props: Props) => {
   const { newSubjects, setNewSubjects, createNewSchedule } = props;
   const [subject, setSubject] = useState("");
   const [week, setWeek] = useState(0);
@@ -37,6 +37,14 @@ const SubjectCreator: React.FC<Props> = (props) => {
 
     setNewSubjects(newSubjects.concat(newSubject));
   };
+
+  const deleteSubject = (key: number) => {
+    const newList = newSubjects.filter((_, index) => {
+      return index !== key;
+    });
+    setNewSubjects(newList);
+  };
+
   return (
     <>
       <button onClick={submitToParent}>完成</button>
@@ -73,7 +81,12 @@ const SubjectCreator: React.FC<Props> = (props) => {
       {newSubjects.map((subject, index) => {
         return (
           <>
-            <NewSubject {...subject} key={index} />
+            <div key={index}>
+              <NewSubject
+                subject={subject}
+                deleteSubject={() => deleteSubject(index)}
+              />
+            </div>
           </>
         );
       })}

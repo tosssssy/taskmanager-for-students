@@ -3,15 +3,20 @@ import Router from "next/router";
 import { NewSubjectProps } from "../../pages/create";
 import styled from "styled-components";
 
-const NewSubject: React.FC<NewSubjectProps> = (props) => {
-  const { subject, week, period, day } = props.newSubject;
+type Props = {
+  subject: NewSubjectProps;
+  deleteSubject: Function;
+};
+
+const NewSubject: React.FC<Props> = (props) => {
+  const { subject, period, day } = props.subject.newSubject;
   return (
     <>
       <Scontainer>
         <Sitem>{day}</Sitem>
         <Sitem>{period}</Sitem>
         <Sitem>{subject}</Sitem>
-        <Sbutton>×</Sbutton>
+        <Sbutton onClick={() => props.deleteSubject}>×</Sbutton>
       </Scontainer>
     </>
   );
@@ -39,7 +44,8 @@ const Sbutton = styled(Sitem)`
   padding: 0;
   margin: auto 10px 10px auto;
 
-  &hover {
+  &:hover {
     cursor: pointer;
+    color: orange;
   }
 `;
