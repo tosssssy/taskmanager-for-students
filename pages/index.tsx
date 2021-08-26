@@ -9,26 +9,24 @@ import Router from "next/router";
 //ユーザーのスケジュールを全取得
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await getSession({ req });
-  if (session) {
-    //ユーザーのスケジュール（postのリスト）
-    const subjects = await prisma.subject.findMany({
-      where: {
-        author: { email: session.user.email },
-      },
-      include: {
-        author: {
-          select: { name: true },
-        },
-      },
-    });
 
-    return {
-      props: { subjects },
-    };
+  if (!session) {
+    return { props: { subjects: [] } };
   }
-  return {
-    props: { subjects: [] },
-  };
+
+  //ユーザーのスケジュール（postのリスト）
+  const subjects = await prisma.subject.findMany({
+    where: {
+      author: { email: session.user.email },
+    },
+    include: {
+      author: {
+        select: { name: true },
+      },
+    },
+  });
+
+  return { props: { subjects } };
 };
 
 //仮
@@ -58,10 +56,10 @@ const Top: React.VFC<Props> = (props) => {
     <Layout>
       <button onClick={() => deleteAllPost()}>Delete</button>
       <div>課題管理がここでできる</div>
-      {props.subjects.map((subject) => {
+      {props.subjects.map((subject, index) => {
         return (
           <>
-            <Subject {...subject} />
+            <Subject {...subject} key={index} />
           </>
         );
       })}
