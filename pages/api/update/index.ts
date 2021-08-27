@@ -1,13 +1,10 @@
-// pages/api/publish/[id].ts
-
 import prisma from "../../../lib/prisma";
 
-// PUT /api/publish/:id
 export default async function handle(req, res) {
   const postId = req.query.id;
-  const post = await prisma.post.update({
+  const post = await prisma.user.update({
     where: { id: Number(postId) },
-    data: { published: true },
+    data: { email: "" },
   });
   res.json(post);
 }

@@ -1,22 +1,22 @@
 import React from "react";
-import Router from "next/router";
 import { NewSubjectProps } from "../../pages/create";
 import styled from "styled-components";
 
 type Props = {
   subject: NewSubjectProps;
-  deleteSubject: Function;
+  deleteSubject: any;
 };
 
 const NewSubject: React.FC<Props> = (props) => {
   const { subject, period, day } = props.subject.newSubject;
+  const { deleteSubject } = props;
   return (
     <>
       <Scontainer>
         <Sitem>{day}</Sitem>
         <Sitem>{period}</Sitem>
         <Sitem>{subject}</Sitem>
-        <Sbutton onClick={() => props.deleteSubject}>×</Sbutton>
+        <Sbutton onClick={deleteSubject}>×</Sbutton>
       </Scontainer>
     </>
   );
@@ -36,11 +36,11 @@ const Sitem = styled.div`
   font-size: 18px;
   padding: 10px 0;
   margin-left: 20px;
+  color: #444444;
 `;
 const Sbutton = styled(Sitem)`
   font-size: 150%;
   display: inline;
-  color: white;
   padding: 0;
   margin: auto 10px 10px auto;
 
