@@ -35,7 +35,6 @@ const InputArea = (props: Props) => {
         <option value="6">6限目</option>
       </select>
       <input
-        autoFocus
         onChange={(e) => setSubject(e.target.value)}
         placeholder="教科名"
         type="text"

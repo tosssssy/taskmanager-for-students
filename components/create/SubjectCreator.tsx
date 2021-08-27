@@ -8,23 +8,14 @@ import InputArea from "./InputArea";
 type Props = {
   newSubjects: NewSubjectProps[];
   setNewSubjects: React.Dispatch<React.SetStateAction<NewSubjectProps[]>>;
-  createNewSchedule: () => Promise<void>;
 };
 
 const SubjectCreator = (props: Props) => {
-  const { newSubjects, setNewSubjects, createNewSchedule } = props;
+  const { newSubjects, setNewSubjects } = props;
   const [subject, setSubject] = useState("");
   const [date, setdate] = useState("");
   const [period, setPeriod] = useState(Number);
   const [day, setDay] = useState("");
-
-  //並べ替えてから親のコンポーネントに渡す関数
-  const submitToParent = () => {
-    // ------------------
-    // 並べ替え処理
-    // ------------------
-    createNewSchedule();
-  };
 
   const addSubject = () => {
     const newSubject: NewSubjectProps = {
@@ -35,7 +26,6 @@ const SubjectCreator = (props: Props) => {
         day: day,
       },
     };
-
     setNewSubjects(newSubjects.concat(newSubject));
   };
 
@@ -61,8 +51,6 @@ const SubjectCreator = (props: Props) => {
 
   return (
     <>
-      <button onClick={submitToParent}>完成</button>
-
       <InputArea
         subject={subject}
         setSubject={setSubject}

@@ -1,5 +1,4 @@
 import React from "react";
-import Router from "next/router";
 import { NewSubjectProps } from "../../pages/create";
 import styled from "styled-components";
 
