@@ -14,7 +14,7 @@ type Props = {
 const SubjectCreator = (props: Props) => {
   const { newSubjects, setNewSubjects, createNewSchedule } = props;
   const [subject, setSubject] = useState("");
-  const [week, setWeek] = useState(0);
+  const [date, setdate] = useState("");
   const [period, setPeriod] = useState(Number);
   const [day, setDay] = useState("");
 
@@ -30,7 +30,7 @@ const SubjectCreator = (props: Props) => {
     const newSubject: NewSubjectProps = {
       newSubject: {
         subject: subject,
-        week: week,
+        date: date,
         period: period,
         day: day,
       },

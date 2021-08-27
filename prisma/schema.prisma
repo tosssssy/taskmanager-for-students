@@ -13,7 +13,7 @@ generator client {
 model Subject {
   id        Int     @default(autoincrement()) @id
   subject   String
-  week      Int
+  date      String
   period    Int
   day       String
   status    Int     @default(0)

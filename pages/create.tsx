@@ -6,18 +6,20 @@ import Router from "next/router";
 import { useSession } from "next-auth/client";
 import { SubjectProps } from "../components/Subject";
 import SubjectCreator from "./../components/create/SubjectCreator";
+import CalenderCreator from "./../components/create/CalenderCreator";
 
 // export type NewSubjectProps = {
 //   newSubject: Pick<SubjectProps, "subject" | "period" | "day">
 // }
 
 export type NewSubjectProps = {
-  newSubject: Pick<SubjectProps, "subject" | "week" | "period" | "day">;
+  newSubject: Pick<SubjectProps, "subject" | "date" | "period" | "day">;
 };
 
 const CreateNewScheduler: React.FC = () => {
   const [session] = useSession();
   const [newSubjects, setNewSubjects] = useState<Array<NewSubjectProps>>([]);
+  const [calender, setCalender] = useState<Array<string>>([]);
 
   //スケジュール新規作成
   const createNewSchedule = async () => {
@@ -50,6 +52,7 @@ const CreateNewScheduler: React.FC = () => {
         setNewSubjects={setNewSubjects}
         createNewSchedule={createNewSchedule}
       />
+      <CalenderCreator setCalender={setCalender} />
     </Layout>
   );
 };
