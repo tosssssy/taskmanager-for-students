@@ -14,26 +14,28 @@ export type NewSubjectProps = {
 const CreateNewScheduler: React.FC = () => {
   const [session] = useSession();
   const [newSubjects, setNewSubjects] = useState<Array<NewSubjectProps>>([]);
-  const [dateList, setDateList] = useState<Array<string>>([]);
+  const [dateList, setDateList] = useState<Array<Date>>([]);
 
-  //スケジュール新規作成
-  // const createNewSchedule = async () => {
-  // e.preventDefault();
-  // try {
-  //   const body = newSubjects;
-  //   await fetch("/api/post", {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify(body),
-  //   });
-  // } catch (error) {
-  //   console.error(error);
-  // }
-  // };
-
-  const createNewSchedule = () => {
-    useCreateNewSchedule(dateList, newSubjects);
+  const createNewSchedule = async () => {
+    try {
+      deleteAllPost();
+      const body = useCreateNewSchedule(dateList, newSubjects);
+      await fetch("/api/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+    } catch (error) {
+      console.error(error);
+    }
+    Router.push("/");
   };
+
+  async function deleteAllPost(): Promise<void> {
+    await fetch(`http://localhost:3000/api/delete`, {
+      method: "DELETE",
+    });
+  }
 
   if (!session) {
     return (

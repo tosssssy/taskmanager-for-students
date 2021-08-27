@@ -13,7 +13,7 @@ type Props = {
 const SubjectCreator = (props: Props) => {
   const { newSubjects, setNewSubjects } = props;
   const [subject, setSubject] = useState("");
-  const [date, setdate] = useState("");
+  const [date, setdate] = useState(Object);
   const [period, setPeriod] = useState(Number);
   const [day, setDay] = useState("");
 

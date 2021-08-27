@@ -7,7 +7,7 @@ import InputArea from "./InputArea";
 import { useCreateDateList } from "./useCreateDateList";
 
 type Props = {
-  setDateList: React.Dispatch<React.SetStateAction<string[]>>;
+  setDateList: React.Dispatch<React.SetStateAction<Date[]>>;
 };
 
 const DateListCreator = (props: Props) => {

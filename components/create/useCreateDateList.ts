@@ -1,12 +1,12 @@
 export const useCreateDateList = (startDate: string, endDate: string) => {
-  let dateList: string[] = [];
+  let dateList: Date[] = [];
   let start = new Date(startDate);
   let end = new Date(endDate);
 
   while (start <= end) {
-    dateList.push(start.toDateString()); //格納 e.g."Sat Aug 28 2021"
     start.setDate(start.getDate() + 1); //次の日に変える
+    let tmp = JSON.parse(JSON.stringify(start));
+    dateList.push(tmp); //格納 e.g."Mon Oct 04 2021 00:00:00 GMT+0900 (日本標準時)"
   }
-
   return dateList;
 };
