@@ -1,18 +1,6 @@
 import React from "react";
+import { SubjectProps } from "../lib/types";
 
-export type SubjectProps = {
-  id: number;
-  author: {
-    name: string;
-    email: string;
-  } | null;
-  subject: string;
-  date: Date;
-  period: number;
-  day: string;
-  status: number;
-  memo?: string;
-};
 
 const Subject: React.FC<SubjectProps> = (props) => {
   return (

@@ -2,14 +2,11 @@ import React, { useState } from "react";
 import Layout from "../components/Layout";
 import Router from "next/router";
 import { useSession } from "next-auth/client";
-import { SubjectProps } from "../components/Subject";
 import SubjectCreator from "./../components/create/SubjectCreator";
 import DateListCreator from "../components/create/DateListCreator";
 import { useCreateNewSchedule } from "./../components/create/useCreateNewSchedule";
+import { NewSubjectProps } from "../lib/types";
 
-export type NewSubjectProps = {
-  newSubject: Pick<SubjectProps, "subject" | "date" | "period" | "day">;
-};
 
 const CreateNewScheduler: React.FC = () => {
   const [session] = useSession();

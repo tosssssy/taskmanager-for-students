@@ -1,6 +1,6 @@
 import React from "react";
-import { NewSubjectProps } from "../../pages/create";
 import styled from "styled-components";
+import { NewSubjectProps } from "../../lib/types";
 
 type Props = {
   subject: NewSubjectProps;

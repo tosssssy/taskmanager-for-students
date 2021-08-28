@@ -1,9 +1,10 @@
 import React from "react";
 import Layout from "../components/Layout";
 import { getSession, useSession } from "next-auth/client";
-import Subject, { SubjectProps } from "../components/Subject";
+import Subject from "../components/Subject";
 import prisma from "./../lib/prisma";
 import { GetServerSideProps } from "next";
+import { SubjectProps } from "../lib/types";
 
 //ユーザーのスケジュールを全取得
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
