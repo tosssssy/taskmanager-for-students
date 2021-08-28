@@ -10,7 +10,7 @@ type Props = {
   addSubject: any;
 };
 
-const InputArea = (props: Props) => {
+const InputSubjectInfo = (props: Props) => {
   const { subject, setSubject, period, setPeriod, day, setDay, addSubject } =
     props;
   return (
@@ -47,4 +47,4 @@ const InputArea = (props: Props) => {
   );
 };
 
-export default InputArea;
+export default InputSubjectInfo;

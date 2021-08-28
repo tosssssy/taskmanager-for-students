@@ -2,9 +2,10 @@
 
 import prisma from "../../../lib/prisma";
 import { getSession } from "next-auth/client";
+import { NextApiRequest, NextApiResponse } from "next";
 
 // DELETE /api/post/:id
-export default async function handle(req, res) {
+export default async function (req: NextApiRequest, res: NextApiResponse) {
   const session = await getSession({ req });
   if (req.method === "DELETE") {
     const subject = await prisma.subject.deleteMany({

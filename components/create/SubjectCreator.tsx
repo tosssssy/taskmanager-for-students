@@ -1,9 +1,9 @@
 import { options } from "next-auth/client";
 import { useState } from "react";
-import { NewSubjectProps } from "../../pages/create";
 import Subject from "../Subject";
 import NewSubject from "./NewSubject";
-import InputArea from "./InputArea";
+import InputSubjectInfo from "./InputSubjectInfo";
+import { NewSubjectProps } from "../../lib/types";
 
 type Props = {
   newSubjects: NewSubjectProps[];
@@ -13,9 +13,9 @@ type Props = {
 const SubjectCreator = (props: Props) => {
   const { newSubjects, setNewSubjects } = props;
   const [subject, setSubject] = useState("");
-  const [date, setdate] = useState(Object);
   const [period, setPeriod] = useState(Number);
   const [day, setDay] = useState("");
+  const date: Date = null;
 
   const addSubject = () => {
     const newSubject: NewSubjectProps = {
@@ -51,7 +51,7 @@ const SubjectCreator = (props: Props) => {
 
   return (
     <>
-      <InputArea
+      <InputSubjectInfo
         subject={subject}
         setSubject={setSubject}
         period={period}

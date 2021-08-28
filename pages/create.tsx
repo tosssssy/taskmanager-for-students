@@ -6,7 +6,7 @@ import SubjectCreator from "./../components/create/SubjectCreator";
 import DateListCreator from "../components/create/DateListCreator";
 import { useCreateNewSchedule } from "./../components/create/useCreateNewSchedule";
 import { NewSubjectProps } from "../lib/types";
-
+import EmailChecker from "../components/create/EmailChecker";
 
 const CreateNewScheduler: React.FC = () => {
   const [session] = useSession();
@@ -17,6 +17,12 @@ const CreateNewScheduler: React.FC = () => {
   // ユーザーの全データを削除してから新規作成
   const createNewSchedule = async () => {
     try {
+      await fetch("http://localhost:3000/api/update/email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: email,
+      });
+
       await fetch(`http://localhost:3000/api/delete`, { method: "DELETE" });
 
       const body = useCreateNewSchedule(dateList, newSubjects);
@@ -41,7 +47,8 @@ const CreateNewScheduler: React.FC = () => {
 
   return (
     <Layout>
-      <input name="email" type="email" value={session.user.email || null} />
+      <EmailChecker email={email} setEmail={setEmail} />
+
       <DateListCreator setDateList={setDateList} />
 
       <SubjectCreator

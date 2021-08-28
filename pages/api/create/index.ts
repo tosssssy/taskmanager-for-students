@@ -1,10 +1,10 @@
 // pages/api/post/index.ts
 
+import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/client";
 import prisma from "../../../lib/prisma";
 
-//TODO subjectのオブジェクトを受け取り、一気に登録する処理に変更
-export default async function (req, res) {
+export default async function (req: NextApiRequest, res: NextApiResponse) {
   const session = await getSession({ req });
 
   for (let i = 0; i < req.body.length; i++) {
