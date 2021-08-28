@@ -1,9 +1,4 @@
-import { options } from "next-auth/client";
 import { useState } from "react";
-import { NewSubjectProps } from "../../pages/create";
-import Subject from "../Subject";
-import NewSubject from "./NewSubject";
-import InputArea from "./InputArea";
 import { useCreateDateList } from "./useCreateDateList";
 
 type Props = {
@@ -14,20 +9,26 @@ const DateListCreator = (props: Props) => {
   const { setDateList } = props;
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [hasRegistered, setHasRegistered] = useState(false);
 
   const onClick = () => {
+    setHasRegistered(true);
     setDateList(useCreateDateList(startDate, endDate));
   };
 
   return (
     <>
-      <p>例）2021/09/1</p>
-      <input type="text" onChange={(e) => setStartDate(e.target.value)} />
-      <p>例）2021/10/3</p>
-      <input type="text" onChange={(e) => setEndDate(e.target.value)} />
-      <button onClick={onClick}>送信</button>
-      <br></br>
-      <br></br>
+      {!hasRegistered ? (
+        <div>
+          <input type="date" onChange={(e) => setStartDate(e.target.value)} />
+          <input type="date" onChange={(e) => setEndDate(e.target.value)} />
+          <button onClick={onClick}>送信</button>
+          <br></br>
+          <br></br>
+        </div>
+      ) : (
+        <div>{`${startDate} ~ ${endDate}`}</div>
+      )}
     </>
   );
 };

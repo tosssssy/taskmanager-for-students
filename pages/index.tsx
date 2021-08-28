@@ -25,6 +25,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     },
   });
   const subjects = JSON.parse(JSON.stringify(data));
+  console.log(subjects);
 
   return { props: { subjects } };
 };

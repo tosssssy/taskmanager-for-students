@@ -13,12 +13,15 @@ export type NewSubjectProps = {
 
 const CreateNewScheduler: React.FC = () => {
   const [session] = useSession();
+  const [email, setEmail] = useState("");
   const [newSubjects, setNewSubjects] = useState<Array<NewSubjectProps>>([]);
   const [dateList, setDateList] = useState<Array<Date>>([]);
 
+  // ユーザーの全データを削除してから新規作成
   const createNewSchedule = async () => {
     try {
-      deleteAllPost();
+      await fetch(`http://localhost:3000/api/delete`, { method: "DELETE" });
+
       const body = useCreateNewSchedule(dateList, newSubjects);
       await fetch("/api/create", {
         method: "POST",
@@ -31,12 +34,6 @@ const CreateNewScheduler: React.FC = () => {
     Router.push("/");
   };
 
-  async function deleteAllPost(): Promise<void> {
-    await fetch(`http://localhost:3000/api/delete`, {
-      method: "DELETE",
-    });
-  }
-
   if (!session) {
     return (
       <Layout>
@@ -47,11 +44,8 @@ const CreateNewScheduler: React.FC = () => {
 
   return (
     <Layout>
-      {/* {dateList.length < 1 ? ( */}
+      <input name="email" type="email" value={session.user.email || null} />
       <DateListCreator setDateList={setDateList} />
-      {/* ) : null} */}
-      {/* {dateList[0]}
-        {dateList[dateList.length - 1]} */}
 
       <SubjectCreator
         newSubjects={newSubjects}
