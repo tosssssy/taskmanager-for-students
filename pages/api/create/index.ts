@@ -15,7 +15,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
         date: date,
         period: period,
         day: day,
-        author: { connect: { email: session.user.email } },
+        author: { connect: { id: Number(session.user.id) } },
       },
     });
   }
