@@ -12,7 +12,11 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@chakra-ui/react": "^1.6.7",
+    "@emotion/react": "^11.4.1",
+    "@emotion/styled": "^11.3.0",
     "@prisma/client": "^2.29.1",
+    "framer-motion": "^4.1.17",
     "next": "9.5.5",
     "next-auth": "^3.28.0",
     "react": "16.14.0",
