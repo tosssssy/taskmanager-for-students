@@ -17,11 +17,11 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   //ユーザーのスケジュール（subjectのリスト）
   const data = await prisma.subject.findMany({
     where: {
-      author: { email: session.user.email },
+      author: { id: Number(session.user.id) },
     },
     include: {
       author: {
-        select: { name: true, email: true },
+        select: { name: true },
       },
     },
   });

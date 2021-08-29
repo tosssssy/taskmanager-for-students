@@ -9,7 +9,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
   const session = await getSession({ req });
   if (req.method === "DELETE") {
     const subject = await prisma.subject.deleteMany({
-      where: { author: { email: session.user.email } },
+      where: { authorId: Number(session.user.id) },
     });
     res.json(subject);
   } else {
