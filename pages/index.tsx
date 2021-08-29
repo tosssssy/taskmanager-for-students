@@ -1,9 +1,10 @@
 import React from "react";
 import Layout from "../components/Layout";
 import { getSession, useSession } from "next-auth/client";
-import Subject, { SubjectProps } from "../components/Subject";
+import Subject from "../components/Subject";
 import prisma from "./../lib/prisma";
 import { GetServerSideProps } from "next";
+import { SubjectProps } from "../lib/types";
 
 //ユーザーのスケジュールを全取得
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
@@ -16,15 +17,16 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   //ユーザーのスケジュール（subjectのリスト）
   const data = await prisma.subject.findMany({
     where: {
-      author: { email: session.user.email },
+      author: { id: Number(session.user.id) },
     },
     include: {
       author: {
-        select: { name: true, email: true },
+        select: { name: true },
       },
     },
   });
   const subjects = JSON.parse(JSON.stringify(data));
+  console.log(subjects);
 
   return { props: { subjects } };
 };

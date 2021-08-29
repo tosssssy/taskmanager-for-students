@@ -2,23 +2,21 @@ import React, { useState } from "react";
 import Layout from "../components/Layout";
 import Router from "next/router";
 import { useSession } from "next-auth/client";
-import { SubjectProps } from "../components/Subject";
 import SubjectCreator from "./../components/create/SubjectCreator";
 import DateListCreator from "../components/create/DateListCreator";
 import { useCreateNewSchedule } from "./../components/create/useCreateNewSchedule";
-
-export type NewSubjectProps = {
-  newSubject: Pick<SubjectProps, "subject" | "date" | "period" | "day">;
-};
+import { NewSubjectProps } from "../lib/types";
 
 const CreateNewScheduler: React.FC = () => {
   const [session] = useSession();
   const [newSubjects, setNewSubjects] = useState<Array<NewSubjectProps>>([]);
   const [dateList, setDateList] = useState<Array<Date>>([]);
 
+  // ユーザーの全データを削除してから新規作成
   const createNewSchedule = async () => {
     try {
-      deleteAllPost();
+      await fetch(`http://localhost:3000/api/delete`, { method: "DELETE" });
+
       const body = useCreateNewSchedule(dateList, newSubjects);
       await fetch("/api/create", {
         method: "POST",
@@ -31,12 +29,6 @@ const CreateNewScheduler: React.FC = () => {
     Router.push("/");
   };
 
-  async function deleteAllPost(): Promise<void> {
-    await fetch(`http://localhost:3000/api/delete`, {
-      method: "DELETE",
-    });
-  }
-
   if (!session) {
     return (
       <Layout>
@@ -47,11 +39,7 @@ const CreateNewScheduler: React.FC = () => {
 
   return (
     <Layout>
-      {/* {dateList.length < 1 ? ( */}
       <DateListCreator setDateList={setDateList} />
-      {/* ) : null} */}
-      {/* {dateList[0]}
-        {dateList[dateList.length - 1]} */}
 
       <SubjectCreator
         newSubjects={newSubjects}
