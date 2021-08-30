@@ -21,7 +21,9 @@ const Subject: React.FC<SubjectProps> = (props) => {
     <>
       <Popover placement="bottom" closeOnBlur={true}>
         <PopoverTrigger>
-          <Button backgroundColor="red">{props.subject}</Button>
+          <Button backgroundColor="red" w={"140px"}>
+            {props.subject}
+          </Button>
         </PopoverTrigger>
         <PopoverContent color="gray" borderColor="blue.800">
           <PopoverHeader pt={4} fontWeight="bold" border="0">

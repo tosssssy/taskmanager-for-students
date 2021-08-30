@@ -1,4 +1,4 @@
-import { NewSubjectProps } from "../../pages/create";
+import { NewSubjectProps } from "../../lib/types";
 
 //1週間分のスケジュールをdateListに格納されているデータ数だけ埋め込む関数
 export const useCreateNewSchedule = (
