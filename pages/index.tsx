@@ -5,6 +5,7 @@ import Subject from "../components/Subject";
 import prisma from "./../lib/prisma";
 import { GetServerSideProps } from "next";
 import { SubjectProps } from "../lib/types";
+import { Flex } from "@chakra-ui/react";
 
 //ユーザーのスケジュールを全取得
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
@@ -47,13 +48,15 @@ const Top: React.VFC<Props> = (props) => {
   return (
     <Layout>
       <div>課題管理がここでできる</div>
-      {props.subjects.map((subject, index) => {
-        return (
-          <>
-            <Subject {...subject} key={index} />
-          </>
-        );
-      })}
+      <Flex direction={"column"}>
+        {props.subjects.map((subject, index) => {
+          return (
+            <>
+              <Subject {...subject} key={index} />
+            </>
+          );
+        })}
+      </Flex>
     </Layout>
   );
 };
