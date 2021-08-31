@@ -11,7 +11,6 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
   }
   const [id, status, memo] = req.body.updateData;
 
-  //ここでエラー
   const result = await prisma.subject.update({
     where: { id: Number(id) },
     data: {
@@ -19,6 +18,5 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
       memo: String(memo),
     },
   });
-
-  res.json(result);
+  res.end();
 }
