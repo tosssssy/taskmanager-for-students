@@ -1,6 +1,12 @@
 import { NewSubjectProps } from "../../lib/types";
 
 //1週間分のスケジュールをdateListに格納されているデータ数だけ埋め込む関数
+// newSubject = {
+//   name: "Bob";
+//   date: null;  ←ここに new Date()して入れる
+//   period: 3;
+//   day: Sat;
+// };
 export const useCreateNewSchedule = (
   dateList: Date[],
   newSubjects: NewSubjectProps[]
