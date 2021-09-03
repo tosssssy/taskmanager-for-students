@@ -15,7 +15,7 @@ const CreateNewScheduler: React.FC = () => {
   // ユーザーの全データを削除してから新規作成
   const createNewSchedule = async () => {
     try {
-      await fetch(`http://localhost:3000/api/delete`, { method: "DELETE" });
+      await fetch("http://localhost:3000/api/delete", { method: "DELETE" });
 
       const body = useCreateNewSchedule(dateList, newSubjects);
       await fetch("/api/create", {

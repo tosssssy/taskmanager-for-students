@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction } from "react";
 
 type Props = {
-  subject: string;
-  setSubject: Dispatch<SetStateAction<string>>;
+  name: string;
+  setName: Dispatch<SetStateAction<string>>;
   period: number;
   setPeriod: Dispatch<SetStateAction<number>>;
   day: string;
@@ -11,8 +11,7 @@ type Props = {
 };
 
 const InputSubjectInfo = (props: Props) => {
-  const { subject, setSubject, period, setPeriod, day, setDay, addSubject } =
-    props;
+  const { name, setName, period, setPeriod, day, setDay, addSubject } = props;
   return (
     <>
       <select name="day" onChange={(e) => setDay(e.target.value)}>
@@ -35,12 +34,12 @@ const InputSubjectInfo = (props: Props) => {
         <option value="6">6限目</option>
       </select>
       <input
-        onChange={(e) => setSubject(e.target.value)}
+        onChange={(e) => setName(e.target.value)}
         placeholder="教科名"
         type="text"
-        value={subject}
+        value={name}
       />
-      <button onClick={addSubject} disabled={!subject || !period || !day}>
+      <button onClick={addSubject} disabled={!name || !period || !day}>
         追加
       </button>
     </>

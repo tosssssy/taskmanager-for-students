@@ -7,25 +7,15 @@ import { GetServerSideProps } from "next";
 import { SubjectProps } from "../lib/types";
 import { Flex } from "@chakra-ui/react";
 
-//ユーザーのスケジュールを全取得
+//ユーザーのスケジュールを全取得（subjectのリスト）
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await getSession({ req });
+  if (!session) return { props: { subjects: [] } };
 
-  if (!session) {
-    return { props: { subjects: [] } };
-  }
-
-  //ユーザーのスケジュール（subjectのリスト）
   const data = await prisma.subject.findMany({
-    where: {
-      author: { id: Number(session.user.id) },
-    },
-    include: {
-      author: {
-        select: { name: true },
-      },
-    },
+    where: { author: { id: Number(session.user.id) } },
   });
+
   const subjects = JSON.parse(JSON.stringify(data));
   console.log(subjects);
 

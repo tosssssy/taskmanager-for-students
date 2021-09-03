@@ -12,7 +12,7 @@ generator client {
 
 model Subject {
   id        Int     @default(autoincrement()) @id
-  subject   String
+  name   String
   date      DateTime
   period    Int
   day       String

@@ -14,15 +14,40 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import React from "react";
-import { SubjectProps } from "../lib/types";
+import { useState } from "react";
+import { SubjectProps, UpdateSubjectTypes } from "../lib/types";
 
 const Subject: React.FC<SubjectProps> = (props) => {
+  const [status, setStatus] = useState(props.status || 0);
+  const [memo, setMemo] = useState(props.memo || "");
+
+  const updateSubject = async () => {
+    try {
+      const body: UpdateSubjectTypes = {
+        updateData: {
+          id: props.id,
+          status: status,
+          memo: memo,
+        },
+      };
+
+      const result = await fetch("http://localhost:3000/api/update/subject", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      console.log(result);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <Popover placement="bottom" closeOnBlur={true}>
         <PopoverTrigger>
           <Button backgroundColor="red" w={"140px"}>
-            {props.subject}
+            {props.name}
           </Button>
         </PopoverTrigger>
         <PopoverContent color="gray" borderColor="blue.800">
@@ -44,10 +69,13 @@ const Subject: React.FC<SubjectProps> = (props) => {
           <PopoverArrow />
           <PopoverCloseButton />
           <PopoverBody>
-            <Textarea placeholder={props.memo || "メモを追加"} />
+            <Textarea
+              placeholder={props.memo || "メモを追加"}
+              onChange={(e) => setMemo(e.target.value)}
+            />
           </PopoverBody>
           <PopoverFooter border="0" d="flex" justifyContent="flex-end" pb={4}>
-            <Button size="sm" colorScheme="blue">
+            <Button size="sm" colorScheme="blue" onClick={updateSubject}>
               Save
             </Button>
           </PopoverFooter>

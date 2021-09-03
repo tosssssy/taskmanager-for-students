@@ -8,14 +8,14 @@ type Props = {
 };
 
 const NewSubject: React.FC<Props> = (props) => {
-  const { subject, period, day } = props.subject.newSubject;
+  const { name, period, day } = props.subject.newSubject;
   const { deleteSubject } = props;
   return (
     <>
       <Scontainer>
         <Sitem>{day}</Sitem>
         <Sitem>{period}</Sitem>
-        <Sitem>{subject}</Sitem>
+        <Sitem>{name}</Sitem>
         <Sbutton onClick={deleteSubject}>×</Sbutton>
       </Scontainer>
     </>

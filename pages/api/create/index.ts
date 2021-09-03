@@ -8,10 +8,10 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
   const session = await getSession({ req });
 
   for (let i = 0; i < req.body.length; i++) {
-    const { subject, date, period, day } = req.body[i].newSubject;
+    const { name, date, period, day } = req.body[i].newSubject;
     await prisma.subject.create({
       data: {
-        subject: subject,
+        name: name,
         date: date,
         period: period,
         day: day,

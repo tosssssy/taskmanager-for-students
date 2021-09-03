@@ -12,7 +12,7 @@ type Props = {
 
 const SubjectCreator = (props: Props) => {
   const { newSubjects, setNewSubjects } = props;
-  const [subject, setSubject] = useState("");
+  const [name, setName] = useState("");
   const [period, setPeriod] = useState(Number);
   const [day, setDay] = useState("");
   const date: Date = null;
@@ -20,7 +20,7 @@ const SubjectCreator = (props: Props) => {
   const addSubject = () => {
     const newSubject: NewSubjectProps = {
       newSubject: {
-        subject: subject,
+        name: name,
         date: date,
         period: period,
         day: day,
@@ -52,8 +52,8 @@ const SubjectCreator = (props: Props) => {
   return (
     <>
       <InputSubjectInfo
-        subject={subject}
-        setSubject={setSubject}
+        name={name}
+        setName={setName}
         period={period}
         setPeriod={setPeriod}
         day={day}

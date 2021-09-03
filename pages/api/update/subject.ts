@@ -9,17 +9,14 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     res.status(401).json({ message: "Not authenticated" });
     return;
   }
-  if (req.method === "POST") {
-    const email = req.body;
+  const [id, status, memo] = req.body.updateData;
 
-    const result = await prisma.user.update({
-      where: { id: Number(session.user.id) },
-      data: { email: email },
-    });
-    res.json(result);
-  } else {
-    throw new Error(
-      `The HTTP ${req.method} method is not supported at this route.`
-    );
-  }
+  const result = await prisma.subject.update({
+    where: { id: Number(id) },
+    data: {
+      status: Number(status),
+      memo: String(memo),
+    },
+  });
+  res.json(result);
 }
