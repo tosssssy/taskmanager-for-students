@@ -31,7 +31,7 @@ const Subject: React.FC<SubjectProps> = (props) => {
         },
       };
 
-      const result = await fetch("http://localhost:3000/api/update/subject", {
+      const result = await fetch("http://localhost:8000/api/update/subject", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
