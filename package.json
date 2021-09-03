@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "大学生のためのシンプルな課題管理アプリ",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next -p 8000",
     "build": "next build",
     "start": "next start",
     "studio": "npx prisma studio"
