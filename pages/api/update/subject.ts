@@ -18,5 +18,5 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
       memo: String(memo),
     },
   });
-  res.end();
+  res.json(result);
 }
