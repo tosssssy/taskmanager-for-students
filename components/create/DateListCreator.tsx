@@ -19,17 +19,17 @@ const DateListCreator = (props: Props) => {
   return (
     <>
       {!hasRegistered ? (
-        <div>
-          <input type="date" onChange={(e) => setStartDate(e.target.value)} />
-          <input type="date" onChange={(e) => setEndDate(e.target.value)} />
-          <button onClick={onClick} disabled={!startDate || !endDate}>
-            送信
-          </button>
-          <br></br>
-          <br></br>
-        </div>
-      ) : (
         <div>{`${startDate} ~ ${endDate}`}</div>
+      ) : (
+        <div>
+        <input type="date" onChange={(e) => setStartDate(e.target.value)} />
+        <input type="date" onChange={(e) => setEndDate(e.target.value)} />
+        <button onClick={onClick} disabled={!startDate || !endDate}>
+          送信
+        </button>
+        <br></br>
+        <br></br>
+      </div>
       )}
     </>
   );

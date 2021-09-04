@@ -1,4 +1,4 @@
-export type SubjectProps = {
+export type SubjectType = {
   id: number;
   author: {
     name: string;
@@ -12,10 +12,10 @@ export type SubjectProps = {
   memo?: string;
 };
 
-export type NewSubjectProps = {
-  newSubject: Pick<SubjectProps, "name" | "date" | "period" | "day">;
+export type NewSubjectType = {
+  newSubject: Pick<SubjectType, "name" | "date" | "period" | "day">;
 };
 
 export type UpdateSubjectTypes = {
-  updateData: Pick<SubjectProps, "id" | "status" | "memo">;
+  updateData: Pick<SubjectType, "id" | "status" | "memo">;
 };

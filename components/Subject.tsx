@@ -15,9 +15,9 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { useState } from "react";
-import { SubjectProps, UpdateSubjectTypes } from "../lib/types";
+import { SubjectType, UpdateSubjectTypes } from "../lib/types";
 
-const Subject: React.FC<SubjectProps> = (props) => {
+export const Subject: React.FC<SubjectType> = (props) => {
   const [status, setStatus] = useState(props.status || 0);
   const [memo, setMemo] = useState(props.memo || "");
 
@@ -85,4 +85,4 @@ const Subject: React.FC<SubjectProps> = (props) => {
   );
 };
 
-export default Subject;
+

@@ -1,4 +1,4 @@
-import { NewSubjectProps } from "../../lib/types";
+import { NewSubjectType } from "../../lib/types";
 
 //1週間分のスケジュールをdateListに格納されているデータ数だけ埋め込む関数
 // newSubject = {
@@ -9,9 +9,9 @@ import { NewSubjectProps } from "../../lib/types";
 // };
 export const useCreateNewSchedule = (
   dateList: Date[],
-  newSubjects: NewSubjectProps[]
+  newSubjects: NewSubjectType[]
 ) => {
-  let newSchedule: NewSubjectProps[] = [];
+  let newSchedule: NewSubjectType[] = [];
 
   for (let i = 0; i < dateList.length; i++) {
     for (let j = 0; j < newSubjects.length; j++) {

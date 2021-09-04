@@ -5,11 +5,11 @@ import { useSession } from "next-auth/client";
 import SubjectCreator from "./../components/create/SubjectCreator";
 import DateListCreator from "../components/create/DateListCreator";
 import { useCreateNewSchedule } from "./../components/create/useCreateNewSchedule";
-import { NewSubjectProps } from "../lib/types";
+import { NewSubjectType } from "../lib/types";
 
 const CreateNewScheduler: React.FC = () => {
   const [session] = useSession();
-  const [newSubjects, setNewSubjects] = useState<Array<NewSubjectProps>>([]);
+  const [newSubjects, setNewSubjects] = useState<Array<NewSubjectType>>([]);
   const [dateList, setDateList] = useState<Array<Date>>([]);
 
   // ユーザーの全データを削除してから新規作成

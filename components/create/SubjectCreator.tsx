@@ -3,11 +3,11 @@ import { useState } from "react";
 import Subject from "../Subject";
 import NewSubject from "./NewSubject";
 import InputSubjectInfo from "./InputSubjectInfo";
-import { NewSubjectProps } from "../../lib/types";
+import { NewSubjectType } from "../../lib/types";
 
 type Props = {
-  newSubjects: NewSubjectProps[];
-  setNewSubjects: React.Dispatch<React.SetStateAction<NewSubjectProps[]>>;
+  newSubjects: NewSubjectType[];
+  setNewSubjects: React.Dispatch<React.SetStateAction<NewSubjectType[]>>;
 };
 
 const SubjectCreator = (props: Props) => {
@@ -18,7 +18,7 @@ const SubjectCreator = (props: Props) => {
   const date: Date = null;
 
   const addSubject = () => {
-    const newSubject: NewSubjectProps = {
+    const newSubject: NewSubjectType = {
       newSubject: {
         name: name,
         date: date,
