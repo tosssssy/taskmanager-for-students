@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { NewSubjectProps } from "../../lib/types";
+import { NewSubjectType } from "../../lib/types";
 
 type Props = {
-  subject: NewSubjectProps;
+  subject: NewSubjectType;
   deleteSubject: any;
 };
 
