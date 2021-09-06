@@ -12,7 +12,7 @@ const Header: React.FC = () => {
 
   let left = (
     <div className="left">
-      <style jsx>{`
+      {/* <style jsx>{`
         .bold {
           font-weight: bold;
         }
@@ -30,7 +30,7 @@ const Header: React.FC = () => {
         a + a {
           margin-left: 1rem;
         }
-      `}</style>
+      `}</style> */}
     </div>
   );
 
@@ -39,7 +39,7 @@ const Header: React.FC = () => {
   if (loading) {
     left = (
       <div className="left">
-        <style jsx>{`
+        {/* <style jsx>{`
           .bold {
             font-weight: bold;
           }
@@ -57,17 +57,17 @@ const Header: React.FC = () => {
           a + a {
             margin-left: 1rem;
           }
-        `}</style>
+        `}</style> */}
       </div>
     );
     right = (
       <div className="right">
         <p>Validating session ...</p>
-        <style jsx>{`
+        {/* <style jsx>{`
           .right {
             margin-left: auto;
           }
-        `}</style>
+        `}</style> */}
       </div>
     );
   }
@@ -78,7 +78,7 @@ const Header: React.FC = () => {
         <Link href="/api/auth/signin">
           <a data-active={isActive("/signup")}>Log in</a>
         </Link>
-        <style jsx>{`
+        {/* <style jsx>{`
           a {
             text-decoration: none;
             color: #000;
@@ -98,7 +98,7 @@ const Header: React.FC = () => {
             padding: 0.5rem 1rem;
             border-radius: 3px;
           }
-        `}</style>
+        `}</style> */}
       </div>
     );
   }
@@ -106,7 +106,7 @@ const Header: React.FC = () => {
   if (session) {
     left = (
       <div className="left">
-        <style jsx>{`
+        {/* <style jsx>{`
           .bold {
             font-weight: bold;
           }
@@ -124,7 +124,7 @@ const Header: React.FC = () => {
           a + a {
             margin-left: 1rem;
           }
-        `}</style>
+        `}</style> */}
       </div>
     );
     right = (
@@ -138,7 +138,7 @@ const Header: React.FC = () => {
         <button onClick={() => signOut()}>
           <a>Log out</a>
         </button>
-        <style jsx>{`
+        {/* <style jsx>{`
           a {
             text-decoration: none;
             color: #000;
@@ -168,7 +168,7 @@ const Header: React.FC = () => {
           button {
             border: none;
           }
-        `}</style>
+        `}</style> */}
       </div>
     );
   }
@@ -177,13 +177,6 @@ const Header: React.FC = () => {
     <nav>
       {left}
       {right}
-      <style jsx>{`
-        nav {
-          display: flex;
-          padding: 2rem;
-          align-items: center;
-        }
-      `}</style>
     </nav>
   );
 };
