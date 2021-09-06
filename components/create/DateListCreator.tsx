@@ -18,7 +18,7 @@ const DateListCreator = (props: Props) => {
 
   return (
     <>
-      {!hasRegistered ? (
+      {hasRegistered ? (
         <div>{`${startDate} ~ ${endDate}`}</div>
       ) : (
         <div>

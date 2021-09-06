@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import Layout from "../components/Layout";
 import { getSession, useSession } from "next-auth/client";
-import {Subject} from "../components/Subject";
+import { Subject } from "../components/top/Subject";
 import prisma from "./../lib/prisma";
 import { GetServerSideProps } from "next";
 import { SubjectType } from "../lib/types";
 import { Box, Flex, Link } from "@chakra-ui/react";
-import {ChangeBtn} from "../components/top/changeBtn";
-import {SelectBtn} from "../components/top/SelectBtn"
+import { Pagination } from "../components/top/Pagination";
 
 //ユーザーのスケジュールを全取得（subjectのリスト）
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
@@ -30,87 +29,18 @@ type Props = {
 
 const Top: React.VFC<Props> = (props) => {
   const [session] = useSession();
-  const {subjects} = props;
+  const { subjects } = props;
+  const [dateList, setDatelist] = useState<
+    Array<{ date: string; day: number }>
+  >([]);
 
-    // 0 埋め関数
-    const toDoubleDigits = function (num) {
-      num += "";
-      if (num.length === 1) {
-        num = "0" + num;
-      }
-      return num;
-    };
-  
-    // 最初の日付
-    let start:Date = new Date(subjects[0].date);
-    // 最初の日付を日曜に
-    while (true) {
-      if (start.getDay() === 0) break;
-      start = new Date(
-        start.getFullYear(),
-        toDoubleDigits(start.getMonth()),
-        toDoubleDigits(start.getDate() - 1)
-      );
-    }
-    let startDate: string =
-      start.getFullYear() +
-      "-" +
-      toDoubleDigits(start.getMonth() + 1) +
-      "-" +
-      toDoubleDigits(start.getDate());
-  
-    // 終わりの日付
-    let end :Date= new Date(subjects[subjects.length - 1].date);
-    // 最後の授業が土曜日の時の処理
-    if (end.getDay() === 0) {
-      end = new Date(subjects[subjects.length - 2].date);
-    }
-  
-    // 最後の日を土曜に
-    if (end.getDay() !== 6) {
-      while (true) {
-        if (end.getDay() === 6) break;
-        end = new Date(
-          end.getFullYear(),
-          toDoubleDigits(end.getMonth()),
-          toDoubleDigits(end.getDate() + 1)
-        );
-      }
-    }
-    let endDate :string =
-      end.getFullYear() +
-      "-" +
-      toDoubleDigits(end.getMonth() + 1) +
-      "-" +
-      toDoubleDigits(end.getDate());
-  
-    // 全データを格納
-    let dateList: { date: string, day: number }[] = [];
-  
-    // 曜日！
-    const selectDay = ["日", "月", "火", "水", "木", "金", "土"];
-  
-    // 配列の表示範囲
-    const [firstYMD, setFirstYMD] = useState("2");
-    const [lastYMD, setLastYMD] = useState("3");
-  
-    // 指定された範囲を dateList に配列で格納
-    let loop: Date = new Date(start);
-  
-    while (loop <= end) {
-      let loopDate: string =
-        loop.getFullYear() +
-        "-" +
-        toDoubleDigits(loop.getMonth() + 1) +
-        "-" +
-        toDoubleDigits(loop.getDate());
-      let loopDay: number = loop.getDay();
-      // dateList.push(loopDate)
-      dateList = dateList.concat({ date: loopDate, day: loopDay });
-      //dateList = dateList.concat({ date: loopDate, day: loopDay });
-      let newDate: number = loop.setDate(loop.getDate() + 1);
-      loop = new Date(newDate);
-    }
+  // 曜日！
+  const Day = ["日", "月", "火", "水", "木", "金", "土"];
+
+  // 配列の表示範囲
+  const [firstYMD, setFirstYMD] = useState("2");
+  const [lastYMD, setLastYMD] = useState("3");
+
   if (!session) {
     return (
       <Layout>
@@ -118,21 +48,10 @@ const Top: React.VFC<Props> = (props) => {
       </Layout>
     );
   }
+
   return (
     <Layout>
-      <Box ml={["15px", "10%", "14%", "27%"]} pb="70px">
-        <ChangeBtn
-          startDate={startDate}
-          endDate={endDate}
-          firstYMD={firstYMD}
-          setFirstYMD={setFirstYMD}
-          lastYMD={lastYMD}
-          setLastYMD={setLastYMD}
-          toDoubleDigits={toDoubleDigits}
-        />
-        <br />
-
-        {/* div いらなそうなら消してくれ */}
+      <Box p={"50px 20px 70px 20px"} minW={"375px"} maxW={"840px"} m={"auto"}>
         {/* 全日付 */}
         {dateList.map((oneday, index) => (
           <Box>
@@ -142,14 +61,14 @@ const Top: React.VFC<Props> = (props) => {
                 <Flex key={index} fontSize={20}>
                   {oneday.date.slice(5, 10)}
                   {"("}
-                  {selectDay[oneday.day] !== "日" ? (
-                    selectDay[oneday.day] === "土" ? (
-                      <Box color="blue.400">{selectDay[oneday.day]}</Box>
+                  {Day[oneday.day] !== "日" ? (
+                    Day[oneday.day] === "土" ? (
+                      <Box color="blue.400">{Day[oneday.day]}</Box>
                     ) : (
-                      <Box>{selectDay[oneday.day]}</Box>
+                      <Box>{Day[oneday.day]}</Box>
                     )
                   ) : (
-                    <Box color="red.400">{selectDay[oneday.day]}</Box>
+                    <Box color="red.400">{Day[oneday.day]}</Box>
                   )}
                   {")"}
                 </Flex>
@@ -157,8 +76,8 @@ const Top: React.VFC<Props> = (props) => {
                   {subjects.map((lesson) => (
                     <Box>
                       {/* 授業がある日を表示 */}
-                      {oneday.date === lesson.date.slice(0, 10) && (
-                          <SelectBtn {...lesson} />
+                      {oneday.date === String(lesson.date).slice(0, 10) && (
+                        <Subject {...lesson} />
                       )}
                     </Box>
                   ))}
@@ -169,8 +88,17 @@ const Top: React.VFC<Props> = (props) => {
           </Box>
         ))}
       </Box>
+      <Pagination
+        dateList={dateList}
+        setDateList={setDatelist}
+        subjects={subjects}
+        firstYMD={firstYMD}
+        setFirstYMD={setFirstYMD}
+        lastYMD={lastYMD}
+        setLastYMD={setLastYMD}
+      />
     </Layout>
-    );
-  }
+  );
+};
 
 export default Top;

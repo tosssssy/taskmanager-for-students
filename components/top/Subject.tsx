@@ -1,5 +1,7 @@
 import {
+  Box,
   Button,
+  Flex,
   Popover,
   PopoverArrow,
   PopoverBody,
@@ -12,14 +14,20 @@ import {
   RadioGroup,
   Stack,
   Textarea,
+  useToast,
 } from "@chakra-ui/react";
-import React from "react";
-import { useState } from "react";
-import { SubjectType, UpdateSubjectTypes } from "../lib/types";
+import React, { useState } from "react";
+import { SubjectType, UpdateSubjectTypes } from "../../lib/types";
 
 export const Subject: React.FC<SubjectType> = (props) => {
+  const toast = useToast();
   const [status, setStatus] = useState(props.status || 0);
   const [memo, setMemo] = useState(props.memo || "");
+  const color = {
+    1: "#d95759",
+    2: "#59d957",
+    3: "gray",
+  };
 
   const updateSubject = async () => {
     try {
@@ -31,22 +39,40 @@ export const Subject: React.FC<SubjectType> = (props) => {
         },
       };
 
-      const result = await fetch("http://localhost:8000/api/update/subject", {
-        method: "POST",
+      await fetch("/api/update/subject", {
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-      console.log(result);
+
+      toast({
+        title: "セーブしました",
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+      });
     } catch (error) {
       console.error(error);
     }
   };
 
   return (
-    <>
+    <Flex flexDirection="column" mr={2}>
+      <Box color="gray" textAlign="center">
+        {props.period + "時限"}
+      </Box>
       <Popover placement="bottom" closeOnBlur={true}>
         <PopoverTrigger>
-          <Button backgroundColor="red" w={"140px"}>
+          <Button
+            bg={status == 0 ? "#fff" : color[status]}
+            w="100%"
+            color={status == 0 ? "black.500" : "white"}
+            boxShadow="lg"
+            border="double"
+            borderColor={memo ? "yellow.400" : "gray"}
+            _hover={{ opacity: 0.6 }}
+            _active={{ opacity: 0.4 }}
+          >
             {props.name}
           </Button>
         </PopoverTrigger>
@@ -54,13 +80,25 @@ export const Subject: React.FC<SubjectType> = (props) => {
           <PopoverHeader pt={4} fontWeight="bold" border="0">
             <RadioGroup defaultValue="3">
               <Stack spacing={5} direction="row">
-                <Radio colorScheme="yellow" value="1">
+                <Radio
+                  colorScheme="red"
+                  value="1"
+                  onChange={() => setStatus(1)}
+                >
                   途中
                 </Radio>
-                <Radio colorScheme="green" value="2">
+                <Radio
+                  colorScheme="green"
+                  value="2"
+                  onChange={() => setStatus(2)}
+                >
                   提出済み
                 </Radio>
-                <Radio colorScheme="gray" value="3">
+                <Radio
+                  colorScheme="gray"
+                  value="3"
+                  onChange={() => setStatus(3)}
+                >
                   無し
                 </Radio>
               </Stack>
@@ -68,9 +106,11 @@ export const Subject: React.FC<SubjectType> = (props) => {
           </PopoverHeader>
           <PopoverArrow />
           <PopoverCloseButton />
+
           <PopoverBody>
             <Textarea
-              placeholder={props.memo || "メモを追加"}
+              value={memo}
+              placeholder="メモを追加"
               onChange={(e) => setMemo(e.target.value)}
             />
           </PopoverBody>
@@ -81,8 +121,6 @@ export const Subject: React.FC<SubjectType> = (props) => {
           </PopoverFooter>
         </PopoverContent>
       </Popover>
-    </>
+    </Flex>
   );
 };
-
-

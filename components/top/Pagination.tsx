@@ -2,15 +2,87 @@ import { useState, useEffect } from "react";
 import { ArrowLeftIcon, ArrowRightIcon } from "@chakra-ui/icons";
 import { Button, Box, Flex } from "@chakra-ui/react";
 
-export const ChangeBtn = ({
-  startDate,
-  endDate,
+export const Pagination = ({
+  subjects,
+  dateList,
+  setDateList,
   firstYMD,
   lastYMD,
   setFirstYMD,
   setLastYMD,
-  toDoubleDigits
-})=> {
+}) => {
+  // 0 埋め関数
+  const toDoubleDigits = function (num) {
+    num += "";
+    if (num.length === 1) {
+      num = "0" + num;
+    }
+    return num;
+  };
+
+  // 最初の日付
+  let start: Date = new Date(subjects[0].date);
+  // 最初の日付を日曜に
+  while (true) {
+    if (start.getDay() === 0) break;
+    start = new Date(
+      start.getFullYear(),
+      toDoubleDigits(start.getMonth()),
+      toDoubleDigits(start.getDate() - 1)
+    );
+  }
+  let startDate: string =
+    start.getFullYear() +
+    "-" +
+    toDoubleDigits(start.getMonth() + 1) +
+    "-" +
+    toDoubleDigits(start.getDate());
+
+  // 終わりの日付
+  let end: Date = new Date(subjects[subjects.length - 1].date);
+  // 最後の授業が土曜日の時の処理
+  if (end.getDay() === 0) {
+    end = new Date(subjects[subjects.length - 2].date);
+  }
+
+  // 最後の日を土曜に
+  if (end.getDay() !== 6) {
+    while (true) {
+      if (end.getDay() === 6) break;
+      end = new Date(
+        end.getFullYear(),
+        toDoubleDigits(end.getMonth()),
+        toDoubleDigits(end.getDate() + 1)
+      );
+    }
+  }
+  let endDate: string =
+    end.getFullYear() +
+    "-" +
+    toDoubleDigits(end.getMonth() + 1) +
+    "-" +
+    toDoubleDigits(end.getDate());
+
+  // 指定された範囲を dateList に配列で格納
+  useEffect(() => {
+    while (loop <= end) {
+      let loopDate: string =
+        loop.getFullYear() +
+        "-" +
+        toDoubleDigits(loop.getMonth() + 1) +
+        "-" +
+        toDoubleDigits(loop.getDate());
+      let loopDay: number = loop.getDay();
+      // dateList.push(loopDate)
+      dateList = dateList.concat({ date: loopDate, day: loopDay });
+      //dateList = dateList.concat({ date: loopDate, day: loopDay });
+      let newDate: number = loop.setDate(loop.getDate() + 1);
+      loop = new Date(newDate);
+    }
+    setDateList(dateList);
+  }, []);
+  let loop: Date = new Date(start);
+
   let thisMonday = new Date();
 
   // 今週の日曜
@@ -110,4 +182,4 @@ export const ChangeBtn = ({
       </Box>
     </Box>
   );
-}
+};

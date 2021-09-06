@@ -1,6 +1,5 @@
 import { options } from "next-auth/client";
 import { useState } from "react";
-import Subject from "../Subject";
 import NewSubject from "./NewSubject";
 import InputSubjectInfo from "./InputSubjectInfo";
 import { NewSubjectType } from "../../lib/types";

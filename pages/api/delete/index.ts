@@ -7,6 +7,12 @@ import { NextApiRequest, NextApiResponse } from "next";
 // DELETE /api/post/:id
 export default async function (req: NextApiRequest, res: NextApiResponse) {
   const session = await getSession({ req });
+
+  if (!session) {
+    res.status(401).json({ message: "Not authenticated" });
+    return;
+  }
+
   if (req.method === "DELETE") {
     const subject = await prisma.subject.deleteMany({
       where: { authorId: Number(session.user.id) },
