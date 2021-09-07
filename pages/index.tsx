@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import Layout from "../components/Layout";
-import { getSession, useSession } from "next-auth/client";
+import { getSession } from "next-auth/client";
 import { Subject } from "../components/top/Subject";
 import prisma from "./../lib/prisma";
 import { GetServerSideProps } from "next";
@@ -9,7 +9,7 @@ import { Box, Flex, Link } from "@chakra-ui/react";
 import { Pagination } from "../components/top/Pagination";
 
 //ユーザーのスケジュールを全取得（subjectのリスト）
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const session = await getSession({ req });
   if (!session) return { props: { subjects: [] } };
 
@@ -27,12 +27,19 @@ type Props = {
   subjects: SubjectType[];
 };
 
-const Top: React.VFC<Props> = (props) => {
-  const [session] = useSession();
+const Top: FC<Props> = (props) => {
   const { subjects } = props;
   const [dateList, setDatelist] = useState<
     Array<{ date: string; day: number }>
   >([]);
+
+  if (!subjects.length) {
+    return (
+      <Layout>
+        <div>新規作成してください</div>;
+      </Layout>
+    );
+  }
 
   // 曜日！
   const Day = ["日", "月", "火", "水", "木", "金", "土"];
@@ -40,14 +47,6 @@ const Top: React.VFC<Props> = (props) => {
   // 配列の表示範囲
   const [firstYMD, setFirstYMD] = useState("2");
   const [lastYMD, setLastYMD] = useState("3");
-
-  if (!session) {
-    return (
-      <Layout>
-        <div>ログインしてください</div>
-      </Layout>
-    );
-  }
 
   return (
     <Layout>
