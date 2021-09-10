@@ -2,6 +2,8 @@ import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { signOut, useSession } from "next-auth/client";
+import { Box } from "@chakra-ui/layout";
+import { Button } from "@chakra-ui/button";
 
 const Header: React.FC = () => {
   const router = useRouter();
@@ -27,7 +29,7 @@ const Header: React.FC = () => {
     right = (
       <div className="right">
         <Link href="/api/auth/signin">
-          <a data-active={isActive("/signup")}>Log in</a>
+          <Button data-active={isActive("/signup")}>Log in</Button>
         </Link>
       </div>
     );
@@ -40,21 +42,21 @@ const Header: React.FC = () => {
         <p>{session.user.name}</p>
         <Link href="/create">
           <button>
-            <a>New post</a>
+            <a>新規作成</a>
           </button>
         </Link>
         <button onClick={() => signOut()}>
-          <a>Log out</a>
+          <a>ログアウト</a>
         </button>
       </div>
     );
   }
 
   return (
-    <nav>
+    <Box bg="gray" h="100px" textAlign="right">
       {left}
       {right}
-    </nav>
+    </Box>
   );
 };
 

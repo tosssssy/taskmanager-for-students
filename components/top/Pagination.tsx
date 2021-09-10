@@ -46,6 +46,7 @@ export const Pagination: FC<Props> = (props) => {
       toDoubleDigits(start.getDate() - 1)
     );
   }
+
   let startDate: string =
     start.getFullYear() +
     "-" +
@@ -71,6 +72,7 @@ export const Pagination: FC<Props> = (props) => {
       );
     }
   }
+
   let endDate: string =
     end.getFullYear() +
     "-" +
@@ -98,15 +100,15 @@ export const Pagination: FC<Props> = (props) => {
   }, []);
   let loop: Date = new Date(start);
 
-  let thisMonday = new Date();
+  let thisSunday = new Date();
 
   // 今週の日曜
   while (true) {
-    if (thisMonday.getDay() === 0) break;
-    thisMonday = new Date(
-      thisMonday.getFullYear(),
-      toDoubleDigits(thisMonday.getMonth()),
-      toDoubleDigits(thisMonday.getDate() - 1)
+    if (thisSunday.getDay() === 0) break;
+    thisSunday = new Date(
+      thisSunday.getFullYear(),
+      toDoubleDigits(thisSunday.getMonth()),
+      toDoubleDigits(thisSunday.getDate() - 1)
     );
   }
 
@@ -117,7 +119,7 @@ export const Pagination: FC<Props> = (props) => {
   useEffect(() => {
     const showMonthDate = () => {
       // cnt 週間後の Date オブジェクトを作成
-      let myDate = new Date(thisMonday.getTime() + 604800000 * cnt);
+      let myDate = new Date(thisSunday.getTime() + 604800000 * cnt);
 
       // その週の日曜
       setFirstYMD(
@@ -192,9 +194,6 @@ export const Pagination: FC<Props> = (props) => {
           />
         </button>
       )}
-      <Box position="fixed" top="5%" left="40%">
-        {firstYMD.slice(0, 4)}
-      </Box>
     </Box>
   );
 };

@@ -3,7 +3,7 @@ import Layout from "../components/Layout";
 import { getSession } from "next-auth/client";
 import { Subject } from "../components/top/Subject";
 import prisma from "./../lib/prisma";
-import { GetServerSideProps } from "next";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { SubjectType } from "../lib/types";
 import { Box, Flex, Link } from "@chakra-ui/react";
 import { Pagination } from "../components/top/Pagination";
@@ -27,7 +27,9 @@ type Props = {
   subjects: SubjectType[];
 };
 
-const Top: FC<Props> = (props) => {
+const Top: FC<Props> = (
+  props: InferGetServerSidePropsType<typeof getServerSideProps>
+) => {
   const { subjects } = props;
   const [dateList, setDatelist] = useState<
     Array<{ date: string; day: number }>
@@ -50,7 +52,10 @@ const Top: FC<Props> = (props) => {
 
   return (
     <Layout>
-      <Box p={"50px 20px 70px 20px"} minW={"375px"} maxW={"840px"} m={"auto"}>
+      <Box textAlign="right" fontSize="25px" p="15px">
+        {firstYMD.slice(0, 4)}
+      </Box>
+      <Box p={"30px 20px 70px 20px"} minW={"375px"} maxW={"840px"} m={"auto"}>
         {/* 全日付 */}
         {dateList.map((oneday, index) => (
           <Box>

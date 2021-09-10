@@ -1,3 +1,4 @@
+import { Box, Flex } from "@chakra-ui/layout";
 import React from "react";
 import styled from "styled-components";
 import { NewSubjectType } from "../../lib/types";
@@ -12,25 +13,23 @@ const NewSubject: React.FC<Props> = (props) => {
   const { deleteSubject } = props;
   return (
     <>
-      <Scontainer>
+      <Flex
+        w="300px"
+        m="10px 0"
+        borderRadius="10px"
+        bg="red.50"
+        ml={["10%", "15%", "20%", "26%"]}
+      >
         <Sitem>{day}</Sitem>
         <Sitem>{period}</Sitem>
         <Sitem>{name}</Sitem>
         <Sbutton onClick={deleteSubject}>×</Sbutton>
-      </Scontainer>
+      </Flex>
     </>
   );
 };
 
 export default NewSubject;
-
-const Scontainer = styled.div`
-  display: flex;
-  background-color: #cbe4ff;
-  width: 300px;
-  margin: 10px;
-  border-radius: 3px;
-`;
 
 const Sitem = styled.div`
   font-size: 18px;

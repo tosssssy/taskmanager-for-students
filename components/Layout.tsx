@@ -11,10 +11,10 @@ const Layout: React.FC<Props> = (props) => {
   const [session] = useSession();
 
   return (
-    <Box w="100%" h="1000px" bgGradient="linear(to-l, #7928CA, #FF0080)">
+    <Box>
       <Header />
       {session ? props.children : <div>ログインしてください</div>}
-      <Heading size={"4xl"}>
+      {/* <Heading size={"4xl"}>
         <span>大学生のための</span>
         <br></br>
         <chakra.span
@@ -24,7 +24,7 @@ const Layout: React.FC<Props> = (props) => {
           シンプル
         </chakra.span>
         な課題管理アプリ
-      </Heading>
+      </Heading> */}
     </Box>
   );
 };

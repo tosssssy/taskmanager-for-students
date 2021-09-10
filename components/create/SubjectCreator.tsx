@@ -35,19 +35,6 @@ const SubjectCreator = (props: Props) => {
     setNewSubjects(newList);
   };
 
-  const newSubjectsView = newSubjects.map((subject, index) => {
-    return (
-      <>
-        <div key={index}>
-          <NewSubject
-            subject={subject}
-            deleteSubject={() => deleteSubject(index)}
-          />
-        </div>
-      </>
-    );
-  });
-
   return (
     <>
       <InputSubjectInfo
@@ -60,7 +47,18 @@ const SubjectCreator = (props: Props) => {
         addSubject={addSubject}
       />
 
-      {newSubjectsView}
+      {newSubjects.map((subject, index) => {
+        return (
+          <>
+            <div key={index}>
+              <NewSubject
+                subject={subject}
+                deleteSubject={() => deleteSubject(index)}
+              />
+            </div>
+          </>
+        );
+      })}
     </>
   );
 };
