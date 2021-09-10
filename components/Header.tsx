@@ -2,6 +2,8 @@ import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { signOut, useSession } from "next-auth/client";
+import { Box } from "@chakra-ui/layout";
+import { Button } from "@chakra-ui/button";
 
 const Header: React.FC = () => {
   const router = useRouter();
@@ -10,64 +12,15 @@ const Header: React.FC = () => {
 
   const [session, loading] = useSession();
 
-  let left = (
-    <div className="left">
-      {/* <style jsx>{`
-        .bold {
-          font-weight: bold;
-        }
-
-        a {
-          text-decoration: none;
-          color: #000;
-          display: inline-block;
-        }
-
-        .left a[data-active="true"] {
-          color: gray;
-        }
-
-        a + a {
-          margin-left: 1rem;
-        }
-      `}</style> */}
-    </div>
-  );
+  let left = <div className="left"></div>;
 
   let right = null;
 
   if (loading) {
-    left = (
-      <div className="left">
-        {/* <style jsx>{`
-          .bold {
-            font-weight: bold;
-          }
-
-          a {
-            text-decoration: none;
-            color: #000;
-            display: inline-block;
-          }
-
-          .left a[data-active="true"] {
-            color: gray;
-          }
-
-          a + a {
-            margin-left: 1rem;
-          }
-        `}</style> */}
-      </div>
-    );
+    left = <div className="left"></div>;
     right = (
       <div className="right">
         <p>Validating session ...</p>
-        {/* <style jsx>{`
-          .right {
-            margin-left: auto;
-          }
-        `}</style> */}
       </div>
     );
   }
@@ -76,108 +29,34 @@ const Header: React.FC = () => {
     right = (
       <div className="right">
         <Link href="/api/auth/signin">
-          <a data-active={isActive("/signup")}>Log in</a>
+          <Button data-active={isActive("/signup")}>Log in</Button>
         </Link>
-        {/* <style jsx>{`
-          a {
-            text-decoration: none;
-            color: #000;
-            display: inline-block;
-          }
-
-          a + a {
-            margin-left: 1rem;
-          }
-
-          .right {
-            margin-left: auto;
-          }
-
-          .right a {
-            border: 1px solid black;
-            padding: 0.5rem 1rem;
-            border-radius: 3px;
-          }
-        `}</style> */}
       </div>
     );
   }
 
   if (session) {
-    left = (
-      <div className="left">
-        {/* <style jsx>{`
-          .bold {
-            font-weight: bold;
-          }
-
-          a {
-            text-decoration: none;
-            color: #000;
-            display: inline-block;
-          }
-
-          .left a[data-active="true"] {
-            color: gray;
-          }
-
-          a + a {
-            margin-left: 1rem;
-          }
-        `}</style> */}
-      </div>
-    );
+    left = <div className="left"></div>;
     right = (
       <div className="right">
         <p>{session.user.name}</p>
         <Link href="/create">
           <button>
-            <a>New post</a>
+            <a>新規作成</a>
           </button>
         </Link>
         <button onClick={() => signOut()}>
-          <a>Log out</a>
+          <a>ログアウト</a>
         </button>
-        {/* <style jsx>{`
-          a {
-            text-decoration: none;
-            color: #000;
-            display: inline-block;
-          }
-
-          p {
-            display: inline-block;
-            font-size: 13px;
-            padding-right: 1rem;
-          }
-
-          a + a {
-            margin-left: 1rem;
-          }
-
-          .right {
-            margin-left: auto;
-          }
-
-          .right a {
-            border: 1px solid black;
-            padding: 0.5rem 1rem;
-            border-radius: 3px;
-          }
-
-          button {
-            border: none;
-          }
-        `}</style> */}
       </div>
     );
   }
 
   return (
-    <nav>
+    <Box bg="gray" h="100px" textAlign="right">
       {left}
       {right}
-    </nav>
+    </Box>
   );
 };
 

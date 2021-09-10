@@ -1,14 +1,12 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import Layout from "../components/Layout";
 import Router from "next/router";
-import { useSession } from "next-auth/client";
 import SubjectCreator from "./../components/create/SubjectCreator";
-import DateListCreator from "../components/create/DateListCreator";
+import { DateListCreator } from "../components/create/DateListCreator";
 import { useCreateNewSchedule } from "./../components/create/useCreateNewSchedule";
 import { NewSubjectType } from "../lib/types";
 
-const CreateNewScheduler: React.FC = () => {
-  const [session] = useSession();
+const CreateNewScheduler: FC = (props) => {
   const [newSubjects, setNewSubjects] = useState<Array<NewSubjectType>>([]);
   const [dateList, setDateList] = useState<Array<Date>>([]);
 
@@ -28,14 +26,6 @@ const CreateNewScheduler: React.FC = () => {
     }
     Router.push("/");
   };
-
-  if (!session) {
-    return (
-      <Layout>
-        <div>ログインしてください</div>
-      </Layout>
-    );
-  }
 
   return (
     <Layout>
