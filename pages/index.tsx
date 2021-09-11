@@ -7,7 +7,7 @@ import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { Box, Flex } from "@chakra-ui/react";
 import { Pagination } from "../components/top/Pagination";
 import { useSession } from "next-auth/client";
-import { PlzNew } from "../components/top/PlzNew"
+import { PlzNew } from "../components/top/PlzNew";
 
 //ユーザーのスケジュールを全取得（subjectのリスト）
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
@@ -15,7 +15,12 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   if (!session) return { props: { subjects: [] } };
 
   const data = await prisma.subject.findMany({
-    where: { author: { id: Number(session.user.id) } },
+    where: {
+      author: { id: Number(session.user.id) },
+    },
+    orderBy: {
+      id: "asc",
+    },
   });
 
   const subjects = JSON.parse(JSON.stringify(data));
@@ -50,7 +55,7 @@ const Top: FC = (
   return (
     <Layout>
       {!subjects.length ? (
-        <PlzNew/>
+        <PlzNew />
       ) : (
         <>
           <Box textAlign="right" fontSize="25px" p="15px">
