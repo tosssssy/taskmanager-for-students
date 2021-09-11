@@ -8,7 +8,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     res.status(401).json({ message: "Not authenticated" });
     return;
   }
-  const { id, status, memo } = req.body.updateData;
+  const { id, status, memo } = req.body;
   const result = await prisma.subject.update({
     where: { id: Number(id) },
     data: {

@@ -32,11 +32,9 @@ export const Subject: React.FC<SubjectType> = (props) => {
   const updateSubject = async () => {
     try {
       const body: UpdateSubjectTypes = {
-        updateData: {
-          id: props.id,
-          status: status,
-          memo: memo,
-        },
+        id: props.id,
+        status: status,
+        memo: memo,
       };
 
       await fetch("/api/update/subject", {

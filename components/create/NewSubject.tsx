@@ -8,7 +8,7 @@ type Props = {
 };
 
 const NewSubject: React.FC<Props> = (props) => {
-  const { name, period, day } = props.subject.newSubject;
+  const { name, period, day } = props.subject;
   const { deleteSubject } = props;
   return (
     <>
