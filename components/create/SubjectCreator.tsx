@@ -3,6 +3,7 @@ import { useState } from "react";
 import NewSubject from "./NewSubject";
 import InputSubjectInfo from "./InputSubjectInfo";
 import { NewSubjectType } from "../../lib/types";
+import { useSession } from "next-auth/client";
 
 type Props = {
   newSubjects: NewSubjectType[];
@@ -10,6 +11,7 @@ type Props = {
 };
 
 const SubjectCreator = (props: Props) => {
+  const [session] = useSession();
   const { newSubjects, setNewSubjects } = props;
   const [name, setName] = useState("");
   const [period, setPeriod] = useState(Number);
@@ -18,12 +20,11 @@ const SubjectCreator = (props: Props) => {
 
   const addSubject = () => {
     const newSubject: NewSubjectType = {
-      newSubject: {
-        name: name,
-        date: date,
-        period: period,
-        day: day,
-      },
+      name: name,
+      date: date,
+      period: period,
+      day: day,
+      authorId: Number(session.user.id),
     };
     setNewSubjects(newSubjects.concat(newSubject));
   };
