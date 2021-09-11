@@ -10,26 +10,17 @@ type Props = {
 export const DateListCreator = (props: Props) => {
   const { setDateList } = props;
   const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
   const [hasRegistered, setHasRegistered] = useState(false);
 
-  const onChange = (e: { target: { value: React.SetStateAction<string> } }) => {
+  const onChange = (e: { target: { value: string } }) => {
     setHasRegistered(true);
-    setEndDate(e.target.value);
-    setDateList(useCreateDateList(startDate, endDate));
+    setDateList(useCreateDateList(startDate, e.target.value));
   };
 
   return (
     <>
       <Box>
-        <Text
-          mt="30px"
-          mb="25px"
-          ml="10%"
-          pr="10%"
-          color="blackAlpha.800"
-          fontSize="sm"
-        >
+        <Text my="30px" ml="10%" pr="10%" color="blackAlpha.800" fontSize="sm">
           ①授業の始まる日、終わる日を選択して下さい
         </Text>
         <Flex

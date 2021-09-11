@@ -1,6 +1,4 @@
 import { Dispatch, SetStateAction } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import Link from "next/link";
 import { ChevronDownIcon, AddIcon, CheckIcon } from "@chakra-ui/icons";
 import { Box, Flex, Button, Input, Text, Select } from "@chakra-ui/react";
@@ -19,14 +17,7 @@ const InputSubjectInfo = (props: Props) => {
   const { name, setName, period, setPeriod, day, setDay, addSubject } = props;
   return (
     <>
-      <Text
-        mt="30px"
-        mb="25px"
-        ml="10%"
-        pr="10%"
-        color="blackAlpha.800"
-        fontSize="sm"
-      >
+      <Text my="30px" ml="10%" pr="10%" color="blackAlpha.800" fontSize="sm">
         ②授業の曜日、時限を選択し、教科名を入力して下さい
       </Text>
 

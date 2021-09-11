@@ -7,24 +7,11 @@ type Props = {
   children: ReactNode;
 };
 
-const Layout: React.FC<Props> = (props) => {
-  const [session] = useSession();
-
+const Layout: React.FC<Props> = ({ children }) => {
   return (
     <Box>
       <Header />
-      {session ? props.children : <div>ログインしてください</div>}
-      {/* <Heading size={"4xl"}>
-        <span>大学生のための</span>
-        <br></br>
-        <chakra.span
-          bgGradient="linear(to-r, teal.500,green.500)"
-          bgClip="text"
-        >
-          シンプル
-        </chakra.span>
-        な課題管理アプリ
-      </Heading> */}
+      {children}
     </Box>
   );
 };

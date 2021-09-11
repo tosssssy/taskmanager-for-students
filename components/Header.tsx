@@ -2,8 +2,9 @@ import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { signOut, useSession } from "next-auth/client";
-import { Box } from "@chakra-ui/layout";
+import { Box, Flex, Heading } from "@chakra-ui/layout";
 import { Button } from "@chakra-ui/button";
+import { Welcome } from "./Welcome";
 
 const Header: React.FC = () => {
   const router = useRouter();
@@ -12,14 +13,11 @@ const Header: React.FC = () => {
 
   const [session, loading] = useSession();
 
-  let left = <div className="left"></div>;
-
   let right = null;
 
   if (loading) {
-    left = <div className="left"></div>;
     right = (
-      <div className="right">
+      <div>
         <p>Validating session ...</p>
       </div>
     );
@@ -27,36 +25,49 @@ const Header: React.FC = () => {
 
   if (!session) {
     right = (
-      <div className="right">
+      <Box>
         <Link href="/api/auth/signin">
-          <Button data-active={isActive("/signup")}>Log in</Button>
+          <Button data-active={isActive("/signup")} m="5px" bg="blue.500">
+            Log in
+          </Button>
         </Link>
-      </div>
+      </Box>
     );
   }
 
   if (session) {
-    left = <div className="left"></div>;
     right = (
-      <div className="right">
-        <p>{session.user.name}</p>
+      <Box mt="10px">
+        <p>user：{session.user.name}</p>
         <Link href="/create">
-          <button>
-            <a>新規作成</a>
-          </button>
+          <Button m="5px" size="sm">
+            新規作成
+          </Button>
         </Link>
-        <button onClick={() => signOut()}>
-          <a>ログアウト</a>
-        </button>
-      </div>
+        <Button m="5px" size="sm" onClick={() => signOut()}>
+          ログアウト
+        </Button>
+      </Box>
     );
   }
 
   return (
-    <Box bg="gray" h="100px" textAlign="right">
-      {left}
-      {right}
-    </Box>
+    <>
+      <Flex align="center" justify="space-between" minH="70px">
+        <Heading
+          ml="40px"
+          p="2px"
+          bgGradient="linear(to-l, #7928CA, #FF0080)"
+          bgClip="text"
+          fontSize="4xl"
+        >
+          <Link href="/">Task Manager</Link>
+        </Heading>
+
+        {right}
+      </Flex>
+      {!session && <Welcome />}
+    </>
   );
 };
 

@@ -1,6 +1,5 @@
 import { Box, Flex } from "@chakra-ui/layout";
 import React from "react";
-import styled from "styled-components";
 import { NewSubjectType } from "../../lib/types";
 
 type Props = {
@@ -20,31 +19,31 @@ const NewSubject: React.FC<Props> = (props) => {
         bg="red.50"
         ml={["10%", "15%", "20%", "26%"]}
       >
-        <Sitem>{day}</Sitem>
-        <Sitem>{period}</Sitem>
-        <Sitem>{name}</Sitem>
-        <Sbutton onClick={deleteSubject}>×</Sbutton>
+        <Box fontSize="18px" p="10px 0" w="38px" ml="20px">
+          {day}
+        </Box>
+        <Box fontSize="18px" p="10px 0" w="15px" ml="20px">
+          {period}
+        </Box>
+        <Box fontSize="18px" p="10px 0" ml="20px" w="160px">
+          {name}
+        </Box>
+        <Box
+          fontSize="150%"
+          display="inline"
+          p="0"
+          m="auto 10px 10px auto"
+          onClick={deleteSubject}
+          _hover={{
+            cursor: "pointer",
+            color: "orange",
+          }}
+        >
+          ×
+        </Box>
       </Flex>
     </>
   );
 };
 
 export default NewSubject;
-
-const Sitem = styled.div`
-  font-size: 18px;
-  padding: 10px 0;
-  margin-left: 20px;
-  color: #444444;
-`;
-const Sbutton = styled(Sitem)`
-  font-size: 150%;
-  display: inline;
-  padding: 0;
-  margin: auto 10px 10px auto;
-
-  &:hover {
-    cursor: pointer;
-    color: orange;
-  }
-`;

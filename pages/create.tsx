@@ -16,6 +16,7 @@ const CreateNewScheduler: FC = (props) => {
       await fetch("api/delete", { method: "DELETE" });
 
       const body = useCreateNewSchedule(dateList, newSubjects);
+      console.log(dateList);
       await fetch("/api/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

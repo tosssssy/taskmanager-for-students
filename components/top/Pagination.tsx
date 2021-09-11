@@ -36,7 +36,9 @@ export const Pagination: FC<Props> = (props) => {
   };
 
   // 最初の日付
+  if (!subjects[0]) return null;
   let start: Date = new Date(subjects[0].date);
+
   // 最初の日付を日曜に
   while (true) {
     if (start.getDay() === 0) break;
@@ -156,9 +158,8 @@ export const Pagination: FC<Props> = (props) => {
             top="90%"
             left={["10%", "20%", "25%", "38%", "42%"]}
             zIndex="10"
-            font-size={"50px"}
+            fontSize="50px"
             color="blue.400"
-            ontouchstart=""
             opacity="0.8"
             _hover={{ opacity: 0.4, transition: "0.5s" }}
             _active={{ opacity: 0.2, color: "red" }}
@@ -186,7 +187,7 @@ export const Pagination: FC<Props> = (props) => {
             top="90%"
             left={["80%", "70%", "69%", "58%", "55%"]}
             zIndex="10"
-            font-size={"50px"}
+            fontSize="50px"
             color="blue.400"
             opacity="0.8"
             _hover={{ opacity: 0.4, transition: "0.5s" }}
