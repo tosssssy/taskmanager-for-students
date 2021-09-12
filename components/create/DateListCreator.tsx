@@ -24,7 +24,7 @@ export const DateListCreator = (props: Props) => {
           ①授業の始まる日、終わる日を選択して下さい
         </Text>
         <Flex
-          m={["0px 10%", "0px 15%", "0px 20%", "0px 26%"]}
+          m={["0px 10%", "0px 15%"]}
           align={"center"}
           h="40px"
           maxW="700px"

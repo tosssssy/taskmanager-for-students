@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 import Link from "next/link";
 import { ChevronDownIcon, AddIcon, CheckIcon } from "@chakra-ui/icons";
-import { Box, Flex, Button, Input, Text, Select } from "@chakra-ui/react";
+import { Box, Flex, Button, Input, Text, Select, chakra } from "@chakra-ui/react";
 
 type Props = {
   name: string;
@@ -21,11 +21,14 @@ const InputSubjectInfo = (props: Props) => {
         ②授業の曜日、時限を選択し、教科名を入力して下さい
       </Text>
 
-      <Flex m={["0px 10%", "0px 15%", "0px 20%", "0px 26%"]} maxW="700px">
-        <Select
-          placeholder="曜日"
-          bg="white"
-          w="80px"
+      <Flex m={["0px 10%", "0px 15%"]} maxW="700px">
+        <chakra.select
+          minW="50px"
+          border="rgb(226,232,240) 2px solid"
+          _focus={{
+            border: "rgb(130,179,225) 2px solid"
+          }}
+          borderRadius="5px"
           onChange={(e) => setDay(e.target.value)}
         >
           <option value="Sun">日</option>
@@ -35,11 +38,14 @@ const InputSubjectInfo = (props: Props) => {
           <option value="Thu">木</option>
           <option value="Fri">金</option>
           <option value="Sat">土</option>
-        </Select>
-        <Select
-          placeholder="時限"
-          bg="white"
-          w="80px"
+        </chakra.select>
+        <chakra.select
+          minW="50px"
+          border="rgb(226,232,240) 2px solid"
+          _focus={{
+            border: "rgb(130,179,225) 2px solid"
+          }}
+          borderRadius="5px"
           onChange={(e) => setPeriod(Number(e.target.value))}
         >
           <option value="1">1</option>
@@ -48,13 +54,13 @@ const InputSubjectInfo = (props: Props) => {
           <option value="4">4</option>
           <option value="5">5</option>
           <option value="6">6</option>
-        </Select>
+        </chakra.select>
         <Input
           placeholder="例）数学"
           onChange={(e) => setName(e.target.value)}
         />
         <Button
-          w="80px"
+          minW="70px"
           rightIcon={<AddIcon />}
           colorScheme="blue"
           variant="outline"

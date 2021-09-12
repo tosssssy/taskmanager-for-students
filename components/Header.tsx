@@ -5,6 +5,7 @@ import { signOut, useSession } from "next-auth/client";
 import { Box, Flex, Heading } from "@chakra-ui/layout";
 import { Button } from "@chakra-ui/button";
 import { Welcome } from "./Welcome";
+import { chakra } from "@chakra-ui/system";
 
 const Header: React.FC = () => {
   const router = useRouter();
@@ -25,29 +26,44 @@ const Header: React.FC = () => {
 
   if (!session) {
     right = (
-      <Box>
-        <Link href="/api/auth/signin">
-          <Button data-active={isActive("/signup")} m="5px" bg="blue.500">
-            Log in
-          </Button>
-        </Link>
-      </Box>
+      <Link href="/api/auth/signin">
+        <Box
+          data-active={isActive("/signup")}
+          as="button"
+          p="8px 10px"
+          mt="25px"
+          mr="10px"
+          color="white"
+          fontWeight="bold"
+          borderRadius="md"
+          bgGradient="linear(to-r, teal.500,green.500)"
+          _hover={{
+            bgGradient: "linear(to-l, #7928CA, #FF0080)",
+          }}
+        >
+          Log in
+        </Box>
+      </Link>
     );
   }
 
   if (session) {
     right = (
-      <Box mt="10px">
-        <p>user：{session.user.name}</p>
-        <Link href="/create">
-          <Button m="5px" size="sm">
-            新規作成
-          </Button>
-        </Link>
-        <Button m="5px" size="sm" onClick={() => signOut()}>
-          ログアウト
-        </Button>
-      </Box>
+      <>
+        <Flex direction="column">
+          <Box pt="12px">user：{session.user.name}</Box>
+          <Flex mt="7px" direction="column" minW="150px">
+            <Link href="/create">
+              <Button m="5px" size="sm">
+                新規作成
+              </Button>
+            </Link>
+            <Button m="5px" size="sm" onClick={() => signOut()}>
+              ログアウト
+            </Button>
+          </Flex>
+        </Flex>
+      </>
     );
   }
 
@@ -55,6 +71,7 @@ const Header: React.FC = () => {
     <>
       <Flex align="center" justify="space-between" minH="70px">
         <Heading
+          mt="15px"
           ml="40px"
           p="2px"
           bgGradient="linear(to-l, #7928CA, #FF0080)"
