@@ -14,8 +14,8 @@ const SubjectCreator = (props: Props) => {
   const [session] = useSession();
   const { newSubjects, setNewSubjects } = props;
   const [name, setName] = useState("");
-  const [period, setPeriod] = useState(Number);
-  const [day, setDay] = useState("");
+  const [period, setPeriod] = useState(1);
+  const [day, setDay] = useState("Sun");
   const date: Date = null;
 
   const addSubject = () => {
