@@ -6,7 +6,7 @@ import { DateListCreator } from "../components/create/DateListCreator";
 import { useCreateNewSchedule } from "./../components/create/useCreateNewSchedule";
 import { NewSubjectType } from "../lib/types";
 
-const CreateNewScheduler: FC = (props) => {
+const CreateNewScheduler: FC = () => {
   const [newSubjects, setNewSubjects] = useState<Array<NewSubjectType>>([]);
   const [dateList, setDateList] = useState<Array<Date>>([]);
 
@@ -16,7 +16,7 @@ const CreateNewScheduler: FC = (props) => {
       await fetch("api/delete", { method: "DELETE" });
 
       const body = useCreateNewSchedule(dateList, newSubjects);
-      console.log(dateList);
+
       await fetch("/api/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -35,8 +35,8 @@ const CreateNewScheduler: FC = (props) => {
       <SubjectCreator
         newSubjects={newSubjects}
         setNewSubjects={setNewSubjects}
+        createNewSchedule={createNewSchedule}
       />
-      <button onClick={createNewSchedule}>完成</button>
     </Layout>
   );
 };

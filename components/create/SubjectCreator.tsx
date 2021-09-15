@@ -1,18 +1,24 @@
-import { options } from "next-auth/client";
-import { useState } from "react";
+import React, { FC, useState } from "react";
 import NewSubject from "./NewSubject";
 import InputSubjectInfo from "./InputSubjectInfo";
 import { NewSubjectType } from "../../lib/types";
 import { useSession } from "next-auth/client";
+import { Box } from "@chakra-ui/layout";
+import { Button } from "@chakra-ui/button";
 
 type Props = {
   newSubjects: NewSubjectType[];
   setNewSubjects: React.Dispatch<React.SetStateAction<NewSubjectType[]>>;
+  createNewSchedule: () => Promise<void>;
 };
 
-const SubjectCreator = (props: Props) => {
+const SubjectCreator: FC<Props> = ({
+  newSubjects,
+  setNewSubjects,
+  createNewSchedule,
+}) => {
   const [session] = useSession();
-  const { newSubjects, setNewSubjects } = props;
+
   const [name, setName] = useState("");
   const [period, setPeriod] = useState(1);
   const [day, setDay] = useState("Sun");
@@ -46,17 +52,18 @@ const SubjectCreator = (props: Props) => {
         day={day}
         setDay={setDay}
         addSubject={addSubject}
+        createNewSchedule={createNewSchedule}
       />
 
       {newSubjects.map((subject, index) => {
         return (
           <>
-            <div key={index}>
+            <Box key={index}>
               <NewSubject
                 subject={subject}
                 deleteSubject={() => deleteSubject(index)}
               />
-            </div>
+            </Box>
           </>
         );
       })}

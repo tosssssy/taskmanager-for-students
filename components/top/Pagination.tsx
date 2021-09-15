@@ -15,19 +15,17 @@ type Props = {
   setLastYMD: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export const Pagination: FC<Props> = (props) => {
-  const {
-    dateList,
-    setDateList,
-    subjects,
-    firstYMD,
-    lastYMD,
-    setFirstYMD,
-    setLastYMD,
-  } = props;
-
+export const Pagination: FC<Props> = ({
+  dateList,
+  setDateList,
+  subjects,
+  firstYMD,
+  lastYMD,
+  setFirstYMD,
+  setLastYMD,
+}) => {
   // 0 埋め関数
-  const toDoubleDigits = function (num) {
+  const toDoubleDigits = (num) => {
     num += "";
     if (num.length === 1) {
       num = "0" + num;
@@ -146,12 +144,10 @@ export const Pagination: FC<Props> = (props) => {
     showMonthDate();
   }, [cnt]);
 
-  // {{"", "",""}} これでレスポンシブになる
-
   // onClick 動かないとき タイプミス
   return (
     <Box>
-      {!(startDate >= firstYMD) && (
+      {startDate <= firstYMD && (
         <button onClick={() => setCnt(cnt - 1)}>
           <ArrowLeftIcon
             position="fixed"
@@ -180,7 +176,7 @@ export const Pagination: FC<Props> = (props) => {
           今週
         </Button>
       </button>
-      {!(endDate <= lastYMD) && (
+      {endDate >= lastYMD && (
         <button onClick={() => setCnt(cnt + 1)}>
           <ArrowRightIcon
             position="fixed"
