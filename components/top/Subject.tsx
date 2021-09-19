@@ -16,10 +16,10 @@ import {
   Textarea,
   useToast,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import { SubjectType, UpdateSubjectTypes } from "../../lib/types";
 
-export const Subject: React.FC<SubjectType> = (props) => {
+export const Subject: React.FC<SubjectType> = memo((props) => {
   const toast = useToast();
   const [status, setStatus] = useState(props.status || 0);
   const [memo, setMemo] = useState(props.memo || "");
@@ -121,4 +121,4 @@ export const Subject: React.FC<SubjectType> = (props) => {
       </Popover>
     </Flex>
   );
-};
+});

@@ -54,11 +54,11 @@ const Header: React.FC = () => {
           <Box pt="12px">user：{session.user.name}</Box>
           <Flex mt="7px" direction="column" minW="150px">
             <Link href="/create">
-              <Button m="5px" size="sm">
+              <Button w="120px" m="5px" size="sm">
                 新規作成
               </Button>
             </Link>
-            <Button m="5px" size="sm" onClick={() => signOut()}>
+            <Button w="120px" m="5px" size="sm" onClick={() => signOut()}>
               ログアウト
             </Button>
           </Flex>

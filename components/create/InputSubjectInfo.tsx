@@ -1,7 +1,6 @@
-import { Dispatch, SetStateAction } from "react";
-import Link from "next/link";
-import { ChevronDownIcon, AddIcon, CheckIcon } from "@chakra-ui/icons";
-import { Box, Flex, Button, Input, Text, Select, chakra } from "@chakra-ui/react";
+import { Dispatch, FC, SetStateAction } from "react";
+import { AddIcon } from "@chakra-ui/icons";
+import { Flex, Button, Input, Text, chakra } from "@chakra-ui/react";
 
 type Props = {
   name: string;
@@ -13,8 +12,15 @@ type Props = {
   addSubject: any;
 };
 
-const InputSubjectInfo = (props: Props) => {
-  const { name, setName, period, setPeriod, day, setDay, addSubject } = props;
+const InputSubjectInfo: FC<Props> = ({
+  name,
+  setName,
+  period,
+  setPeriod,
+  day,
+  setDay,
+  addSubject,
+}) => {
   return (
     <>
       <Text my="30px" ml="10%" pr="10%" color="blackAlpha.800" fontSize="sm">
@@ -26,7 +32,7 @@ const InputSubjectInfo = (props: Props) => {
           minW="50px"
           border="rgb(226,232,240) 2px solid"
           _focus={{
-            border: "rgb(130,179,225) 2px solid"
+            border: "rgb(130,179,225) 2px solid",
           }}
           borderRadius="5px"
           onChange={(e) => setDay(e.target.value)}
@@ -43,7 +49,7 @@ const InputSubjectInfo = (props: Props) => {
           minW="50px"
           border="rgb(226,232,240) 2px solid"
           _focus={{
-            border: "rgb(130,179,225) 2px solid"
+            border: "rgb(130,179,225) 2px solid",
           }}
           borderRadius="5px"
           onChange={(e) => setPeriod(Number(e.target.value))}
