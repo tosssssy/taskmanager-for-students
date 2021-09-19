@@ -27,7 +27,7 @@ const Top: FC<Props> = ({ subjects }) => {
 
   if (!session)
     <Layout>
-      <></>
+      <>qqqqqqqqqq</>
     </Layout>;
 
   return (
@@ -56,11 +56,11 @@ const Top: FC<Props> = ({ subjects }) => {
           >
             {/* 全日付 */}
             {dateList?.map((oneday, index) => (
-              <Box>
+              <Box key={index}>
                 {/* 範囲指定 */}
                 {oneday.date >= firstYMD && oneday.date <= lastYMD && (
                   <Box>
-                    <Flex key={index} fontSize={20}>
+                    <Flex fontSize={20}>
                       {oneday.date.slice(5, 10)}
                       {"("}
                       {Day[oneday.day] !== "日" ? (

@@ -1,6 +1,6 @@
 import { Dispatch, FC, SetStateAction } from "react";
 import { AddIcon } from "@chakra-ui/icons";
-import { Box, Flex, Button, Input, Text, chakra } from "@chakra-ui/react";
+import { Flex, Button, Input, Text, chakra } from "@chakra-ui/react";
 
 type Props = {
   name: string;
@@ -10,7 +10,6 @@ type Props = {
   day: string;
   setDay: Dispatch<SetStateAction<string>>;
   addSubject: any;
-  createNewSchedule: () => Promise<void>;
 };
 
 const InputSubjectInfo: FC<Props> = ({
@@ -21,7 +20,6 @@ const InputSubjectInfo: FC<Props> = ({
   day,
   setDay,
   addSubject,
-  createNewSchedule,
 }) => {
   return (
     <>
@@ -79,11 +77,6 @@ const InputSubjectInfo: FC<Props> = ({
           追加
         </Button>
       </Flex>
-      <Box mr={["10%", "15%"]} textAlign="right">
-        <Button minW="70px" onClick={createNewSchedule}>
-          完成
-        </Button>
-      </Box>
     </>
   );
 };

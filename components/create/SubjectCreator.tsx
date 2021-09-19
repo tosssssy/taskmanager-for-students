@@ -12,11 +12,7 @@ type Props = {
   createNewSchedule: () => Promise<void>;
 };
 
-const SubjectCreator: FC<Props> = ({
-  newSubjects,
-  setNewSubjects,
-  createNewSchedule,
-}) => {
+const SubjectCreator: FC<Props> = ({ newSubjects, setNewSubjects }) => {
   const [session] = useSession();
 
   const [name, setName] = useState("");
@@ -52,9 +48,7 @@ const SubjectCreator: FC<Props> = ({
         day={day}
         setDay={setDay}
         addSubject={addSubject}
-        createNewSchedule={createNewSchedule}
       />
-
       {newSubjects.map((subject, index) => {
         return (
           <>

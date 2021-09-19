@@ -5,8 +5,10 @@ import SubjectCreator from "./../components/create/SubjectCreator";
 import { DateListCreator } from "../components/create/DateListCreator";
 import { useCreateNewSchedule } from "./../components/create/useCreateNewSchedule";
 import { NewSubjectType } from "../lib/types";
+import { Text } from "@chakra-ui/layout";
+import { Button } from "@chakra-ui/button";
 
-const CreateNewScheduler: FC = () => {
+const CreateNewScheduler: FC = (props) => {
   const [newSubjects, setNewSubjects] = useState<Array<NewSubjectType>>([]);
   const [dateList, setDateList] = useState<Array<Date>>([]);
 
@@ -37,6 +39,23 @@ const CreateNewScheduler: FC = () => {
         setNewSubjects={setNewSubjects}
         createNewSchedule={createNewSchedule}
       />
+
+      <Text my="30px" ml="10%" pr="10%" color="blackAlpha.800" fontSize="sm">
+        ③時間割を確認し、完成ボタンを押して下さい。
+      </Text>
+      <Button
+        minW="70px"
+        ml={["10%", "15%"]}
+        bgGradient="linear(to-l, #7928CA, #FF0080)"
+        bgClip="text"
+        borderColor="red.700"
+        _hover={{
+          opacity: 0.8,
+        }}
+        onClick={createNewSchedule}
+      >
+        完成
+      </Button>
     </Layout>
   );
 };

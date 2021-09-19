@@ -17,7 +17,7 @@ const NewSubject: React.FC<Props> = (props) => {
         m="10px 0"
         borderRadius="10px"
         bg="red.50"
-        ml={["10%", "15%", "20%", "26%"]}
+        ml={["10%", "15%"]}
       >
         <Box fontSize="18px" p="10px 0" w="38px" ml="20px">
           {day}

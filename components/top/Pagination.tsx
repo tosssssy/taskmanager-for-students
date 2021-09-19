@@ -162,7 +162,7 @@ export const Pagination: FC<Props> = ({
           />
         </button>
       )}
-      <button onClick={() => setCnt(0)}>
+      <Box onClick={() => setCnt(0)}>
         <Button
           colorScheme="blue"
           position="fixed"
@@ -175,7 +175,7 @@ export const Pagination: FC<Props> = ({
         >
           今週
         </Button>
-      </button>
+      </Box>
       {endDate >= lastYMD && (
         <button onClick={() => setCnt(cnt + 1)}>
           <ArrowRightIcon
