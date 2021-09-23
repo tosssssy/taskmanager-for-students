@@ -48,7 +48,8 @@ const CreateNewScheduler: FC = (props) => {
         ml={["10%", "15%"]}
         bgGradient="linear(to-l, #7928CA, #FF0080)"
         bgClip="text"
-        borderColor="red.700"
+        border="1px"
+        borderColor="silver"
         _hover={{
           opacity: 0.8,
         }}

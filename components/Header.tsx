@@ -5,7 +5,6 @@ import { signOut, useSession } from "next-auth/client";
 import { Box, Flex, Heading } from "@chakra-ui/layout";
 import { Button } from "@chakra-ui/button";
 import { Welcome } from "./Welcome";
-import { chakra } from "@chakra-ui/system";
 
 const Header: React.FC = () => {
   const router = useRouter();
@@ -54,11 +53,24 @@ const Header: React.FC = () => {
           <Box pt="12px">user：{session.user.name}</Box>
           <Flex mt="7px" direction="column" minW="150px">
             <Link href="/create">
-              <Button w="120px" m="5px" size="sm">
+              <Button
+                w="120px"
+                m="5px"
+                size="sm"
+                variant="outline"
+                color="gray.700"
+              >
                 新規作成
               </Button>
             </Link>
-            <Button w="120px" m="5px" size="sm" onClick={() => signOut()}>
+            <Button
+              w="120px"
+              m="5px"
+              size="sm"
+              variant="outline"
+              color="gray.700"
+              onClick={() => signOut()}
+            >
               ログアウト
             </Button>
           </Flex>
