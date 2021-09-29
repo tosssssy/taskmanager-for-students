@@ -1,6 +1,8 @@
 // はじめの日付から終わりの日付までの日数分dateListに入れて返す
 export const useCreateDateList = (startDate: string, endDate: string) => {
-  let start = new Date(startDate);
+  // バグ回避（今後直す）
+  let tmpStart = new Date(startDate);
+  let start = new Date(tmpStart.setDate(tmpStart.getDate() - 1));
   let end = new Date(endDate);
   let dateList: Date[] = [];
 
