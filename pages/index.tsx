@@ -3,11 +3,9 @@ import Layout from "../components/Layout";
 import { getSession } from "next-auth/client";
 import { Subject } from "../components/top/Subject";
 import prisma from "./../lib/prisma";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import { GetServerSideProps } from "next";
 import { Box, Flex } from "@chakra-ui/react";
 import { Pagination } from "../components/top/Pagination";
-import { useSession } from "next-auth/client";
-import { PlzNew } from "../components/top/PlzNew";
 import { SubjectType } from "../lib/types";
 
 interface Props {
@@ -15,7 +13,6 @@ interface Props {
 }
 
 const Top: FC<Props> = ({ subjects }) => {
-  const [session] = useSession();
   const [dateList, setDatelist] = useState<
     Array<{ date: string; day: number }>
   >([]);
@@ -25,15 +22,10 @@ const Top: FC<Props> = ({ subjects }) => {
   const [firstYMD, setFirstYMD] = useState("2");
   const [lastYMD, setLastYMD] = useState("3");
 
-  if (!session)
-    <Layout>
-      <>qqqqqqqqqq</>
-    </Layout>;
-
   return (
     <Layout>
       {!subjects.length ? (
-        <PlzNew />
+        <></>
       ) : (
         <>
           <Pagination
