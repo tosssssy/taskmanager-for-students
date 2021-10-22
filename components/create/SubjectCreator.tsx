@@ -4,7 +4,6 @@ import InputSubjectInfo from "./InputSubjectInfo";
 import { NewSubjectType } from "../../lib/types";
 import { useSession } from "next-auth/client";
 import { Box } from "@chakra-ui/layout";
-import { Button } from "@chakra-ui/button";
 
 type Props = {
   newSubjects: NewSubjectType[];

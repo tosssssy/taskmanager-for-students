@@ -1,6 +1,6 @@
 import { useState, useEffect, FC } from "react";
 import { ArrowLeftIcon, ArrowRightIcon } from "@chakra-ui/icons";
-import { Button, Box, Flex } from "@chakra-ui/react";
+import { Button, Box } from "@chakra-ui/react";
 import { SubjectType } from "../../lib/types";
 
 type Props = {
