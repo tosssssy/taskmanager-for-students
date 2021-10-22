@@ -1,5 +1,5 @@
 import { Input } from "@chakra-ui/input";
-import { Box, Center, Flex, Text } from "@chakra-ui/layout";
+import { Box, Flex, Text } from "@chakra-ui/layout";
 import React, { useState } from "react";
 import { useCreateDateList } from "./useCreateDateList";
 

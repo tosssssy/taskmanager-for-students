@@ -1,5 +1,4 @@
-import { Box, chakra, Heading } from "@chakra-ui/react";
-import { useSession } from "next-auth/client";
+import { Box } from "@chakra-ui/react";
 import React, { ReactNode } from "react";
 import Header from "./Header";
 
