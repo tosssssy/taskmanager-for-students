@@ -20,3 +20,7 @@ const config = {
 };
 
 module.exports = withPWA(config);
+
+module.exports = {
+  swcMinify: true,
+}
