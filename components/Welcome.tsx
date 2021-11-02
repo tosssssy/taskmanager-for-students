@@ -4,7 +4,9 @@ import { FC } from "react";
 export const Welcome: FC = () => {
   return (
     <>
-      <div>大学生のためのシンプルな課題管理アプリ</div>
+      <Box fontSize={"x-large"} m={50}>
+        大学生のためのシンプルな課題管理アプリ
+      </Box>
     </>
   );
 };
