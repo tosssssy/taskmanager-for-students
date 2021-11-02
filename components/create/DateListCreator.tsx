@@ -10,10 +10,8 @@ type Props = {
 export const DateListCreator = (props: Props) => {
   const { setDateList } = props;
   const [startDate, setStartDate] = useState("");
-  const [hasRegistered, setHasRegistered] = useState(false);
 
   const onChange = (e: { target: { value: string } }) => {
-    setHasRegistered(true);
     setDateList(useCreateDateList(startDate, e.target.value));
   };
 
@@ -33,7 +31,6 @@ export const DateListCreator = (props: Props) => {
             type="date"
             bg="white"
             onChange={(e) => setStartDate(e.target.value)}
-            disabled={hasRegistered}
           />
           <Text fontSize="38px" h="40px" mb="24px" color="blackAlpha.700">
             ~
@@ -42,7 +39,6 @@ export const DateListCreator = (props: Props) => {
             type="date"
             bg="white"
             onChange={onChange}
-            disabled={!startDate || hasRegistered}
           />
         </Flex>
       </Box>
