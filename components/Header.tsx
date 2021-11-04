@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { signOut, useSession } from "next-auth/client";
@@ -6,7 +6,7 @@ import { Box, Flex, Heading } from "@chakra-ui/layout";
 import { Button } from "@chakra-ui/button";
 import { Welcome } from "./Welcome";
 
-const Header: React.FC = () => {
+export const Header: FC = () => {
   const router = useRouter();
   const isActive: (pathname: string) => boolean = (pathname) =>
     router.pathname === pathname;
@@ -99,5 +99,3 @@ const Header: React.FC = () => {
     </>
   );
 };
-
-export default Header;

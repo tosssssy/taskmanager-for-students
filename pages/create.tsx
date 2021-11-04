@@ -1,13 +1,11 @@
 import React, { FC, useState } from "react";
-import Layout from "../components/Layout";
+import { Layout } from "../components/Layout";
 import Router from "next/router";
-import SubjectCreator from "./../components/create/SubjectCreator";
+import { SubjectCreator } from "./../components/create/SubjectCreator";
 import { DateListCreator } from "../components/create/DateListCreator";
 import { useCreateNewSchedule } from "./../components/create/useCreateNewSchedule";
 import { CreateButton } from "./../components/create/CreateButton";
 import { NewSubjectType } from "../lib/types";
-import { Text } from "@chakra-ui/layout";
-import { Button } from "@chakra-ui/button";
 
 const CreateNewScheduler: FC = () => {
   const [newSubjects, setNewSubjects] = useState<Array<NewSubjectType>>([]);
@@ -38,7 +36,6 @@ const CreateNewScheduler: FC = () => {
       <SubjectCreator
         newSubjects={newSubjects}
         setNewSubjects={setNewSubjects}
-        createNewSchedule={createNewSchedule}
       />
 
       <CreateButton onclick={createNewSchedule} />

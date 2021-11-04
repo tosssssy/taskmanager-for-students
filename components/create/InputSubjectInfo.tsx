@@ -12,7 +12,7 @@ type Props = {
   addSubject: any;
 };
 
-const InputSubjectInfo: FC<Props> = ({
+export const InputSubjectInfo: FC<Props> = ({
   name,
   setName,
   period,
@@ -80,5 +80,3 @@ const InputSubjectInfo: FC<Props> = ({
     </>
   );
 };
-
-export default InputSubjectInfo;

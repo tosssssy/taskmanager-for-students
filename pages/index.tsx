@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import Layout from "../components/Layout";
+import { Layout } from "../components/Layout";
 import { getSession } from "next-auth/client";
 import { Subject } from "../components/top/Subject";
 import prisma from "./../lib/prisma";
@@ -8,9 +8,9 @@ import { Box, Flex } from "@chakra-ui/react";
 import { Pagination } from "../components/top/Pagination";
 import { SubjectType } from "../lib/types";
 
-interface Props {
+type Props = {
   subjects: SubjectType[];
-}
+};
 
 const Top: FC<Props> = ({ subjects }) => {
   const [dateList, setDatelist] = useState<
