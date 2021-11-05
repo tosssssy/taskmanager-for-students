@@ -15,4 +15,4 @@ export type NewSubjectType = Pick<
   authorId: number;
 };
 
-export type UpdateSubjectTypes = Pick<SubjectType, "id" | "status" | "memo">;
+export type UpdateSubjectType = Pick<SubjectType, "id" | "status" | "memo">;
