@@ -7,9 +7,9 @@ type Props = {
   deleteSubject: any;
 };
 
-const NewSubject: React.FC<Props> = (props) => {
-  const { name, period, day } = props.subject;
-  const { deleteSubject } = props;
+export const NewSubject: React.FC<Props> = ({ subject, deleteSubject }) => {
+  const { name, period, day } = subject;
+
   return (
     <>
       <Flex
@@ -45,5 +45,3 @@ const NewSubject: React.FC<Props> = (props) => {
     </>
   );
 };
-
-export default NewSubject;

@@ -17,7 +17,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import React, { memo, useState } from "react";
-import { SubjectType, UpdateSubjectTypes } from "../../lib/types";
+import { SubjectType, UpdateSubjectType } from "../../lib/types";
 
 export const Subject: React.FC<SubjectType> = memo((props) => {
   const toast = useToast();
@@ -31,7 +31,7 @@ export const Subject: React.FC<SubjectType> = memo((props) => {
 
   const updateSubject = async () => {
     try {
-      const body: UpdateSubjectTypes = {
+      const body: UpdateSubjectType = {
         id: props.id,
         status: status,
         memo: memo,

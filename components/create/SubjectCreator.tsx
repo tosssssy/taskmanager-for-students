@@ -1,6 +1,6 @@
 import React, { FC, useState } from "react";
-import NewSubject from "./NewSubject";
-import InputSubjectInfo from "./InputSubjectInfo";
+import { NewSubject } from "./NewSubject";
+import { InputSubjectInfo } from "./InputSubjectInfo";
 import { NewSubjectType } from "../../lib/types";
 import { useSession } from "next-auth/client";
 import { Box } from "@chakra-ui/layout";
@@ -8,12 +8,10 @@ import { Box } from "@chakra-ui/layout";
 type Props = {
   newSubjects: NewSubjectType[];
   setNewSubjects: React.Dispatch<React.SetStateAction<NewSubjectType[]>>;
-  createNewSchedule: () => Promise<void>;
 };
 
-const SubjectCreator: FC<Props> = ({ newSubjects, setNewSubjects }) => {
+export const SubjectCreator: FC<Props> = ({ newSubjects, setNewSubjects }) => {
   const [session] = useSession();
-
   const [name, setName] = useState("");
   const [period, setPeriod] = useState(1);
   const [day, setDay] = useState("Sun");
@@ -63,5 +61,3 @@ const SubjectCreator: FC<Props> = ({ newSubjects, setNewSubjects }) => {
     </>
   );
 };
-
-export default SubjectCreator;
