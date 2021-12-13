@@ -53,6 +53,7 @@ class MyDocument extends Document {
           <link rel="icon" href="/favicon.ico" />
           <link rel="manifest" href="/manifest.json" />
         </Head>
+        <title>大学生のための課題アプリ</title>
         <body>
           <Main />
           <NextScript />
