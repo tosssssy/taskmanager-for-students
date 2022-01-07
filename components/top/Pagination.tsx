@@ -24,64 +24,69 @@ export const Pagination: FC<Props> = ({
   setFirstYMD,
   setLastYMD,
 }) => {
-  // 0 埋め関数
-  const toDoubleDigits = (num) => {
-    num += ''
-    if (num.length === 1) {
-      num = '0' + num
+  // 今週から何週目か
+  const [cnt, setCnt] = useState(0)
+  let start: Date, startDate: string, end: Date, endDate: string
+
+  useEffect(() => {
+    // 0 埋め関数
+    const toDoubleDigits = (num) => {
+      num += ''
+      if (num.length === 1) {
+        num = '0' + num
+      }
+      return num
     }
-    return num
-  }
 
-  // 最初の日付
-  if (!subjects[0]) return null
-  let start: Date = new Date(subjects[0].date)
+    // 最初の日付
+    if (!subjects[0]) return null
+    start = new Date(subjects[0].date)
 
-  // 最初の日付を日曜に
-  while (true) {
-    if (start.getDay() === 0) break
-    start = new Date(
-      start.getFullYear(),
-      toDoubleDigits(start.getMonth()),
-      toDoubleDigits(start.getDate() - 1)
-    )
-  }
-
-  let startDate: string =
-    start.getFullYear() +
-    '-' +
-    toDoubleDigits(start.getMonth() + 1) +
-    '-' +
-    toDoubleDigits(start.getDate())
-
-  // 終わりの日付
-  let end: Date = new Date(subjects[subjects.length - 1].date)
-  // 最後の授業が土曜日の時の処理
-  if (end.getDay() === 0) {
-    end = new Date(subjects[subjects.length - 2].date)
-  }
-
-  // 最後の日を土曜に
-  if (end.getDay() !== 6) {
+    // 最初の日付を日曜に
     while (true) {
-      if (end.getDay() === 6) break
-      end = new Date(
-        end.getFullYear(),
-        toDoubleDigits(end.getMonth()),
-        toDoubleDigits(end.getDate() + 1)
+      if (start.getDay() === 0) break
+      start = new Date(
+        start.getFullYear(),
+        toDoubleDigits(start.getMonth()),
+        toDoubleDigits(start.getDate() - 1)
       )
     }
-  }
 
-  let endDate: string =
-    end.getFullYear() +
-    '-' +
-    toDoubleDigits(end.getMonth() + 1) +
-    '-' +
-    toDoubleDigits(end.getDate())
+    startDate =
+      start.getFullYear() +
+      '-' +
+      toDoubleDigits(start.getMonth() + 1) +
+      '-' +
+      toDoubleDigits(start.getDate())
 
-  // 指定された範囲を dateList に配列で格納
-  useEffect(() => {
+    // 終わりの日付
+    end = new Date(subjects[subjects.length - 1].date)
+    // 最後の授業が土曜日の時の処理
+    if (end.getDay() === 0) {
+      end = new Date(subjects[subjects.length - 2].date)
+    }
+
+    // 最後の日を土曜に
+    if (end.getDay() !== 6) {
+      while (true) {
+        if (end.getDay() === 6) break
+        end = new Date(
+          end.getFullYear(),
+          toDoubleDigits(end.getMonth()),
+          toDoubleDigits(end.getDate() + 1)
+        )
+      }
+    }
+
+    endDate =
+      end.getFullYear() +
+      '-' +
+      toDoubleDigits(end.getMonth() + 1) +
+      '-' +
+      toDoubleDigits(end.getDate())
+
+    // 指定された範囲を dateList に配列で格納
+    let loop: Date = new Date(start)
     while (loop <= end) {
       let loopDate: string =
         loop.getFullYear() +
@@ -90,33 +95,24 @@ export const Pagination: FC<Props> = ({
         '-' +
         toDoubleDigits(loop.getDate())
       let loopDay: number = loop.getDay()
-      // dateList.push(loopDate)
       dateList.push({ date: loopDate, day: loopDay })
-      //dateList = dateList.concat({ date: loopDate, day: loopDay });
       let newDate: number = loop.setDate(loop.getDate() + 1)
       loop = new Date(newDate)
     }
     setDateList(dateList)
-  }, [])
-  let loop: Date = new Date(start)
 
-  let thisSunday = new Date()
+    let thisSunday = new Date()
 
-  // 今週の日曜
-  while (true) {
-    if (thisSunday.getDay() === 0) break
-    thisSunday = new Date(
-      thisSunday.getFullYear(),
-      toDoubleDigits(thisSunday.getMonth()),
-      toDoubleDigits(thisSunday.getDate() - 1)
-    )
-  }
+    // 今週の日曜
+    while (true) {
+      if (thisSunday.getDay() === 0) break
+      thisSunday = new Date(
+        thisSunday.getFullYear(),
+        toDoubleDigits(thisSunday.getMonth()),
+        toDoubleDigits(thisSunday.getDate() - 1)
+      )
+    }
 
-  // 今週から何週目か
-  const [cnt, setCnt] = useState(0)
-
-  // < , > 押すと発動
-  useEffect(() => {
     const showMonthDate = () => {
       // cnt 週間後の Date オブジェクトを作成
       let myDate = new Date(thisSunday.getTime() + 604800000 * cnt)
@@ -142,7 +138,7 @@ export const Pagination: FC<Props> = ({
       )
     }
     showMonthDate()
-  }, [cnt])
+  }, [])
 
   // onClick 動かないとき タイプミス
   return (

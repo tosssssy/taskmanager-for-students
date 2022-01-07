@@ -3,7 +3,10 @@ import { getSession } from 'next-auth/client'
 import prisma from '../../../lib/prisma'
 
 // DELETE /api/post/:id
-export default async function (req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   const session = await getSession({ req })
 
   if (!session) {
