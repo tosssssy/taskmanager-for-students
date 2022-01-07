@@ -1,36 +1,39 @@
-import React, { FC, useState } from "react";
-import { Layout } from "../components/Layout";
-import Router from "next/router";
-import { SubjectCreator } from "./../components/create/SubjectCreator";
-import { DateListCreator } from "../components/create/DateListCreator";
-import { useCreateNewSchedule } from "./../components/create/useCreateNewSchedule";
-import { CreateButton } from "./../components/create/CreateButton";
-import { NewSubjectType } from "../lib/types";
+import { Box } from '@chakra-ui/react'
+import Router from 'next/router'
+import React, { FC, useState } from 'react'
+import { Layout } from '../components/Layout'
+import { DateListCreator } from '../components/create/DateListCreator'
+import { createNewScheduleList } from '../components/create/createNewScheduleList'
+import { NewSubjectType } from '../lib/types'
+import { CreateButton } from './../components/create/CreateButton'
+import { SubjectCreator } from './../components/create/SubjectCreator'
 
-const CreateNewScheduler: FC = () => {
-  const [newSubjects, setNewSubjects] = useState<Array<NewSubjectType>>([]);
-  const [dateList, setDateList] = useState<Array<Date>>([]);
+const CreatePage: FC = () => {
+  const [newSubjects, setNewSubjects] = useState<Array<NewSubjectType>>([])
+  const [dateList, setDateList] = useState<Array<Date>>([])
 
   // ユーザーの全データを削除してから新規作成
   const createNewSchedule = async () => {
     try {
-      await fetch("api/delete", { method: "DELETE" });
+      await fetch('api/delete', { method: 'DELETE' })
 
-      const body = useCreateNewSchedule(dateList, newSubjects);
+      const body = createNewScheduleList(dateList, newSubjects)
 
-      await fetch("/api/create", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      await fetch('/api/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
-      });
+      })
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
-    Router.push("/");
-  };
+    Router.push('/')
+  }
 
   return (
     <Layout>
+      <Box h={100} />
+
       <DateListCreator setDateList={setDateList} />
 
       <SubjectCreator
@@ -40,7 +43,7 @@ const CreateNewScheduler: FC = () => {
 
       <CreateButton onclick={createNewSchedule} />
     </Layout>
-  );
-};
+  )
+}
 
-export default CreateNewScheduler;
+export default CreatePage

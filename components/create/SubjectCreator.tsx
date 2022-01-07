@@ -1,21 +1,21 @@
-import React, { FC, useState } from "react";
-import { NewSubject } from "./NewSubject";
-import { InputSubjectInfo } from "./InputSubjectInfo";
-import { NewSubjectType } from "../../lib/types";
-import { useSession } from "next-auth/client";
-import { Box } from "@chakra-ui/layout";
+import { Box } from '@chakra-ui/layout'
+import { useSession } from 'next-auth/client'
+import React, { FC, useState } from 'react'
+import { NewSubjectType } from '../../lib/types'
+import { InputSubjectInfo } from './InputSubjectInfo'
+import { NewSubject } from './NewSubject'
 
 type Props = {
-  newSubjects: NewSubjectType[];
-  setNewSubjects: React.Dispatch<React.SetStateAction<NewSubjectType[]>>;
-};
+  newSubjects: NewSubjectType[]
+  setNewSubjects: React.Dispatch<React.SetStateAction<NewSubjectType[]>>
+}
 
 export const SubjectCreator: FC<Props> = ({ newSubjects, setNewSubjects }) => {
-  const [session] = useSession();
-  const [name, setName] = useState("");
-  const [period, setPeriod] = useState(1);
-  const [day, setDay] = useState("Sun");
-  const date: Date = null;
+  const [session] = useSession()
+  const [name, setName] = useState('')
+  const [period, setPeriod] = useState(1)
+  const [day, setDay] = useState('Sun')
+  const date: Date = null
 
   const addSubject = () => {
     const newSubject: NewSubjectType = {
@@ -24,16 +24,16 @@ export const SubjectCreator: FC<Props> = ({ newSubjects, setNewSubjects }) => {
       period: period,
       day: day,
       authorId: Number(session.user.id),
-    };
-    setNewSubjects(newSubjects.concat(newSubject));
-  };
+    }
+    setNewSubjects(newSubjects.concat(newSubject))
+  }
 
   const deleteSubject = (key: number) => {
     const newList = newSubjects.filter((_, index) => {
-      return index !== key;
-    });
-    setNewSubjects(newList);
-  };
+      return index !== key
+    })
+    setNewSubjects(newList)
+  }
 
   return (
     <>
@@ -56,8 +56,8 @@ export const SubjectCreator: FC<Props> = ({ newSubjects, setNewSubjects }) => {
               />
             </Box>
           </>
-        );
+        )
       })}
     </>
-  );
-};
+  )
+}
