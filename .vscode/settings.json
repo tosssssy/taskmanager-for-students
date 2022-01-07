@@ -1,4 +1,15 @@
 {
-  "WillLuke.nextjs.addTypesOnSave": true,
+  "editor.tabSize": 2,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+  "[markdown]": {
+    "files.trimTrailingWhitespace": false
+  },
   "WillLuke.nextjs.hasPrompted": true
 }

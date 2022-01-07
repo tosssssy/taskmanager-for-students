@@ -1,6 +1,5 @@
-import React, { FC } from "react";
-import { Text } from "@chakra-ui/layout";
-import { Button } from "@chakra-ui/button";
+import { Button } from '@chakra-ui/button'
+import { Text } from '@chakra-ui/layout'
 import {
   useDisclosure,
   AlertDialog,
@@ -10,27 +9,28 @@ import {
   AlertDialogCloseButton,
   AlertDialogBody,
   AlertDialogFooter,
-} from "@chakra-ui/react";
+} from '@chakra-ui/react'
+import React, { FC } from 'react'
 
 type Props = {
-  onclick: () => Promise<void>;
-};
+  onclick: () => Promise<void>
+}
 
 export const CreateButton: FC<Props> = ({ onclick }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const cancelRef = React.useRef();
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const cancelRef = React.useRef()
   return (
     <>
-      <Text my="30px" ml="10%" pr="10%" color="blackAlpha.800" fontSize="sm">
+      <Text my='30px' ml='10%' pr='10%' color='blackAlpha.800' fontSize='sm'>
         ③時間割を確認し、完成ボタンを押して下さい。
       </Text>
       <Button
-        minW="70px"
-        ml={["10%", "15%"]}
-        bgGradient="linear(to-l, #7928CA, #FF0080)"
-        bgClip="text"
-        border="1px"
-        borderColor="silver"
+        minW='70px'
+        ml={['10%', '15%']}
+        bgGradient='linear(to-l, #7928CA, #FF0080)'
+        bgClip='text'
+        border='1px'
+        borderColor='silver'
         _hover={{
           opacity: 0.8,
         }}
@@ -39,7 +39,7 @@ export const CreateButton: FC<Props> = ({ onclick }) => {
         完成
       </Button>
       <AlertDialog
-        motionPreset="slideInBottom"
+        motionPreset='slideInBottom'
         leastDestructiveRef={cancelRef}
         onClose={onClose}
         isOpen={isOpen}
@@ -58,12 +58,12 @@ export const CreateButton: FC<Props> = ({ onclick }) => {
             <Button ref={cancelRef} onClick={onClose}>
               いいえ
             </Button>
-            <Button colorScheme="red" ml={3} onClick={onclick}>
+            <Button colorScheme='red' ml={3} onClick={onclick}>
               はい
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
     </>
-  );
-};
+  )
+}
