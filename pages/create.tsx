@@ -27,12 +27,12 @@ const CreatePage: FC = () => {
     } catch (error) {
       console.error(error)
     }
-    Router.push('/')
+    Router.push('/schedule')
   }
 
   return (
     <Layout>
-      <Box h={100} />
+      <Box h={200} />
 
       <DateListCreator setDateList={setDateList} />
 

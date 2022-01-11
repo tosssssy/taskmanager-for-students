@@ -1,110 +1,20 @@
-import { Box, Flex } from '@chakra-ui/react'
-import { GetServerSideProps } from 'next'
-import { getSession } from 'next-auth/client'
-import React, { FC, useState } from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useSession } from 'next-auth/client'
+import Router from 'next/router'
+import React, { FC } from 'react'
 import { Layout } from '../components/Layout'
-import { Pagination } from '../components/top/Pagination'
-import { Subject } from '../components/top/Subject'
-import { SubjectType } from '../lib/types'
-import prisma from './../lib/prisma'
-
-type Props = {
-  subjects: SubjectType[]
-}
-
-const TopPage: FC<Props> = ({ subjects }) => {
-  const [dateList, setDatelist] = useState<
-    Array<{ date: string; day: number }>
-  >([])
-  const Day = ['日', '月', '火', '水', '木', '金', '土']
-
-  // 配列の表示範囲
-  const [firstYMD, setFirstYMD] = useState('2')
-  const [lastYMD, setLastYMD] = useState('3')
+import { Welcome } from '../components/top/Welcome'
+const TopPage: FC = () => {
+  const [session] = useSession()
+  if (session) {
+    Router.push('/schedule')
+  }
 
   return (
     <Layout>
-      {!subjects.length ? (
-        <></>
-      ) : (
-        <>
-          <Pagination
-            dateList={dateList}
-            setDateList={setDatelist}
-            subjects={subjects}
-            firstYMD={firstYMD}
-            setFirstYMD={setFirstYMD}
-            lastYMD={lastYMD}
-            setLastYMD={setLastYMD}
-          />
-          <Box textAlign='right' fontSize='25px' p='15px'>
-            {firstYMD.slice(0, 4)}
-          </Box>
-          <Box
-            p={'30px 20px 70px 20px'}
-            minW={'375px'}
-            maxW={'840px'}
-            m={'auto'}
-          >
-            {/* 全日付 */}
-            {dateList?.map((oneday, index) => (
-              <Box key={index}>
-                {/* 範囲指定 */}
-                {oneday.date >= firstYMD && oneday.date <= lastYMD && (
-                  <Box>
-                    <Flex fontSize={20}>
-                      {oneday.date.slice(5, 10)}
-                      {'('}
-                      {Day[oneday.day] !== '日' ? (
-                        Day[oneday.day] === '土' ? (
-                          <Box color='blue.400'>{Day[oneday.day]}</Box>
-                        ) : (
-                          <Box>{Day[oneday.day]}</Box>
-                        )
-                      ) : (
-                        <Box color='red.400'>{Day[oneday.day]}</Box>
-                      )}
-                      {')'}
-                    </Flex>
-                    <Flex flexWrap='wrap'>
-                      {subjects?.map((subject) => (
-                        <Box key={subject.id}>
-                          {/* 授業がある日を表示 */}
-                          {oneday.date == String(subject.date).slice(0, 10) && (
-                            <Subject subject={subject} />
-                          )}
-                        </Box>
-                      ))}
-                    </Flex>
-                    <Box mt='20px' border='1px' borderColor='blue.200'></Box>
-                  </Box>
-                )}
-              </Box>
-            ))}
-          </Box>
-        </>
-      )}
+      <Welcome />
     </Layout>
   )
 }
 
 export default TopPage
-
-//ユーザーのスケジュールを全取得（subjectのリスト）
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-  const session = await getSession({ req })
-  if (!session) return { props: { subjects: [] } }
-
-  const data = await prisma.subject.findMany({
-    where: {
-      author: { id: Number(session.user.id) },
-    },
-    orderBy: {
-      id: 'asc',
-    },
-  })
-
-  const subjects = JSON.parse(JSON.stringify(data))
-
-  return { props: { subjects } }
-}

@@ -53,7 +53,7 @@ class MyDocument extends Document {
           <link rel='icon' href='/favicon.ico' />
           <link rel='manifest' href='/manifest.json' />
         </Head>
-        <body>
+        <body style={{ background: 'rgb(247,246,247)' }}>
           <Main />
           <NextScript />
         </body>

@@ -4,7 +4,6 @@ import { signOut, useSession } from 'next-auth/client'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { FC } from 'react'
-import { Welcome } from './Welcome'
 
 export const Header: FC = () => {
   const router = useRouter()
@@ -80,22 +79,24 @@ export const Header: FC = () => {
   }
 
   return (
-    <>
-      <Flex align='center' justify='space-between' minH='70px'>
-        <Heading
-          mt='15px'
-          ml='40px'
-          p='2px'
-          bgGradient='linear(to-l, #7928CA, #FF0080)'
-          bgClip='text'
-          fontSize='4xl'
-        >
-          <Link href='/'>Task Manager</Link>
-        </Heading>
-
-        {right}
-      </Flex>
-      {!session && <Welcome />}
-    </>
+    <Flex
+      align='center'
+      justify='space-between'
+      minH='70px'
+      position='fixed'
+      w='full'
+    >
+      <Heading
+        mt='15px'
+        ml='40px'
+        p='2px'
+        bgGradient='linear(to-l, #7928CA, #FF0080)'
+        bgClip='text'
+        fontSize='4xl'
+      >
+        <Link href='/'>Task Manager</Link>
+      </Heading>
+      {right}
+    </Flex>
   )
 }
