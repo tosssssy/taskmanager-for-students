@@ -52,7 +52,9 @@ class MyDocument extends Document {
           <link rel='icon' sizes='192x192' href='/icon-192x192.png' />
           <link rel='icon' href='/favicon.ico' />
           <link rel='manifest' href='/manifest.json' />
+          <title>Task Manager</title>
         </Head>
+
         <body style={{ background: 'rgb(247,246,247)' }}>
           <Main />
           <NextScript />
