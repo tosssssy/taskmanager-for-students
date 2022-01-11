@@ -4,13 +4,14 @@ import { FC } from 'react'
 
 export const Welcome: FC = () => {
   return (
-    <Box>
+    <Box bg={'white'}>
+      <Box h={50} bg={'white'} />
       <Flex
         maxW={'container.xl'}
         minW={'58rem'}
         px={10}
         mx={'auto'}
-        my={50}
+        my={100}
         alignItems={'center'}
         justifyContent={'flex-end'}
       >

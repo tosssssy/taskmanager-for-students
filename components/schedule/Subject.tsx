@@ -60,18 +60,16 @@ export const Subject: React.FC<Props> = ({ subject }) => {
 
   return (
     <Flex flexDirection='column' mr={2}>
-      <Box color='gray' textAlign='center'>
-        {subject.period + '時限'}
+      <Box color='gray' textAlign='center' fontSize={'sm'} m={1}>
+        {subject.period + '限'}
       </Box>
       <Popover placement='bottom' closeOnBlur={true}>
         <PopoverTrigger>
           <Button
             bg={status == 0 ? '#fff' : color[status]}
-            w='100%'
             color={status == 0 ? 'black.500' : 'white'}
-            boxShadow='lg'
-            border='double'
-            borderColor={memo ? 'yellow.400' : 'gray'}
+            border='2px'
+            borderColor={memo ? 'yellow.400' : 'gray.300'}
             _hover={{ opacity: 0.6 }}
             _active={{ opacity: 0.4 }}
           >
