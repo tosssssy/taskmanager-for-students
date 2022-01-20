@@ -1,11 +1,13 @@
 export const toStringYMD = (date: Date) => {
-  const tmp = new Date(date)
-  const stringDate =
-    tmp.getFullYear() +
-    '-' +
-    toDoubleDigits(tmp.getMonth() + 1) +
-    '-' +
-    toDoubleDigits(tmp.getDate() - 1)
+  const tmp = new Date(date).toISOString()
+
+  const stringDate = tmp.slice(0, 10)
+  // const stringDate =
+  //   tmp.getFullYear() +
+  //   '-' +
+  //   toDoubleDigits(tmp.getMonth() + 1) +
+  //   '-' +
+  //   toDoubleDigits(tmp.getDate())
 
   return stringDate
 }

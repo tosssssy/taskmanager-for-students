@@ -1,19 +1,20 @@
 import { ArrowLeftIcon, ArrowRightIcon } from '@chakra-ui/icons'
 import { Button, Box } from '@chakra-ui/react'
+import { Dayjs } from 'dayjs'
 import { FC } from 'react'
 
 type Props = {
-  firstYMD: Date
-  lastYMD: Date
-  start: Date
-  end: Date
+  firstViewDate: Dayjs
+  lastViewDate: Dayjs
+  start: Dayjs
+  end: Dayjs
   currentWeekNum: number
   setCurrentWeekNum: React.Dispatch<React.SetStateAction<number>>
 }
 
 export const Pagination: FC<Props> = ({
-  firstYMD,
-  lastYMD,
+  firstViewDate,
+  lastViewDate,
   start,
   end,
   currentWeekNum,
@@ -21,7 +22,7 @@ export const Pagination: FC<Props> = ({
 }) => {
   return (
     <Box>
-      {start <= firstYMD && (
+      {start <= firstViewDate && (
         <button onClick={() => setCurrentWeekNum(currentWeekNum - 1)}>
           <ArrowLeftIcon
             position='fixed'
@@ -50,7 +51,7 @@ export const Pagination: FC<Props> = ({
           今週
         </Button>
       </Box>
-      {end >= lastYMD && (
+      {end >= lastViewDate && (
         <button onClick={() => setCurrentWeekNum(currentWeekNum + 1)}>
           <ArrowRightIcon
             position='fixed'
