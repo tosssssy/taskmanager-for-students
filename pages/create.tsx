@@ -1,4 +1,5 @@
 import { Box } from '@chakra-ui/react'
+import Head from 'next/head'
 import Router from 'next/router'
 import React, { FC, useState } from 'react'
 import { Layout } from '../components/Layout'
@@ -32,6 +33,10 @@ const CreatePage: FC = () => {
 
   return (
     <Layout>
+      <Head>
+        <title>Task Manager | 新規作成</title>
+      </Head>
+
       <Box h={200} />
 
       <DateListCreator setDateList={setDateList} />

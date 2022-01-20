@@ -19,7 +19,7 @@ export const createNewScheduleList = (
       const date = new Date(dateList[i])
 
       // "Sun" == "Sat" => false
-      if (date.toUTCString()['substr'](0, 3) == newSubjects[j].day) {
+      if (date.toUTCString().slice(0, 3) == newSubjects[j].day) {
         let tmp = JSON.parse(JSON.stringify(newSubjects[j]))
         tmp.date = dateList[i]
         newSchedule = newSchedule.concat(tmp)
