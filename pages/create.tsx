@@ -3,6 +3,7 @@ import Head from 'next/head'
 import Router from 'next/router'
 import React, { FC, useState } from 'react'
 import { Layout } from '../components/Layout'
+import { Loading } from '../components/Loading'
 import { DateListCreator } from '../components/create/DateListCreator'
 import { createNewScheduleList } from '../components/create/createNewScheduleList'
 import { NewSubjectType } from '../lib/types'
@@ -13,8 +14,11 @@ const CreatePage: FC = () => {
   const [newSubjects, setNewSubjects] = useState<Array<NewSubjectType>>([])
   const [dateList, setDateList] = useState<Array<Date>>([])
 
+  const [loading, setLoading] = useState<boolean>(false)
+
   // ユーザーの全データを削除してから新規作成
   const createNewSchedule = async () => {
+    setLoading(true)
     try {
       await fetch('api/delete', { method: 'DELETE' })
 
@@ -30,6 +34,7 @@ const CreatePage: FC = () => {
     }
     Router.push('/schedule')
   }
+  if (loading) return <Loading />
 
   return (
     <Layout>
@@ -52,3 +57,18 @@ const CreatePage: FC = () => {
 }
 
 export default CreatePage
+
+// export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+//   const session = await getSession()
+
+//   if (!session) {
+//     return {
+//       redirect: {
+//         destination: '/',
+//         permanent: false,
+//       },
+//     }
+//   }
+
+//   return { props: {} }
+// }
