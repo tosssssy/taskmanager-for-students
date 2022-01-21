@@ -4,7 +4,6 @@ import dayjs from 'dayjs'
 import isBetween from 'dayjs/plugin/isBetween'
 import React, { FC } from 'react'
 import { SubjectType } from '../../lib/types'
-import { Layout } from '../Layout'
 import { Pagination } from './Pagination'
 import { Subject } from './Subject'
 import { setDateList } from './setDateList'
@@ -16,8 +15,8 @@ type Props = {
 }
 
 export const ScheduleList: FC<Props> = ({ subjects }) => {
-  const Day = ['日', '月', '火', '水', '木', '金', '土']
   dayjs.extend(isBetween)
+  const Day = ['日', '月', '火', '水', '木', '金', '土']
 
   // subjectsの最初と最後のDayjsオブジェクト
   const { start, end } = useSetStartAndEnd(subjects)
@@ -30,7 +29,7 @@ export const ScheduleList: FC<Props> = ({ subjects }) => {
     useSetViewRange()
 
   return (
-    <Layout>
+    <>
       <Box h={170} />
       {subjects.length && (
         <>
@@ -43,12 +42,10 @@ export const ScheduleList: FC<Props> = ({ subjects }) => {
             maxW={'840px'}
             m={'auto'}
           >
-            {/* 全日付 */}
             {dateList?.map((oneDay, index) => {
               const oneDayjs = dayjs(oneDay)
               return (
                 <>
-                  {/* 範囲指定 */}
                   {oneDayjs.isBetween(
                     firstViewDate.subtract(1, 'day'),
                     lastViewDate
@@ -105,6 +102,6 @@ export const ScheduleList: FC<Props> = ({ subjects }) => {
           />
         </>
       )}
-    </Layout>
+    </>
   )
 }

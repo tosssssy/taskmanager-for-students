@@ -94,7 +94,7 @@ export const Header: FC = () => {
         bgClip='text'
         fontSize='4xl'
       >
-        <Link href='/'>Task Manager</Link>
+        <Link href='/schedule'>Task Manager</Link>
       </Heading>
       {right}
     </Flex>

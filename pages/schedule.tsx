@@ -1,7 +1,6 @@
 import { GetServerSideProps } from 'next'
-import { useSession, getSession } from 'next-auth/client'
+import { getSession } from 'next-auth/client'
 import Head from 'next/head'
-import { useRouter } from 'next/router'
 import { FC } from 'react'
 import { Layout } from '../components/Layout'
 import { ScheduleList } from '../components/schedule/ScheduleList'
@@ -14,12 +13,6 @@ type Props = {
 }
 
 const SchedulePage: FC<Props> = ({ subjects }) => {
-  const [session] = useSession()
-  const router = useRouter()
-  if (!session) {
-    router.replace('/schedule')
-  }
-
   return (
     <Layout>
       <Head>
@@ -35,7 +28,13 @@ export default SchedulePage
 //ユーザーのスケジュールを全取得（subjectのリスト）
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const session = await getSession({ req })
-  if (!session) return { props: { subjects: [] } }
+  if (!session)
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
 
   const data = await prisma.subject.findMany({
     where: {
