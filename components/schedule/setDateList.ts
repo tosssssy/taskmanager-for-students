@@ -1,6 +1,5 @@
 import { Dayjs } from 'dayjs'
 
-// eslint-disable-next-line react-hooks/rules-of-hooks
 export const setDateList = (start: Dayjs, end: Dayjs) => {
   const dateList: string[] = []
 

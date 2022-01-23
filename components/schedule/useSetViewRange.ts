@@ -1,5 +1,6 @@
 import dayjs, { Dayjs } from 'dayjs'
 import { useState, useEffect } from 'react'
+
 export const useSetViewRange = () => {
   // 配列の表示範囲のDate
   const [firstViewDate, setFirstViewDate] = useState<Dayjs>(dayjs())

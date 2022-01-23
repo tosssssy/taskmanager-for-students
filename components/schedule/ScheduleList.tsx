@@ -2,12 +2,12 @@
 import { Box, Flex } from '@chakra-ui/react'
 import dayjs from 'dayjs'
 import isBetween from 'dayjs/plugin/isBetween'
-import React, { FC } from 'react'
+import React, { FC, useMemo } from 'react'
 import { SubjectType } from '../../lib/types'
 import { Pagination } from './Pagination'
 import { Subject } from './Subject'
 import { setDateList } from './setDateList'
-import { useSetStartAndEnd } from './useSetStartAndEnd'
+import { setStartAndEnd } from './setStartAndEnd'
 import { useSetViewRange } from './useSetViewRange'
 
 type Props = {
@@ -19,10 +19,10 @@ export const ScheduleList: FC<Props> = ({ subjects }) => {
   const Day = ['日', '月', '火', '水', '木', '金', '土']
 
   // subjectsの最初と最後のDayjsオブジェクト
-  const { start, end } = useSetStartAndEnd(subjects)
+  const { start, end } = useMemo(() => setStartAndEnd(subjects), [subjects])
 
   // 全体のDayjsオブジェクトの配列
-  const dateList = setDateList(start, end)
+  const dateList = useMemo(() => setDateList(start, end), [start, end])
 
   // 表示範囲と今何週目を表示しているか
   const { firstViewDate, lastViewDate, currentWeekNum, setCurrentWeekNum } =
