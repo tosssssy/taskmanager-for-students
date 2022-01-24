@@ -4,25 +4,25 @@ import { Dayjs } from 'dayjs'
 import { FC } from 'react'
 
 type Props = {
+  startDate: Dayjs
+  endDate: Dayjs
   firstViewDate: Dayjs
   lastViewDate: Dayjs
-  start: Dayjs
-  end: Dayjs
   currentWeekNum: number
   setCurrentWeekNum: React.Dispatch<React.SetStateAction<number>>
 }
 
 export const Pagination: FC<Props> = ({
+  startDate,
+  endDate,
   firstViewDate,
   lastViewDate,
-  start,
-  end,
   currentWeekNum,
   setCurrentWeekNum,
 }) => {
   return (
     <Box>
-      {start <= firstViewDate && (
+      {startDate <= firstViewDate && (
         <button onClick={() => setCurrentWeekNum(currentWeekNum - 1)}>
           <ArrowLeftIcon
             position='fixed'
@@ -51,7 +51,7 @@ export const Pagination: FC<Props> = ({
           今週
         </Button>
       </Box>
-      {end >= lastViewDate && (
+      {endDate >= lastViewDate && (
         <button onClick={() => setCurrentWeekNum(currentWeekNum + 1)}>
           <ArrowRightIcon
             position='fixed'
