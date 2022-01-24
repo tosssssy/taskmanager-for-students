@@ -10,6 +10,9 @@ import { setDateList } from './setDateList'
 import { setStartAndEnd } from './setStartAndEnd'
 import { useSetViewRange } from './useSetViewRange'
 
+// DBから取得できる日付は'2022-01-09T00:00:00.000Z'というフォーマット
+// タイムゾーン周りでずれが生じる可能性があるのでdayjs(2022-01-09)として扱っている
+
 type Props = {
   subjects: SubjectType[]
 }
@@ -18,11 +21,17 @@ export const ScheduleList: FC<Props> = ({ subjects }) => {
   dayjs.extend(isBetween)
   const Day = ['日', '月', '火', '水', '木', '金', '土']
 
-  // subjectsの最初と最後のDayjsオブジェクト
-  const { start, end } = useMemo(() => setStartAndEnd(subjects), [subjects])
+  // subjectsの最初と最後の日付のDayjsオブジェクト
+  const { startDate, endDate } = useMemo(
+    () => setStartAndEnd(subjects),
+    [subjects]
+  )
 
-  // 全体のDayjsオブジェクトの配列
-  const dateList = useMemo(() => setDateList(start, end), [start, end])
+  // 全体の日付(YYYY-MM-DD)の配列
+  const dateList = useMemo(
+    () => setDateList(startDate, endDate),
+    [startDate, endDate]
+  )
 
   // 表示範囲と今何週目を表示しているか
   const { firstViewDate, lastViewDate, currentWeekNum, setCurrentWeekNum } =
@@ -44,6 +53,7 @@ export const ScheduleList: FC<Props> = ({ subjects }) => {
           >
             {dateList?.map((oneDay, index) => {
               const oneDayjs = dayjs(oneDay)
+              console.log('render')
               return (
                 <>
                   {oneDayjs.isBetween(
@@ -95,8 +105,8 @@ export const ScheduleList: FC<Props> = ({ subjects }) => {
           <Pagination
             firstViewDate={firstViewDate}
             lastViewDate={lastViewDate}
-            start={start}
-            end={end}
+            startDate={startDate}
+            endDate={endDate}
             currentWeekNum={currentWeekNum}
             setCurrentWeekNum={setCurrentWeekNum}
           />

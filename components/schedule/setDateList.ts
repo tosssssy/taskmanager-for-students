@@ -1,14 +1,14 @@
 import { Dayjs } from 'dayjs'
 
-export const setDateList = (start: Dayjs, end: Dayjs) => {
+export const setDateList = (startDate: Dayjs, endDate: Dayjs) => {
   const dateList: string[] = []
 
   // 指定された範囲を dateList に配列で格納
-  const days = end.diff(start, 'day')
+  const days = endDate.diff(startDate, 'day')
 
   for (let i = 0; i <= days; i++) {
-    dateList.push(start.format('YYYY-MM-DD'))
-    start = start.add(1, 'day')
+    dateList.push(startDate.format('YYYY-MM-DD'))
+    startDate = startDate.add(1, 'day')
   }
 
   return dateList
