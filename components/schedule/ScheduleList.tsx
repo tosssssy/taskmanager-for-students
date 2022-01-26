@@ -53,7 +53,6 @@ export const ScheduleList: FC<Props> = ({ subjects }) => {
           >
             {dateList?.map((oneDay, index) => {
               const oneDayjs = dayjs(oneDay)
-              console.log('render')
               return (
                 <>
                   {oneDayjs.isBetween(
