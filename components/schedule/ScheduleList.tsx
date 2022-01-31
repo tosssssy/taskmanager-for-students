@@ -114,3 +114,6 @@ export const ScheduleList: FC<Props> = ({ subjects }) => {
     </>
   )
 }
+
+// Component definition is missing display name のESLintエラー回避
+ScheduleList.displayName = 'ScheduleList'

@@ -16,14 +16,14 @@ import {
   Textarea,
   useToast,
 } from '@chakra-ui/react'
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 import { SubjectType, UpdateSubjectType } from '../../lib/types'
 
 type Props = {
   subject: SubjectType
 }
 
-export const Subject: React.FC<Props> = ({ subject }) => {
+export const Subject: React.FC<Props> = memo(({ subject }) => {
   const toast = useToast()
   const [status, setStatus] = useState(subject.status || 0)
   const [memo, setMemo] = useState(subject.memo || '')
@@ -123,4 +123,7 @@ export const Subject: React.FC<Props> = ({ subject }) => {
       </Popover>
     </Flex>
   )
-}
+})
+
+// Component definition is missing display name のESLintエラー回避
+Subject.displayName = 'Subject'
