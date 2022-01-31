@@ -10,13 +10,13 @@ import {
   AlertDialogBody,
   AlertDialogFooter,
 } from '@chakra-ui/react'
-import React, { FC } from 'react'
+import React, { FC, memo } from 'react'
 
 type Props = {
   onclick: () => Promise<void>
 }
 
-export const CreateButton: FC<Props> = ({ onclick }) => {
+export const CreateButton: FC<Props> = memo(({ onclick }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const cancelRef = React.useRef()
   return (
@@ -66,4 +66,6 @@ export const CreateButton: FC<Props> = ({ onclick }) => {
       </AlertDialog>
     </>
   )
-}
+})
+
+CreateButton.displayName = 'CreateButton'

@@ -1,13 +1,13 @@
 import { Input } from '@chakra-ui/input'
 import { Box, Flex, Text } from '@chakra-ui/layout'
-import React, { FC, useState } from 'react'
+import React, { FC, memo, useState } from 'react'
 import { createDateList } from './createDateList'
 
 type Props = {
   setDateList: React.Dispatch<React.SetStateAction<Date[]>>
 }
 
-export const DateListCreator: FC<Props> = ({ setDateList }) => {
+export const DateListCreator: FC<Props> = memo(({ setDateList }) => {
   const [startDate, setStartDate] = useState('')
 
   const onChange = (e: { target: { value: string } }) => {
@@ -34,4 +34,6 @@ export const DateListCreator: FC<Props> = ({ setDateList }) => {
       </Box>
     </>
   )
-}
+})
+
+DateListCreator.displayName = 'DateListCreator'
