@@ -16,7 +16,7 @@ export default async function handler(
 
   if (req.method === 'DELETE') {
     const subject = await prisma.subject.deleteMany({
-      where: { authorId: Number(session.user.id) },
+      where: { authorId: Number(session.id) },
     })
     res.json(subject)
   } else {

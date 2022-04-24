@@ -38,7 +38,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 
   const data = await prisma.subject.findMany({
     where: {
-      author: { id: Number(session.user.id) },
+      author: { id: Number(session.id) },
     },
     orderBy: {
       id: 'asc',

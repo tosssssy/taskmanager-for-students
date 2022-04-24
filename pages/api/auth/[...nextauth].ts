@@ -19,7 +19,7 @@ const options: NextAuthOptions = {
   secret: process.env.SECRET,
   callbacks: {
     session: async (session, user) => {
-      session.id = user.id
+      session.id = Number(user.id)
       return Promise.resolve(session)
     },
   },
