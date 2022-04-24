@@ -1,5 +1,4 @@
 import { Button } from '@chakra-ui/button'
-import { Text } from '@chakra-ui/layout'
 import {
   useDisclosure,
   AlertDialog,
@@ -13,7 +12,7 @@ import {
 import React, { FC, memo } from 'react'
 
 type Props = {
-  onclick: () => Promise<void>
+  onclick: () => void
 }
 
 export const CreateButton: FC<Props> = memo(({ onclick }) => {
@@ -21,9 +20,6 @@ export const CreateButton: FC<Props> = memo(({ onclick }) => {
   const cancelRef = React.useRef()
   return (
     <>
-      <Text my='30px' ml='10%' pr='10%' color='blackAlpha.800' fontSize='sm'>
-        ③時間割を確認し、完成ボタンを押して下さい。
-      </Text>
       <Button
         minW='70px'
         ml={['10%', '15%']}

@@ -1,60 +1,92 @@
-import { Box } from '@chakra-ui/layout'
+import { AddIcon } from '@chakra-ui/icons'
+import { Flex, chakra, Input, Button } from '@chakra-ui/react'
 import { useSession } from 'next-auth/client'
 import React, { FC, memo, useState } from 'react'
 import { NewSubjectType } from '../../lib/types'
-import { InputSubjectInfo } from './InputSubjectInfo'
 import { NewSubject } from './NewSubject'
 
 type Props = {
-  newSubjects: NewSubjectType[]
-  setNewSubjects: React.Dispatch<React.SetStateAction<NewSubjectType[]>>
+  newSubjectList: NewSubjectType[]
+  onAdd: (newSubject: NewSubjectType) => void
+  onDelete: (index: number) => void
 }
 
 export const SubjectCreator: FC<Props> = memo(
-  ({ newSubjects, setNewSubjects }) => {
+  ({ newSubjectList, onAdd, onDelete }) => {
     const [session] = useSession()
-    const [name, setName] = useState('')
-    const [period, setPeriod] = useState(1)
     const [day, setDay] = useState('Sun')
+    const [period, setPeriod] = useState(1)
+    const [name, setName] = useState('')
     const date: Date = null
-
-    const addSubject = () => {
-      const newSubject: NewSubjectType = {
-        name: name,
-        date: date,
-        period: period,
-        day: day,
-        authorId: Number(session.user.id),
-      }
-      setNewSubjects(newSubjects.concat(newSubject))
-    }
-
-    const deleteSubject = (key: number) => {
-      const newList = newSubjects.filter((_, index) => {
-        return index !== key
-      })
-      setNewSubjects(newList)
-    }
 
     return (
       <>
-        <InputSubjectInfo
-          name={name}
-          setName={setName}
-          period={period}
-          setPeriod={setPeriod}
-          day={day}
-          setDay={setDay}
-          addSubject={addSubject}
-        />
-        {newSubjects.map((subject, index) => {
+        <Flex m={['0px 10%', '0px 15%']} maxW='700px'>
+          <chakra.select
+            minW='50px'
+            border='rgb(226,232,240) 2px solid'
+            _focus={{
+              border: 'rgb(130,179,225) 2px solid',
+            }}
+            borderRadius='5px'
+            onChange={(e) => setDay(e.target.value)}
+          >
+            <option value='Sun'>日</option>
+            <option value='Mon'>月</option>
+            <option value='Tue'>火</option>
+            <option value='Wed'>水</option>
+            <option value='Thu'>木</option>
+            <option value='Fri'>金</option>
+            <option value='Sat'>土</option>
+          </chakra.select>
+          <chakra.select
+            minW='50px'
+            border='rgb(226,232,240) 2px solid'
+            _focus={{
+              border: 'rgb(130,179,225) 2px solid',
+            }}
+            borderRadius='5px'
+            onChange={(e) => setPeriod(Number(e.target.value))}
+          >
+            <option value='1'>1</option>
+            <option value='2'>2</option>
+            <option value='3'>3</option>
+            <option value='4'>4</option>
+            <option value='5'>5</option>
+            <option value='6'>6</option>
+          </chakra.select>
+          <Input
+            placeholder='例）数学'
+            onChange={(e) => setName(e.target.value)}
+          />
+          <Button
+            minW='70px'
+            rightIcon={<AddIcon />}
+            colorScheme='blue'
+            variant='outline'
+            _hover={{ bg: 'blue.500', color: 'white' }}
+            onClick={() =>
+              onAdd({
+                name: name,
+                date: date,
+                period: period,
+                day: day,
+                authorId: Number(session.id),
+              })
+            }
+            disabled={!name || !period || !day}
+          >
+            追加
+          </Button>
+        </Flex>
+
+        {newSubjectList.map((subject, index) => {
           return (
-            <Box key={index}>
-              <NewSubject
-                subject={subject}
-                deleteSubject={() => deleteSubject(index)}
-              />
-            </Box>
+            <NewSubject
+              key={index}
+              subject={subject}
+              onDelete={() => onDelete(index)}
+            />
           )
         })}
       </>
