@@ -7,17 +7,22 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const session = await getSession({ req })
+
   if (!session) {
-    res.status(401).json({ message: 'Not authenticated' })
-    return
+    return res.status(401).json({ message: 'Not authenticated' })
   }
-  const { id, status, memo } = req.body
-  const result = await prisma.subject.update({
-    where: { id: Number(id) },
-    data: {
-      status: Number(status),
-      memo: String(memo),
-    },
-  })
-  res.json(result)
+
+  try {
+    const { id, status, memo } = req.body
+    const result = await prisma.subject.update({
+      where: { id: Number(id) },
+      data: {
+        status: Number(status),
+        memo: String(memo),
+      },
+    })
+    return res.json(result)
+  } catch (error) {
+    return res.status(500).json(error)
+  }
 }
