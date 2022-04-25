@@ -1,13 +1,10 @@
 import { NextApiHandler } from 'next'
-import NextAuth from 'next-auth'
+import NextAuth, { NextAuthOptions } from 'next-auth'
 import Adapters from 'next-auth/adapters'
 import Providers from 'next-auth/providers'
 import prisma from '../../../lib/prisma'
 
-const authHandler: NextApiHandler = (req, res) => NextAuth(req, res, options)
-export default authHandler
-
-const options = {
+const options: NextAuthOptions = {
   providers: [
     Providers.GitHub({
       clientId: process.env.GITHUB_ID,
@@ -22,13 +19,11 @@ const options = {
   secret: process.env.SECRET,
   callbacks: {
     session: async (session, user) => {
-      return Promise.resolve({
-        ...session,
-        user: {
-          ...session.user,
-          id: user.id,
-        },
-      })
+      session.id = Number(user.id)
+      return Promise.resolve(session)
     },
   },
 }
+
+const authHandler: NextApiHandler = (req, res) => NextAuth(req, res, options)
+export default authHandler

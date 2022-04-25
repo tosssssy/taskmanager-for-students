@@ -18,6 +18,7 @@ import {
 } from '@chakra-ui/react'
 import React, { memo, useState } from 'react'
 import { SubjectType, UpdateSubjectType } from '../../lib/types'
+import { putApi } from './../../utils/api'
 
 type Props = {
   subject: SubjectType
@@ -41,11 +42,7 @@ export const Subject: React.FC<Props> = memo(({ subject }) => {
         memo: memo,
       }
 
-      await fetch('/api/update/subject', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-      })
+      await putApi('/api/subject/update', body)
 
       toast({
         title: 'セーブしました',

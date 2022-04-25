@@ -2,44 +2,49 @@
 import { Box, Flex } from '@chakra-ui/react'
 import dayjs from 'dayjs'
 import isBetween from 'dayjs/plugin/isBetween'
-import React, { FC, useMemo } from 'react'
+import React, { FC, useEffect, useState } from 'react'
+import { useSchedule } from '../../hooks/useSchedule'
 import { SubjectType } from '../../lib/types'
+import { getApi } from '../../utils/api'
 import { Pagination } from './Pagination'
 import { Subject } from './Subject'
-import { setDateList } from './setDateList'
-import { setStartAndEnd } from './setStartAndEnd'
-import { useSetViewRange } from './useSetViewRange'
 
 // DBから取得できる日付は'2022-01-09T00:00:00.000Z'というフォーマット
 // タイムゾーン周りでずれが生じる可能性があるのでdayjs(2022-01-09)として扱っている
+dayjs.extend(isBetween)
+const Day = ['日', '月', '火', '水', '木', '金', '土']
 
 type Props = {
   subjects: SubjectType[]
 }
 
-export const ScheduleList: FC<Props> = ({ subjects }) => {
-  dayjs.extend(isBetween)
-  const Day = ['日', '月', '火', '水', '木', '金', '土']
+export const ScheduleList: FC<Props> = ({ subjects: initSubjects }) => {
+  const [subjects, setSubjects] = useState(initSubjects)
+  const {
+    startDate,
+    endDate,
+    dateList,
+    firstViewDate,
+    lastViewDate,
+    currentWeekNum,
+    setCurrentWeekNum,
+  } = useSchedule(subjects)
 
-  // subjectsの最初と最後の日付のDayjsオブジェクト
-  const { startDate, endDate } = useMemo(
-    () => setStartAndEnd(subjects),
-    [subjects]
-  )
-
-  // 全体の日付(YYYY-MM-DD)の配列
-  const dateList = useMemo(
-    () => setDateList(startDate, endDate),
-    [startDate, endDate]
-  )
-
-  // 表示範囲と今何週目を表示しているか
-  const { firstViewDate, lastViewDate, currentWeekNum, setCurrentWeekNum } =
-    useSetViewRange()
+  useEffect(() => {
+    const getAllSubjects = async () => {
+      try {
+        const response = await getApi<SubjectType[]>('api/subject/get')
+        setSubjects(response || [])
+      } catch (e) {
+        console.error(e)
+      }
+    }
+    getAllSubjects()
+  }, [])
 
   return (
     <>
-      <Box h={170} />
+      <Box h={50} />
       {subjects.length && (
         <>
           <Box textAlign='center' fontSize='25px'>

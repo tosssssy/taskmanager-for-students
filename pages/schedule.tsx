@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 import { GetServerSideProps } from 'next'
 import { getSession } from 'next-auth/client'
 import Head from 'next/head'
@@ -25,7 +26,7 @@ const SchedulePage: FC<Props> = ({ subjects }) => {
 
 export default SchedulePage
 
-//ユーザーのスケジュールを全取得（subjectのリスト）
+//ユーザーのスケジュールを2週間分先に取得（subjectのリスト）
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const session = await getSession({ req })
   if (!session)
@@ -38,7 +39,11 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 
   const data = await prisma.subject.findMany({
     where: {
-      author: { id: Number(session.user.id) },
+      author: { id: Number(session.id) },
+      date: {
+        gte: dayjs().add(-1, 'week').toISOString(),
+        lte: dayjs().add(1, 'week').toISOString(),
+      },
     },
     orderBy: {
       id: 'asc',

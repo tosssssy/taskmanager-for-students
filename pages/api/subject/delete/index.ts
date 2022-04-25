@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { getSession } from 'next-auth/client'
-import prisma from '../../../lib/prisma'
+import prisma from '../../../../lib/prisma'
 
 // DELETE /api/post/:id
 export default async function handler(
@@ -10,18 +10,15 @@ export default async function handler(
   const session = await getSession({ req })
 
   if (!session) {
-    res.status(401).json({ message: 'Not authenticated' })
-    return
+    return res.status(401).json({ message: 'Not authenticated' })
   }
 
-  if (req.method === 'DELETE') {
+  try {
     const subject = await prisma.subject.deleteMany({
-      where: { authorId: Number(session.user.id) },
+      where: { authorId: Number(session.id) },
     })
-    res.json(subject)
-  } else {
-    throw new Error(
-      `The HTTP ${req.method} method is not supported at this route.`
-    )
+    return res.json(subject)
+  } catch (error) {
+    return res.status(500).json(error)
   }
 }
