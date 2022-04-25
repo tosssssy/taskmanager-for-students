@@ -2,9 +2,10 @@
 import { Box, Flex } from '@chakra-ui/react'
 import dayjs from 'dayjs'
 import isBetween from 'dayjs/plugin/isBetween'
-import React, { FC } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { useSchedule } from '../../hooks/useSchedule'
 import { SubjectType } from '../../lib/types'
+import { getApi } from '../../utils/api'
 import { Pagination } from './Pagination'
 import { Subject } from './Subject'
 
@@ -17,7 +18,8 @@ type Props = {
   subjects: SubjectType[]
 }
 
-export const ScheduleList: FC<Props> = ({ subjects }) => {
+export const ScheduleList: FC<Props> = ({ subjects: initSubjects }) => {
+  const [subjects, setSubjects] = useState(initSubjects)
   const {
     startDate,
     endDate,
@@ -27,6 +29,18 @@ export const ScheduleList: FC<Props> = ({ subjects }) => {
     currentWeekNum,
     setCurrentWeekNum,
   } = useSchedule(subjects)
+
+  useEffect(() => {
+    const getAllSubjects = async () => {
+      try {
+        const response = await getApi<SubjectType[]>('api/subject/get')
+        setSubjects(response || [])
+      } catch (e) {
+        console.error(e)
+      }
+    }
+    getAllSubjects()
+  }, [])
 
   return (
     <>
