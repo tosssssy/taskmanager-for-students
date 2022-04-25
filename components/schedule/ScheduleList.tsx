@@ -44,7 +44,7 @@ export const ScheduleList: FC<Props> = ({ subjects: initSubjects }) => {
 
   return (
     <>
-      <Box h={170} />
+      <Box h={50} />
       {subjects.length && (
         <>
           <Box textAlign='center' fontSize='25px'>

@@ -79,13 +79,7 @@ export const Header: FC = () => {
   }
 
   return (
-    <Flex
-      align='center'
-      justify='space-between'
-      minH='70px'
-      position='fixed'
-      w='full'
-    >
+    <Flex align='center' justify='space-between' minH='70px' w='full'>
       <Heading
         mt='15px'
         ml='40px'
