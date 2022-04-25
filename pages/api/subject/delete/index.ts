@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { getSession } from 'next-auth/client'
-import prisma from '../../../lib/prisma'
+import prisma from '../../../../lib/prisma'
 
 // DELETE /api/post/:id
 export default async function handler(

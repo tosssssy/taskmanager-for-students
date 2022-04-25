@@ -41,7 +41,7 @@ export const Subject: React.FC<Props> = memo(({ subject }) => {
         memo: memo,
       }
 
-      await fetch('/api/update/subject', {
+      await fetch('/api/subject/update', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),

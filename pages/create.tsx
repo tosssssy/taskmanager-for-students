@@ -7,6 +7,7 @@ import { Layout } from '../components/Layout'
 import { Loading } from '../components/Loading'
 import { DateSelect } from '../components/create/DateSelect'
 import { NewSubjectType } from '../lib/types'
+import { deleteApi, postApi } from '../utils/api'
 import { createNewScheduleList } from '../utils/subjectCreate'
 import { CreateButton } from './../components/create/CreateButton'
 import { SubjectCreator } from './../components/create/SubjectCreator'
@@ -27,13 +28,9 @@ const CreatePage: NextPage = () => {
   const createNewSchedule = useCallback(async () => {
     setIsLoading(true)
     try {
-      await fetch('/api/delete', { method: 'DELETE' })
-      const body = createNewScheduleList(dateList, newSubjectList)
-      await fetch('/api/create', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-      })
+      await deleteApi('/api/subject/delete')
+      const data = createNewScheduleList(dateList, newSubjectList)
+      await postApi('/api/subject/create', data)
     } catch (error) {
       console.error(error)
     }

@@ -1,8 +1,6 @@
-// pages/api/post/index.ts
-
 import { NextApiRequest, NextApiResponse } from 'next'
 import { getSession } from 'next-auth/client'
-import prisma from '../../../lib/prisma'
+import prisma from '../../../../lib/prisma'
 
 export default async function handler(
   req: NextApiRequest,
@@ -13,8 +11,13 @@ export default async function handler(
     res.status(401).json({ message: 'Not authenticated' })
     return
   }
-  await prisma.subject.createMany({
-    data: [...req.body],
+  const { id, status, memo } = req.body
+  const result = await prisma.subject.update({
+    where: { id: Number(id) },
+    data: {
+      status: Number(status),
+      memo: String(memo),
+    },
   })
-  res.end()
+  res.json(result)
 }
