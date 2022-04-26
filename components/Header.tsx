@@ -24,23 +24,25 @@ export const Header: FC = () => {
 
   if (!session) {
     right = (
-      <Link href='/api/auth/signin' passHref>
-        <Box
-          data-active={isActive('/signup')}
-          as='button'
-          p='10px 20px'
-          mt='25px'
-          mr='30px'
-          color='white'
-          fontWeight='bold'
-          borderRadius='md'
-          bgGradient='linear(to-l, #7928CA, #FF0080)'
-          _hover={{
-            opacity: 0.6,
-          }}
-        >
-          Log in
-        </Box>
+      <Link href='/api/auth/signin'>
+        <a>
+          <Box
+            data-active={isActive('/signup')}
+            as='button'
+            p='10px 20px'
+            mt='25px'
+            mr='30px'
+            color='white'
+            fontWeight='bold'
+            borderRadius='md'
+            bgGradient='linear(to-l, #7928CA, #FF0080)'
+            _hover={{
+              opacity: 0.6,
+            }}
+          >
+            Log in
+          </Box>
+        </a>
       </Link>
     )
   }
@@ -53,6 +55,7 @@ export const Header: FC = () => {
           <Flex mt='7px' direction='column' minW='150px'>
             <Link href='/create' passHref>
               <Button
+                as='a'
                 w='120px'
                 m='5px'
                 size='sm'
