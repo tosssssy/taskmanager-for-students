@@ -33,7 +33,7 @@ export const ScheduleList: FC<Props> = ({ subjects: initSubjects }) => {
   useEffect(() => {
     const getAllSubjects = async () => {
       try {
-        const response = await getApi<SubjectType[]>('api/subject/get')
+        const response = await getApi<SubjectType[]>('/api/subjects')
         setSubjects(response || [])
       } catch (e) {
         console.error(e)

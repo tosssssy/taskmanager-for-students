@@ -42,7 +42,7 @@ export const Subject: React.FC<Props> = memo(({ subject }) => {
         memo: memo,
       }
 
-      await putApi('/api/subject/update', body)
+      await putApi('/api/subjects', body)
 
       toast({
         title: 'セーブしました',

@@ -28,9 +28,9 @@ const CreatePage: NextPage = () => {
   const createNewSchedule = useCallback(async () => {
     setIsLoading(true)
     try {
-      await deleteApi('/api/subject/delete')
+      await deleteApi('/api/subjects')
       const data = createNewScheduleList(dateList, newSubjectList)
-      await postApi('/api/subject/create', data)
+      await postApi('/api/subjects', data)
     } catch (error) {
       console.error(error)
     }
