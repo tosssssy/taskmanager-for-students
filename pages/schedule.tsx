@@ -46,7 +46,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
       },
     },
     orderBy: {
-      id: 'asc',
+      date: 'asc',
     },
   })
 

@@ -20,15 +20,7 @@ type Props = {
 
 export const ScheduleList: FC<Props> = ({ subjects: initSubjects }) => {
   const [subjects, setSubjects] = useState(initSubjects)
-  const {
-    startDate,
-    endDate,
-    dateList,
-    firstViewDate,
-    lastViewDate,
-    currentWeekNum,
-    setCurrentWeekNum,
-  } = useSchedule(subjects)
+  const { dateList, setCurrentWeekNum } = useSchedule()
 
   useEffect(() => {
     const getAllSubjects = async () => {
@@ -65,7 +57,7 @@ export const ScheduleList: FC<Props> = ({ subjects: initSubjects }) => {
       {subjects.length && (
         <>
           <Box textAlign='center' fontSize='25px'>
-            {firstViewDate.format('YYYY')}
+            {dayjs(dateList[0]).format('YYYY')}
           </Box>
           <Box
             p={'30px 20px 70px 20px'}
@@ -73,67 +65,50 @@ export const ScheduleList: FC<Props> = ({ subjects: initSubjects }) => {
             maxW={'840px'}
             m={'auto'}
           >
-            {dateList?.map((oneDay, index) => {
+            {dateList.map((oneDay, index) => {
               const oneDayjs = dayjs(oneDay)
               return (
-                <>
-                  {oneDayjs.isBetween(
-                    firstViewDate.subtract(1, 'day'),
-                    lastViewDate
-                  ) && (
-                    <Box
-                      key={index}
-                      my={5}
-                      p={5}
-                      bg={'white'}
-                      borderRadius={'10px'}
-                      shadow={'md'}
-                    >
-                      <Flex fontSize={18}>
-                        {oneDayjs.format('M-D')}
-                        {'('}
-                        {Day[oneDayjs.day()] == '土' && (
-                          <Box color='blue.400'>{Day[oneDayjs.day()]}</Box>
-                        )}
-                        {Day[oneDayjs.day()] == '日' && (
-                          <Box color='red.400'>{Day[oneDayjs.day()]}</Box>
-                        )}
-                        {Day[oneDayjs.day()] != '土' &&
-                          Day[oneDayjs.day()] !== '日' && (
-                            <Box>{Day[oneDayjs.day()]}</Box>
-                          )}
-                        {')'}
-                      </Flex>
+                <Box
+                  key={index}
+                  my={5}
+                  p={5}
+                  bg={'white'}
+                  borderRadius={'10px'}
+                  shadow={'md'}
+                >
+                  <Flex fontSize={18}>
+                    {oneDayjs.format('M-D')}
+                    {'('}
+                    {Day[oneDayjs.day()] == '土' && (
+                      <Box color='blue.400'>{Day[oneDayjs.day()]}</Box>
+                    )}
+                    {Day[oneDayjs.day()] == '日' && (
+                      <Box color='red.400'>{Day[oneDayjs.day()]}</Box>
+                    )}
+                    {Day[oneDayjs.day()] != '土' &&
+                      Day[oneDayjs.day()] !== '日' && (
+                        <Box>{Day[oneDayjs.day()]}</Box>
+                      )}
+                    {')'}
+                  </Flex>
 
-                      <Flex flexWrap='wrap'>
-                        {subjects?.map((subject) => (
-                          <Box key={subject.id}>
-                            {/* 授業がある日を表示 */}
-                            {oneDayjs.format('YYYY-MM-DD') ==
-                              String(subject.date).slice(0, 10) && (
-                              <Subject
-                                subject={subject}
-                                onClick={updateSubject}
-                              />
-                            )}
-                          </Box>
-                        ))}
-                      </Flex>
-                    </Box>
-                  )}
-                </>
+                  <Flex flexWrap='wrap'>
+                    {subjects?.map((subject) => (
+                      <Box key={subject.id}>
+                        {/* 授業がある日を表示 */}
+                        {oneDayjs.format('YYYY-MM-DD') ===
+                          String(subject.date).slice(0, 10) && (
+                          <Subject subject={subject} onClick={updateSubject} />
+                        )}
+                      </Box>
+                    ))}
+                  </Flex>
+                </Box>
               )
             })}
           </Box>
 
-          <Pagination
-            firstViewDate={firstViewDate}
-            lastViewDate={lastViewDate}
-            startDate={startDate}
-            endDate={endDate}
-            currentWeekNum={currentWeekNum}
-            setCurrentWeekNum={setCurrentWeekNum}
-          />
+          <Pagination setCurrentWeekNum={setCurrentWeekNum} />
         </>
       )}
     </>
