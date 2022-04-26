@@ -1,6 +1,6 @@
 import dayjs, { Dayjs } from 'dayjs'
 import { useState, useEffect, useMemo } from 'react'
-import { SubjectType } from '../lib/types'
+import { SubjectType } from '../types/subject'
 
 const setStartAndEnd = (subjects: SubjectType[]) => {
   // 全体の配列の最初と最後のDate

@@ -17,7 +17,7 @@ import {
   useToast,
 } from '@chakra-ui/react'
 import React, { memo, useState } from 'react'
-import { SubjectType, UpdateSubjectType } from '../../lib/types'
+import { SubjectType, UpdateSubjectType } from '../../types/subject'
 import { putApi } from './../../utils/api'
 
 type Props = {
