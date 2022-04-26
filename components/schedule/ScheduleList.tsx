@@ -2,10 +2,10 @@
 import { Box, Flex } from '@chakra-ui/react'
 import dayjs from 'dayjs'
 import isBetween from 'dayjs/plugin/isBetween'
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useCallback, useEffect, useState } from 'react'
 import { useSchedule } from '../../hooks/useSchedule'
-import { SubjectType } from '../../types/subject'
-import { getApi } from '../../utils/api'
+import { SubjectType, UpdateSubjectType } from '../../types/subject'
+import { getApi, putApi } from '../../utils/api'
 import { Pagination } from './Pagination'
 import { Subject } from './Subject'
 
@@ -40,6 +40,23 @@ export const ScheduleList: FC<Props> = ({ subjects: initSubjects }) => {
       }
     }
     getAllSubjects()
+  }, [])
+
+  const updateSubject = useCallback(async (newSubject: UpdateSubjectType) => {
+    try {
+      await putApi('/api/subjects', newSubject)
+      // mutate処理
+      setSubjects((postData) =>
+        postData.map((data) => {
+          if (data.id === newSubject.id) {
+            data = { ...data, ...newSubject }
+          }
+          return data
+        })
+      )
+    } catch (error) {
+      console.error(error)
+    }
   }, [])
 
   return (
@@ -94,7 +111,10 @@ export const ScheduleList: FC<Props> = ({ subjects: initSubjects }) => {
                             {/* 授業がある日を表示 */}
                             {oneDayjs.format('YYYY-MM-DD') ==
                               String(subject.date).slice(0, 10) && (
-                              <Subject subject={subject} />
+                              <Subject
+                                subject={subject}
+                                onClick={updateSubject}
+                              />
                             )}
                           </Box>
                         ))}
