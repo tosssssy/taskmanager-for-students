@@ -2,7 +2,7 @@ import { AddIcon } from '@chakra-ui/icons'
 import { Flex, chakra, Input, Button } from '@chakra-ui/react'
 import { useSession } from 'next-auth/client'
 import React, { FC, memo, useState } from 'react'
-import { NewSubjectType } from '../../lib/types'
+import { NewSubjectType } from '../../types/subject'
 import { NewSubject } from './NewSubject'
 
 type Props = {

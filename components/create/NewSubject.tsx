@@ -1,6 +1,6 @@
 import { Box, Flex } from '@chakra-ui/layout'
 import React, { memo } from 'react'
-import { NewSubjectType } from '../../lib/types'
+import { NewSubjectType } from '../../types/subject'
 
 type Props = {
   subject: NewSubjectType

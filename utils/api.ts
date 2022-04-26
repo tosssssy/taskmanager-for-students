@@ -12,13 +12,14 @@ const fetchApi = async <T>(url: string, method: Method, body?: any) => {
     body: JSON.stringify(body),
   })
 
-  let result: T | null = null
+  let result: T
   if (!response.ok) {
     throw new Error(response.status + 'エラー : ' + (await response.json()))
   }
 
   try {
-    result = (await response.json()) as T
+    result =
+      response.status === 204 ? ({} as T) : ((await response.json()) as T)
   } catch (e) {
     throw new Error(e.message)
   }

@@ -6,7 +6,7 @@ import React, { useCallback, useState } from 'react'
 import { Layout } from '../components/Layout'
 import { Loading } from '../components/Loading'
 import { DateSelect } from '../components/create/DateSelect'
-import { NewSubjectType } from '../lib/types'
+import { NewSubjectType } from '../types/subject'
 import { deleteApi, postApi } from '../utils/api'
 import { createNewScheduleList } from '../utils/subjectCreate'
 import { CreateButton } from './../components/create/CreateButton'
@@ -28,9 +28,9 @@ const CreatePage: NextPage = () => {
   const createNewSchedule = useCallback(async () => {
     setIsLoading(true)
     try {
-      await deleteApi('/api/subject/delete')
+      await deleteApi('/api/subjects')
       const data = createNewScheduleList(dateList, newSubjectList)
-      await postApi('/api/subject/create', data)
+      await postApi('/api/subjects', data)
     } catch (error) {
       console.error(error)
     }

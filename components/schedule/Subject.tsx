@@ -16,44 +16,37 @@ import {
   Textarea,
   useToast,
 } from '@chakra-ui/react'
-import React, { memo, useState } from 'react'
-import { SubjectType, UpdateSubjectType } from '../../lib/types'
-import { putApi } from './../../utils/api'
+import React, { memo, useCallback, useState } from 'react'
+import { SubjectType, UpdateSubjectType } from '../../types/subject'
+
+const colors = {
+  1: '#d95759',
+  2: '#59d957',
+  3: 'gray',
+}
 
 type Props = {
   subject: SubjectType
+  onClick: (subject: UpdateSubjectType) => void
 }
 
-export const Subject: React.FC<Props> = memo(({ subject }) => {
+export const Subject: React.FC<Props> = memo(({ subject, onClick }) => {
   const toast = useToast()
   const [status, setStatus] = useState(subject.status || 0)
   const [memo, setMemo] = useState(subject.memo || '')
-  const color = {
-    1: '#d95759',
-    2: '#59d957',
-    3: 'gray',
-  }
 
-  const updateSubject = async () => {
-    try {
-      const body: UpdateSubjectType = {
-        id: subject.id,
-        status: status,
-        memo: memo,
-      }
-
-      await putApi('/api/subject/update', body)
-
+  const handleClick = useCallback(
+    (subject: UpdateSubjectType) => {
+      onClick(subject)
       toast({
         title: 'セーブしました',
         status: 'success',
         duration: 2000,
         isClosable: true,
       })
-    } catch (error) {
-      console.error(error)
-    }
-  }
+    },
+    [onClick, toast]
+  )
 
   return (
     <Flex flexDirection='column' mr={2}>
@@ -63,7 +56,7 @@ export const Subject: React.FC<Props> = memo(({ subject }) => {
       <Popover placement='bottom' closeOnBlur={true}>
         <PopoverTrigger>
           <Button
-            bg={status == 0 ? '#fff' : color[status]}
+            bg={status == 0 ? '#fff' : colors[status]}
             color={status == 0 ? 'black.500' : 'white'}
             border='2px'
             borderColor={memo ? 'yellow.400' : 'gray.300'}
@@ -112,7 +105,17 @@ export const Subject: React.FC<Props> = memo(({ subject }) => {
             />
           </PopoverBody>
           <PopoverFooter border='0' d='flex' justifyContent='flex-end' pb={4}>
-            <Button size='sm' colorScheme='blue' onClick={updateSubject}>
+            <Button
+              size='sm'
+              colorScheme='blue'
+              onClick={() =>
+                handleClick({
+                  id: subject.id,
+                  status,
+                  memo,
+                })
+              }
+            >
               Save
             </Button>
           </PopoverFooter>

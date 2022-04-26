@@ -6,7 +6,7 @@ import { FC } from 'react'
 import { Layout } from '../components/Layout'
 import { ScheduleList } from '../components/schedule/ScheduleList'
 import { PlzNew } from '../components/top/PlzNew'
-import { SubjectType } from '../lib/types'
+import { SubjectType } from '../types/subject'
 import prisma from './../lib/prisma'
 
 type Props = {
@@ -46,7 +46,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
       },
     },
     orderBy: {
-      id: 'asc',
+      date: 'asc',
     },
   })
 

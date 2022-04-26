@@ -1,4 +1,4 @@
-import { NewSubjectType } from '../lib/types'
+import { NewSubjectType } from '../types/subject'
 
 // はじめの日付から終わりの日付までの日数分dateListに入れて返す
 export const createDateList = (startDate: string, endDate: string) => {
