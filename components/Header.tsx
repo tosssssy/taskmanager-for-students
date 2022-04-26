@@ -1,5 +1,5 @@
 import { Button } from '@chakra-ui/button'
-import { Box, Flex, Heading } from '@chakra-ui/layout'
+import { Box, Flex, Heading, Text } from '@chakra-ui/layout'
 import { signOut, useSession } from 'next-auth/client'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -24,69 +24,60 @@ export const Header: FC = () => {
 
   if (!session) {
     right = (
-      <Link href='/api/auth/signin'>
-        <a>
-          <Box
-            data-active={isActive('/signup')}
-            as='button'
-            p='10px 20px'
-            mt='25px'
-            mr='30px'
-            color='white'
-            fontWeight='bold'
-            borderRadius='md'
-            bgGradient='linear(to-l, #7928CA, #FF0080)'
-            _hover={{
-              opacity: 0.6,
-            }}
-          >
-            Log in
-          </Box>
-        </a>
+      <Link href='/api/auth/signin' passHref>
+        <Box
+          data-active={isActive('/signup')}
+          as='button'
+          p='10px 20px'
+          color='white'
+          fontWeight='bold'
+          borderRadius='md'
+          bgGradient='linear(to-l, #7928CA, #FF0080)'
+          _hover={{
+            opacity: 0.6,
+          }}
+        >
+          Log in
+        </Box>
       </Link>
     )
   }
 
   if (session) {
     right = (
-      <>
-        <Flex direction='column'>
-          <Box pt='12px'>user：{session.user.name}</Box>
-          <Flex mt='7px' direction='column' minW='150px'>
-            <Link href='/create' passHref>
-              <Button
-                as='a'
-                w='120px'
-                m='5px'
-                size='sm'
-                variant='outline'
-                color='gray.700'
-              >
-                新規作成
-              </Button>
-            </Link>
+      <Flex direction='column'>
+        <Text>user：{session.user.name}</Text>
+        <Flex mt={3} direction='column' gap='2' justify={'end'}>
+          <Link href='/create' passHref>
             <Button
+              as='a'
               w='120px'
-              m='5px'
               size='sm'
               variant='outline'
               color='gray.700'
-              onClick={() => signOut()}
             >
-              ログアウト
+              新規作成
             </Button>
-          </Flex>
+          </Link>
+          <Button
+            w='120px'
+            size='sm'
+            variant='outline'
+            color='gray.700'
+            onClick={() => signOut()}
+          >
+            ログアウト
+          </Button>
         </Flex>
-      </>
+      </Flex>
     )
   }
 
   return (
-    <Flex align='center' justify='space-between' minH='70px' w='full'>
+    <Flex justify='space-between' alignItems={'center'} m={5}>
       <Heading
-        mt='15px'
-        ml='40px'
-        p='2px'
+        as='h1'
+        p={2}
         bgGradient='linear(to-l, #7928CA, #FF0080)'
         bgClip='text'
         fontSize='4xl'

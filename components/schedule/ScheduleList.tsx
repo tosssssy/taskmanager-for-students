@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Box, Flex } from '@chakra-ui/react'
+import { Box, Flex, Text } from '@chakra-ui/react'
 import dayjs from 'dayjs'
 import isBetween from 'dayjs/plugin/isBetween'
 import React, { FC, useCallback, useEffect, useState } from 'react'
@@ -53,64 +53,61 @@ export const ScheduleList: FC<Props> = ({ subjects: initSubjects }) => {
 
   return (
     <>
-      <Box h={50} />
-      {subjects.length && (
-        <>
-          <Box textAlign='center' fontSize='25px'>
-            {dayjs(dateList[0]).format('YYYY')}
-          </Box>
-          <Box
-            p={'30px 20px 70px 20px'}
-            minW={'375px'}
-            maxW={'840px'}
-            m={'auto'}
-          >
-            {dateList.map((oneDay, index) => {
-              const oneDayjs = dayjs(oneDay)
-              return (
-                <Box
-                  key={index}
-                  my={5}
-                  p={5}
-                  bg={'white'}
-                  borderRadius={'10px'}
-                  shadow={'md'}
-                >
-                  <Flex fontSize={18}>
-                    {oneDayjs.format('M-D')}
-                    {'('}
-                    {Day[oneDayjs.day()] == '土' && (
-                      <Box color='blue.400'>{Day[oneDayjs.day()]}</Box>
-                    )}
-                    {Day[oneDayjs.day()] == '日' && (
-                      <Box color='red.400'>{Day[oneDayjs.day()]}</Box>
-                    )}
-                    {Day[oneDayjs.day()] != '土' &&
-                      Day[oneDayjs.day()] !== '日' && (
-                        <Box>{Day[oneDayjs.day()]}</Box>
-                      )}
-                    {')'}
-                  </Flex>
+      <Box mt={50} textAlign='center' fontSize='25px'>
+        {dayjs(dateList[0]).format('YYYY')}
+      </Box>
 
-                  <Flex flexWrap='wrap'>
-                    {subjects?.map((subject) => (
-                      <Box key={subject.id}>
-                        {/* 授業がある日を表示 */}
-                        {oneDayjs.format('YYYY-MM-DD') ===
-                          String(subject.date).slice(0, 10) && (
-                          <Subject subject={subject} onClick={updateSubject} />
-                        )}
-                      </Box>
-                    ))}
-                  </Flex>
-                </Box>
-              )
-            })}
-          </Box>
+      <Flex
+        direction={'column'}
+        gap={5}
+        p={25}
+        mx={'auto'}
+        mb={'150px'}
+        maxW={'840px'}
+      >
+        {dateList.map((oneDay) => {
+          const oneDayjs = dayjs(oneDay)
+          return (
+            <Box
+              key={oneDay}
+              p={5}
+              bg={'white'}
+              borderRadius={'10px'}
+              shadow={'md'}
+            >
+              <Flex fontSize={18}>
+                {oneDayjs.format('M-D')}
+                {'('}
+                {Day[oneDayjs.day()] === '土' && (
+                  <Text color='blue.400'>{Day[oneDayjs.day()]}</Text>
+                )}
+                {Day[oneDayjs.day()] === '日' && (
+                  <Text color='red.400'>{Day[oneDayjs.day()]}</Text>
+                )}
+                {Day[oneDayjs.day()] !== '土' &&
+                  Day[oneDayjs.day()] !== '日' && (
+                    <Text>{Day[oneDayjs.day()]}</Text>
+                  )}
+                {')'}
+              </Flex>
 
-          <Pagination setCurrentWeekNum={setCurrentWeekNum} />
-        </>
-      )}
+              <Flex flexWrap='wrap'>
+                {subjects?.map((subject) => (
+                  <Box key={subject.id}>
+                    {/* 授業がある日を表示 */}
+                    {oneDayjs.format('YYYY-MM-DD') ===
+                      String(subject.date).slice(0, 10) && (
+                      <Subject subject={subject} onClick={updateSubject} />
+                    )}
+                  </Box>
+                ))}
+              </Flex>
+            </Box>
+          )
+        })}
+      </Flex>
+
+      <Pagination setCurrentWeekNum={setCurrentWeekNum} />
     </>
   )
 }
