@@ -17,7 +17,7 @@ export const Pagination: FC<Props> = ({ setCurrentWeekNum }) => {
       gap={['40px', '60px', '100px', '100px']}
     >
       {/* chakra UIのButtonを使うとbgに違和感があるため */}
-      <button onClick={() => setCurrentWeekNum((num) => num + 1)}>
+      <button onClick={() => setCurrentWeekNum((num) => num - 1)}>
         <ArrowLeftIcon
           p='0'
           zIndex='10'
