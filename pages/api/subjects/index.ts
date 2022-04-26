@@ -23,19 +23,14 @@ export default async function handler(
 
   switch (req.method) {
     case 'GET':
-      getHandler(handlerArgs)
-      break
+      return getHandler(handlerArgs)
     case 'POST':
-      postHandler(handlerArgs)
-      break
+      return postHandler(handlerArgs)
     case 'PUT':
-      putHandler(handlerArgs)
-      break
+      return putHandler(handlerArgs)
     case 'DELETE':
-      deleteHandler(handlerArgs)
-      break
+      return deleteHandler(handlerArgs)
     default:
-      res.status(405).json({ message: 'メソッドが定義されていません' })
-      break
+      return res.status(405).json({ message: 'メソッドが定義されていません' })
   }
 }
