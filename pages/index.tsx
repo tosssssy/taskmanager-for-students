@@ -4,7 +4,7 @@ import { useSession, getSession } from 'next-auth/client'
 import Head from 'next/head'
 import Router from 'next/router'
 import React from 'react'
-import { Layout } from '../components/Layout'
+import { Header } from '../components/Header'
 import { Welcome } from '../components/top/Welcome'
 
 const TopPage: NextPage = () => {
@@ -16,9 +16,9 @@ const TopPage: NextPage = () => {
       <Head>
         <title>Task Manager</title>
       </Head>
-      <Layout>
-        <Welcome />
-      </Layout>
+
+      <Header />
+      <Welcome />
     </>
   )
 }

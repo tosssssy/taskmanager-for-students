@@ -3,7 +3,7 @@ import { NextPage } from 'next'
 import Head from 'next/head'
 import Router from 'next/router'
 import React, { useCallback, useState } from 'react'
-import { Layout } from '../components/Layout'
+import { Header } from '../components/Header'
 import { Loading } from '../components/Loading'
 import { DateSelect } from '../components/create/DateSelect'
 import { NewSubjectType } from '../types/subject'
@@ -42,38 +42,36 @@ const CreatePage: NextPage = () => {
         <title>Task Manager | 新規作成</title>
       </Head>
 
-      <Layout>
-        {isLoading ? (
-          <Loading />
-        ) : (
-          <Box my={'80px'} mx={'auto'} maxW='700px' px={5}>
-            <Text {...textProps}>
-              ①授業の始まる日、終わる日を選択して下さい
-            </Text>
-            <DateSelect onUpdate={(dateList) => setDateList(dateList)} />
+      <Header rightButtonName='スケジュール' rightButtonPath='/schedule' />
 
-            <Text {...textProps}>
-              ②授業の曜日、時限を選択し、教科名を入力して下さい
-            </Text>
-            <SubjectCreator
-              newSubjectList={newSubjectList}
-              onAdd={(newSubject) => {
-                setNewSubjectList((subjects) => [...subjects, newSubject])
-              }}
-              onDelete={(index) =>
-                setNewSubjectList((subjects) =>
-                  subjects.filter((_, i) => i !== index)
-                )
-              }
-            />
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <Box my={'80px'} mx={'auto'} maxW='700px' px={5}>
+          <Text {...textProps}>①授業の始まる日、終わる日を選択して下さい</Text>
+          <DateSelect onUpdate={(dateList) => setDateList(dateList)} />
 
-            <Text {...textProps}>
-              ③時間割を確認し、完成ボタンを押して下さい。
-            </Text>
-            <CreateButton onclick={createNewSchedule} />
-          </Box>
-        )}
-      </Layout>
+          <Text {...textProps}>
+            ②授業の曜日、時限を選択し、教科名を入力して下さい
+          </Text>
+          <SubjectCreator
+            newSubjectList={newSubjectList}
+            onAdd={(newSubject) => {
+              setNewSubjectList((subjects) => [...subjects, newSubject])
+            }}
+            onDelete={(index) =>
+              setNewSubjectList((subjects) =>
+                subjects.filter((_, i) => i !== index)
+              )
+            }
+          />
+
+          <Text {...textProps}>
+            ③時間割を確認し、完成ボタンを押して下さい。
+          </Text>
+          <CreateButton onclick={createNewSchedule} />
+        </Box>
+      )}
     </>
   )
 }
