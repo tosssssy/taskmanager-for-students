@@ -57,6 +57,7 @@ export const SubjectCreator: FC<Props> = memo(
           </chakra.select>
           <Input
             placeholder='例）数学'
+            maxLength={20}
             onChange={(e) => setName(e.target.value)}
           />
           <Button
