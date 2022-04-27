@@ -1,9 +1,9 @@
-import { Box, Spinner } from '@chakra-ui/react'
+import { Flex, Spinner } from '@chakra-ui/react'
 import React, { FC } from 'react'
 
 export const Loading: FC = () => {
   return (
-    <Box display='flex' pt='50Vh' justifyContent='center'>
+    <Flex mt='30vh' justifyContent='center'>
       <Spinner
         thickness='4px'
         speed='0.65s'
@@ -11,6 +11,6 @@ export const Loading: FC = () => {
         color='blue.500'
         size='xl'
       />
-    </Box>
+    </Flex>
   )
 }
