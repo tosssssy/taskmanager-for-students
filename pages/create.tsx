@@ -14,7 +14,6 @@ import { SubjectCreator } from './../components/create/SubjectCreator'
 
 const textProps: TextProps = {
   my: '30px',
-  ml: '10%',
   pr: '10%',
   color: 'blackAlpha.800',
 }
@@ -47,8 +46,7 @@ const CreatePage: NextPage = () => {
         {isLoading ? (
           <Loading />
         ) : (
-          <>
-            <Box h={200} />
+          <Box my={'80px'} mx={'auto'} maxW='700px' px={5}>
             <Text {...textProps}>
               ①授業の始まる日、終わる日を選択して下さい
             </Text>
@@ -73,7 +71,7 @@ const CreatePage: NextPage = () => {
               ③時間割を確認し、完成ボタンを押して下さい。
             </Text>
             <CreateButton onclick={createNewSchedule} />
-          </>
+          </Box>
         )}
       </Layout>
     </>

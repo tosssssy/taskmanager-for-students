@@ -15,12 +15,19 @@ type Props = {
 
 const SchedulePage: FC<Props> = ({ subjects }) => {
   return (
-    <Layout>
+    <>
       <Head>
         <title>Task Manager | スケジュール</title>
       </Head>
-      {subjects.length > 0 ? <ScheduleList subjects={subjects} /> : <PlzNew />}
-    </Layout>
+
+      <Layout>
+        {subjects.length > 0 ? (
+          <ScheduleList mt={50} subjects={subjects} />
+        ) : (
+          <PlzNew />
+        )}
+      </Layout>
+    </>
   )
 }
 

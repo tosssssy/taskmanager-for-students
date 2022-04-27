@@ -21,7 +21,7 @@ export const SubjectCreator: FC<Props> = memo(
 
     return (
       <>
-        <Flex m={['0px 10%', '0px 15%']} maxW='700px'>
+        <Flex>
           <chakra.select
             minW='50px'
             border='rgb(226,232,240) 2px solid'
@@ -80,15 +80,17 @@ export const SubjectCreator: FC<Props> = memo(
           </Button>
         </Flex>
 
-        {newSubjectList.map((subject, index) => {
-          return (
-            <NewSubject
-              key={index}
-              subject={subject}
-              onDelete={() => onDelete(index)}
-            />
-          )
-        })}
+        <Flex direction='column' gap='10px' mt='10px'>
+          {newSubjectList.map((subject, index) => {
+            return (
+              <NewSubject
+                key={index}
+                subject={subject}
+                onDelete={() => onDelete(index)}
+              />
+            )
+          })}
+        </Flex>
       </>
     )
   }

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Box, Flex, Text } from '@chakra-ui/react'
+import { Box, BoxProps, Flex, Text, Wrap } from '@chakra-ui/react'
 import dayjs from 'dayjs'
 import isBetween from 'dayjs/plugin/isBetween'
 import React, { FC, useCallback, useEffect, useState } from 'react'
@@ -16,9 +16,12 @@ const Day = ['日', '月', '火', '水', '木', '金', '土']
 
 type Props = {
   subjects: SubjectType[]
-}
+} & BoxProps
 
-export const ScheduleList: FC<Props> = ({ subjects: initSubjects }) => {
+export const ScheduleList: FC<Props> = ({
+  subjects: initSubjects,
+  ...rest
+}) => {
   const [subjects, setSubjects] = useState(initSubjects)
   const { dateList, setCurrentWeekNum } = useSchedule()
 
@@ -52,8 +55,8 @@ export const ScheduleList: FC<Props> = ({ subjects: initSubjects }) => {
   }, [])
 
   return (
-    <>
-      <Box mt={50} textAlign='center' fontSize='25px'>
+    <Box {...rest}>
+      <Box textAlign='center' fontSize='25px'>
         {dayjs(dateList[0]).format('YYYY')}
       </Box>
 
@@ -67,6 +70,9 @@ export const ScheduleList: FC<Props> = ({ subjects: initSubjects }) => {
       >
         {dateList.map((oneDay) => {
           const oneDayjs = dayjs(oneDay)
+          const oneDaySubjects = subjects.filter(
+            (v) => oneDayjs.format('YYYY-MM-DD') === String(v.date).slice(0, 10)
+          )
           return (
             <Box
               key={oneDay}
@@ -91,24 +97,22 @@ export const ScheduleList: FC<Props> = ({ subjects: initSubjects }) => {
                 {')'}
               </Flex>
 
-              <Flex flexWrap='wrap'>
-                {subjects?.map((subject) => (
-                  <Box key={subject.id}>
-                    {/* 授業がある日を表示 */}
-                    {oneDayjs.format('YYYY-MM-DD') ===
-                      String(subject.date).slice(0, 10) && (
-                      <Subject subject={subject} onClick={updateSubject} />
-                    )}
-                  </Box>
+              <Wrap>
+                {oneDaySubjects.map((oneDaySubject) => (
+                  <Subject
+                    key={oneDaySubject.id}
+                    subject={oneDaySubject}
+                    onSave={updateSubject}
+                  />
                 ))}
-              </Flex>
+              </Wrap>
             </Box>
           )
         })}
       </Flex>
 
       <Pagination setCurrentWeekNum={setCurrentWeekNum} />
-    </>
+    </Box>
   )
 }
 
