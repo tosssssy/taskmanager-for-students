@@ -1,5 +1,6 @@
 import {
   Box,
+  BoxProps,
   Button,
   Flex,
   Popover,
@@ -27,17 +28,17 @@ const colors = {
 
 type Props = {
   subject: SubjectType
-  onClick: (subject: UpdateSubjectType) => void
-}
+  onSave: (subject: UpdateSubjectType) => void
+} & BoxProps
 
-export const Subject: React.FC<Props> = memo(({ subject, onClick }) => {
+export const Subject: React.FC<Props> = memo(({ subject, onSave, ...rest }) => {
   const toast = useToast()
   const [status, setStatus] = useState(subject.status || 0)
   const [memo, setMemo] = useState(subject.memo || '')
 
   const handleClick = useCallback(
     (subject: UpdateSubjectType) => {
-      onClick(subject)
+      onSave(subject)
       toast({
         title: 'セーブしました',
         status: 'success',
@@ -45,11 +46,11 @@ export const Subject: React.FC<Props> = memo(({ subject, onClick }) => {
         isClosable: true,
       })
     },
-    [onClick, toast]
+    [onSave, toast]
   )
 
   return (
-    <Flex flexDirection='column' mr={2}>
+    <Flex flexDirection='column' {...rest}>
       <Box color='gray' textAlign='center' fontSize={'sm'} m={1}>
         {subject.period + '限'}
       </Box>

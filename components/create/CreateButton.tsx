@@ -8,6 +8,7 @@ import {
   AlertDialogCloseButton,
   AlertDialogBody,
   AlertDialogFooter,
+  Box,
 } from '@chakra-ui/react'
 import React, { FC, memo } from 'react'
 
@@ -20,20 +21,22 @@ export const CreateButton: FC<Props> = memo(({ onclick }) => {
   const cancelRef = React.useRef()
   return (
     <>
-      <Button
-        minW='70px'
-        ml={['10%', '15%']}
-        bgGradient='linear(to-l, #7928CA, #FF0080)'
-        bgClip='text'
-        border='1px'
-        borderColor='silver'
-        _hover={{
-          opacity: 0.8,
-        }}
-        onClick={onOpen}
-      >
-        完成
-      </Button>
+      <Box textAlign={'right'}>
+        <Button
+          p='10px 20px'
+          color='white'
+          fontWeight='bold'
+          borderRadius='md'
+          bgGradient='linear(to-l, #7928CA, #FF0080)'
+          _hover={{
+            opacity: 0.6,
+          }}
+          onClick={onOpen}
+        >
+          完成
+        </Button>
+      </Box>
+
       <AlertDialog
         motionPreset='slideInBottom'
         leastDestructiveRef={cancelRef}

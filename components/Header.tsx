@@ -5,73 +5,19 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { FC } from 'react'
 
-export const Header: FC = () => {
+type Props = {
+  rightButtonName?: string
+  rightButtonPath?: string
+}
+
+export const Header: FC<Props> = ({
+  rightButtonName = '',
+  rightButtonPath = '',
+}) => {
   const router = useRouter()
   const isActive: (pathname: string) => boolean = (pathname) =>
     router.pathname === pathname
-
-  const [session, loading] = useSession()
-
-  let right = null
-
-  if (loading) {
-    right = (
-      <div>
-        <p>Validating session ...</p>
-      </div>
-    )
-  }
-
-  if (!session) {
-    right = (
-      <Link href='/api/auth/signin' passHref>
-        <Box
-          data-active={isActive('/signup')}
-          as='button'
-          p='10px 20px'
-          color='white'
-          fontWeight='bold'
-          borderRadius='md'
-          bgGradient='linear(to-l, #7928CA, #FF0080)'
-          _hover={{
-            opacity: 0.6,
-          }}
-        >
-          Log in
-        </Box>
-      </Link>
-    )
-  }
-
-  if (session) {
-    right = (
-      <Flex direction='column'>
-        <Text>user：{session.user.name}</Text>
-        <Flex mt={3} direction='column' gap='2' justify={'end'}>
-          <Link href='/create' passHref>
-            <Button
-              as='a'
-              w='120px'
-              size='sm'
-              variant='outline'
-              color='gray.700'
-            >
-              新規作成
-            </Button>
-          </Link>
-          <Button
-            w='120px'
-            size='sm'
-            variant='outline'
-            color='gray.700'
-            onClick={() => signOut()}
-          >
-            ログアウト
-          </Button>
-        </Flex>
-      </Flex>
-    )
-  }
+  const [session] = useSession()
 
   return (
     <Flex justify='space-between' alignItems={'center'} m={5}>
@@ -84,7 +30,51 @@ export const Header: FC = () => {
       >
         <Link href='/schedule'>Task Manager</Link>
       </Heading>
-      {right}
+
+      {session ? (
+        <Flex direction='column'>
+          <Text>user：{session.user.name}</Text>
+          <Flex mt={3} direction='column' gap='2' justify={'end'}>
+            <Link href={rightButtonPath} passHref>
+              <Button
+                as='a'
+                w='120px'
+                size='sm'
+                variant='outline'
+                color='gray.700'
+              >
+                {rightButtonName}
+              </Button>
+            </Link>
+            <Button
+              w='120px'
+              size='sm'
+              variant='outline'
+              color='gray.700'
+              onClick={() => signOut()}
+            >
+              ログアウト
+            </Button>
+          </Flex>
+        </Flex>
+      ) : (
+        <Link href='/api/auth/signin' passHref>
+          <Box
+            data-active={isActive('/signup')}
+            as='button'
+            p='10px 20px'
+            color='white'
+            fontWeight='bold'
+            borderRadius='md'
+            bgGradient='linear(to-l, #7928CA, #FF0080)'
+            _hover={{
+              opacity: 0.6,
+            }}
+          >
+            Log in
+          </Box>
+        </Link>
+      )}
     </Flex>
   )
 }

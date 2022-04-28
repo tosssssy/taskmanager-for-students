@@ -3,7 +3,7 @@ import { GetServerSideProps } from 'next'
 import { getSession } from 'next-auth/client'
 import Head from 'next/head'
 import { FC } from 'react'
-import { Layout } from '../components/Layout'
+import { Header } from '../components/Header'
 import { ScheduleList } from '../components/schedule/ScheduleList'
 import { PlzNew } from '../components/top/PlzNew'
 import { SubjectType } from '../types/subject'
@@ -15,12 +15,19 @@ type Props = {
 
 const SchedulePage: FC<Props> = ({ subjects }) => {
   return (
-    <Layout>
+    <>
       <Head>
         <title>Task Manager | スケジュール</title>
       </Head>
-      {subjects.length > 0 ? <ScheduleList subjects={subjects} /> : <PlzNew />}
-    </Layout>
+
+      <Header rightButtonName='新規作成' rightButtonPath='/create' />
+
+      {subjects.length > 0 ? (
+        <ScheduleList mt={50} subjects={subjects} />
+      ) : (
+        <PlzNew />
+      )}
+    </>
   )
 }
 
