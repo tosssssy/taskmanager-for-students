@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start -p 8000",
     "studio": "npx prisma studio",
-    "lint:fix": "eslint pages components --ext .js,jsx,.ts,.tsx --fix"
+    "lint:fix": "eslint pages components hooks types utils --ext .js,jsx,.ts,.tsx --fix",
+    "prettier:fix": "npx prettier --write pages components hooks types utils"
   },
   "keywords": [],
   "author": "",
@@ -39,10 +40,5 @@
     "eslint-plugin-unused-imports": "^2.0.0",
     "prisma": "^2.30.3",
     "typescript": "^4.6.3"
-  },
-  "prettier": {
-    "semi": false,
-    "singleQuote": true,
-    "jsxSingleQuote": true
   }
 }

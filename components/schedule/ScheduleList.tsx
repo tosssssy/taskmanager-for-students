@@ -18,10 +18,7 @@ type Props = {
   subjects: SubjectType[]
 } & BoxProps
 
-export const ScheduleList: FC<Props> = ({
-  subjects: initSubjects,
-  ...rest
-}) => {
+export const ScheduleList: FC<Props> = ({ subjects: initSubjects, ...rest }) => {
   const [subjects, setSubjects] = useState(initSubjects)
   const { dateList, setCurrentWeekNum } = useSchedule()
 
@@ -60,50 +57,30 @@ export const ScheduleList: FC<Props> = ({
         {dayjs(dateList[0]).format('YYYY')}
       </Box>
 
-      <Flex
-        direction={'column'}
-        gap={5}
-        p={25}
-        mx={'auto'}
-        mb={'150px'}
-        maxW={'840px'}
-      >
+      <Flex direction={'column'} gap={5} p={25} mx={'auto'} mb={'150px'} maxW={'840px'}>
         {dateList.map((oneDay) => {
           const oneDayjs = dayjs(oneDay)
           const oneDaySubjects = subjects.filter(
             (v) => oneDayjs.format('YYYY-MM-DD') === String(v.date).slice(0, 10)
           )
           return (
-            <Box
-              key={oneDay}
-              p={5}
-              bg={'white'}
-              borderRadius={'10px'}
-              shadow={'md'}
-            >
+            <Box key={oneDay} p={5} bg={'white'} borderRadius={'10px'} shadow={'md'}>
               <Flex fontSize={18}>
                 {oneDayjs.format('M-D')}
                 {'('}
                 {Day[oneDayjs.day()] === '土' && (
                   <Text color='blue.400'>{Day[oneDayjs.day()]}</Text>
                 )}
-                {Day[oneDayjs.day()] === '日' && (
-                  <Text color='red.400'>{Day[oneDayjs.day()]}</Text>
+                {Day[oneDayjs.day()] === '日' && <Text color='red.400'>{Day[oneDayjs.day()]}</Text>}
+                {Day[oneDayjs.day()] !== '土' && Day[oneDayjs.day()] !== '日' && (
+                  <Text>{Day[oneDayjs.day()]}</Text>
                 )}
-                {Day[oneDayjs.day()] !== '土' &&
-                  Day[oneDayjs.day()] !== '日' && (
-                    <Text>{Day[oneDayjs.day()]}</Text>
-                  )}
                 {')'}
               </Flex>
 
               <Wrap>
                 {oneDaySubjects.map((oneDaySubject) => (
-                  <Subject
-                    key={oneDaySubject.id}
-                    subject={oneDaySubject}
-                    onSave={updateSubject}
-                  />
+                  <Subject key={oneDaySubject.id} subject={oneDaySubject} onSave={updateSubject} />
                 ))}
               </Wrap>
             </Box>

@@ -71,25 +71,13 @@ export const Subject: React.FC<Props> = memo(({ subject, onSave, ...rest }) => {
           <PopoverHeader pt={4} fontWeight='bold' border='0'>
             <RadioGroup defaultValue='3'>
               <Stack spacing={5} direction='row'>
-                <Radio
-                  colorScheme='red'
-                  value='1'
-                  onChange={() => setStatus(1)}
-                >
+                <Radio colorScheme='red' value='1' onChange={() => setStatus(1)}>
                   途中
                 </Radio>
-                <Radio
-                  colorScheme='green'
-                  value='2'
-                  onChange={() => setStatus(2)}
-                >
+                <Radio colorScheme='green' value='2' onChange={() => setStatus(2)}>
                   提出済み
                 </Radio>
-                <Radio
-                  colorScheme='gray'
-                  value='3'
-                  onChange={() => setStatus(3)}
-                >
+                <Radio colorScheme='gray' value='3' onChange={() => setStatus(3)}>
                   無し
                 </Radio>
               </Stack>

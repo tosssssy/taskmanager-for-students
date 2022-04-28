@@ -22,11 +22,7 @@ const SchedulePage: FC<Props> = ({ subjects }) => {
 
       <Header rightButtonName='新規作成' rightButtonPath='/create' />
 
-      {subjects.length > 0 ? (
-        <ScheduleList mt={50} subjects={subjects} />
-      ) : (
-        <PlzNew />
-      )}
+      {subjects.length > 0 ? <ScheduleList mt={50} subjects={subjects} /> : <PlzNew />}
     </>
   )
 }

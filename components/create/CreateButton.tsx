@@ -50,8 +50,7 @@ export const CreateButton: FC<Props> = memo(({ onclick }) => {
           <AlertDialogHeader>注意</AlertDialogHeader>
           <AlertDialogCloseButton />
           <AlertDialogBody>
-            現在のスケジュールが削除されて新しいスケジュールが作成されます。
-            よろしいですか？
+            現在のスケジュールが削除されて新しいスケジュールが作成されます。 よろしいですか？
           </AlertDialogBody>
           <AlertDialogFooter>
             <Button ref={cancelRef} onClick={onClose}>

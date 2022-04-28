@@ -18,8 +18,7 @@ const fetchApi = async <T>(url: string, method: Method, body?: any) => {
   }
 
   try {
-    result =
-      response.status === 204 ? ({} as T) : ((await response.json()) as T)
+    result = response.status === 204 ? ({} as T) : ((await response.json()) as T)
   } catch (e) {
     throw new Error(e.message)
   }
@@ -29,11 +28,8 @@ const fetchApi = async <T>(url: string, method: Method, body?: any) => {
 
 export const getApi = async <T>(url: string) => fetchApi<T>(url, 'GET')
 
-export const postApi = async (url: string, body?: any) =>
-  fetchApi(url, 'POST', body)
+export const postApi = async (url: string, body?: any) => fetchApi(url, 'POST', body)
 
-export const putApi = async (url: string, body?: any) =>
-  fetchApi(url, 'PUT', body)
+export const putApi = async (url: string, body?: any) => fetchApi(url, 'PUT', body)
 
-export const deleteApi = async (url: string, body?: any) =>
-  fetchApi(url, 'DELETE', body)
+export const deleteApi = async (url: string, body?: any) => fetchApi(url, 'DELETE', body)

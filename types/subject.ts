@@ -8,10 +8,7 @@ export type SubjectType = {
   memo?: string
 }
 
-export type NewSubjectType = Pick<
-  SubjectType,
-  'name' | 'date' | 'period' | 'day'
-> & {
+export type NewSubjectType = Pick<SubjectType, 'name' | 'date' | 'period' | 'day'> & {
   authorId: number
 }
 
