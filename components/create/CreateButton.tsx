@@ -10,7 +10,7 @@ import {
   AlertDialogFooter,
   Box,
 } from '@chakra-ui/react'
-import React, { FC, memo } from 'react'
+import React, { FC, memo, useRef } from 'react'
 
 type Props = {
   onclick: () => void
@@ -18,7 +18,7 @@ type Props = {
 
 export const CreateButton: FC<Props> = memo(({ onclick }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const cancelRef = React.useRef()
+  const cancelRef = useRef(null)
   return (
     <>
       <Box textAlign={'right'}>
@@ -50,8 +50,7 @@ export const CreateButton: FC<Props> = memo(({ onclick }) => {
           <AlertDialogHeader>注意</AlertDialogHeader>
           <AlertDialogCloseButton />
           <AlertDialogBody>
-            現在のスケジュールが削除されて新しいスケジュールが作成されます。
-            よろしいですか？
+            現在のスケジュールが削除されて新しいスケジュールが作成されます。 よろしいですか？
           </AlertDialogBody>
           <AlertDialogFooter>
             <Button ref={cancelRef} onClick={onClose}>

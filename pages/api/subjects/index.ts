@@ -5,10 +5,7 @@ import { getHandler } from './get'
 import { postHandler } from './post'
 import { putHandler } from './put'
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getSession({ req })
 
   if (!session) {

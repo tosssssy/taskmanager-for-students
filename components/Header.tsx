@@ -10,13 +10,9 @@ type Props = {
   rightButtonPath?: string
 }
 
-export const Header: FC<Props> = ({
-  rightButtonName = '',
-  rightButtonPath = '',
-}) => {
+export const Header: FC<Props> = ({ rightButtonName = '', rightButtonPath = '' }) => {
   const router = useRouter()
-  const isActive: (pathname: string) => boolean = (pathname) =>
-    router.pathname === pathname
+  const isActive: (pathname: string) => boolean = (pathname) => router.pathname === pathname
   const [session] = useSession()
 
   return (
@@ -33,16 +29,10 @@ export const Header: FC<Props> = ({
 
       {session ? (
         <Flex direction='column'>
-          <Text>user：{session.user.name}</Text>
+          <Text>user：{session?.user?.name || ''}</Text>
           <Flex mt={3} direction='column' gap='2' justify={'end'}>
             <Link href={rightButtonPath} passHref>
-              <Button
-                as='a'
-                w='120px'
-                size='sm'
-                variant='outline'
-                color='gray.700'
-              >
+              <Button as='a' w='120px' size='sm' variant='outline' color='gray.700'>
                 {rightButtonName}
               </Button>
             </Link>

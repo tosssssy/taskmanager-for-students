@@ -51,24 +51,18 @@ const CreatePage: NextPage = () => {
           <Text {...textProps}>①授業の始まる日、終わる日を選択して下さい</Text>
           <DateSelect onUpdate={(dateList) => setDateList(dateList)} />
 
-          <Text {...textProps}>
-            ②授業の曜日、時限を選択し、教科名を入力して下さい
-          </Text>
+          <Text {...textProps}>②授業の曜日、時限を選択し、教科名を入力して下さい</Text>
           <SubjectCreator
             newSubjectList={newSubjectList}
             onAdd={(newSubject) => {
               setNewSubjectList((subjects) => [...subjects, newSubject])
             }}
             onDelete={(index) =>
-              setNewSubjectList((subjects) =>
-                subjects.filter((_, i) => i !== index)
-              )
+              setNewSubjectList((subjects) => subjects.filter((_, i) => i !== index))
             }
           />
 
-          <Text {...textProps}>
-            ③時間割を確認し、完成ボタンを押して下さい。
-          </Text>
+          <Text {...textProps}>③時間割を確認し、完成ボタンを押して下さい。</Text>
           <CreateButton onclick={createNewSchedule} />
         </Box>
       )}

@@ -23,10 +23,7 @@ export const createDateList = (startDate: string, endDate: string) => {
 //   period: 3;
 //   day: Sat;
 // };
-export const createNewScheduleList = (
-  dateList: Date[],
-  newSubjects: NewSubjectType[]
-) => {
+export const createNewScheduleList = (dateList: Date[], newSubjects: NewSubjectType[]) => {
   let newSchedule: NewSubjectType[] = []
 
   for (let i = 0; i < dateList.length; i++) {

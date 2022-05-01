@@ -12,11 +12,7 @@ export const DateSelect: FC<Props> = memo(({ onUpdate }) => {
   return (
     <Box>
       <Flex align={'center'} h='40px'>
-        <Input
-          type='date'
-          bg='white'
-          onChange={(e) => setStartDate(e.target.value)}
-        />
+        <Input type='date' bg='white' onChange={(e) => setStartDate(e.target.value)} />
         <Text fontSize='38px' h='40px' mb='24px' color='blackAlpha.700'>
           ~
         </Text>
