@@ -2,10 +2,11 @@
 import { Box, BoxProps, Flex, Text, Wrap } from '@chakra-ui/react'
 import dayjs from 'dayjs'
 import isBetween from 'dayjs/plugin/isBetween'
-import React, { FC, useCallback, useEffect, useState } from 'react'
+import React, { FC, useCallback } from 'react'
+import { useGetApi } from '../../hooks/useApi'
 import { useSchedule } from '../../hooks/useSchedule'
 import { SubjectType, UpdateSubjectType } from '../../types/subject'
-import { getApi, putApi } from '../../utils/api'
+import { putApi } from '../../utils/api'
 import { Pagination } from './Pagination'
 import { Subject } from './Subject'
 
@@ -19,27 +20,15 @@ type Props = {
 } & BoxProps
 
 export const ScheduleList: FC<Props> = ({ subjects: initSubjects, ...rest }) => {
-  const [subjects, setSubjects] = useState(initSubjects)
   const { dateList, setCurrentWeekNum } = useSchedule()
-
-  useEffect(() => {
-    const getAllSubjects = async () => {
-      try {
-        const response = await getApi<SubjectType[]>('/api/subjects')
-        setSubjects(response || [])
-      } catch (e) {
-        console.error(e)
-      }
-    }
-    getAllSubjects()
-  }, [])
+  const { data: subjects, mutate } = useGetApi<SubjectType[]>('/api/subjects', initSubjects)
 
   const updateSubject = useCallback(async (newSubject: UpdateSubjectType) => {
     try {
       await putApi('/api/subjects', newSubject)
-      // mutate処理
-      setSubjects((postData) =>
-        postData.map((data) => {
+
+      mutate((postData) =>
+        postData?.map((data) => {
           if (data.id === newSubject.id) {
             data = { ...data, ...newSubject }
           }
@@ -60,7 +49,7 @@ export const ScheduleList: FC<Props> = ({ subjects: initSubjects, ...rest }) => 
       <Flex direction={'column'} gap={5} p={25} mx={'auto'} mb={'150px'} maxW={'840px'}>
         {dateList.map((oneDay) => {
           const oneDayjs = dayjs(oneDay)
-          const oneDaySubjects = subjects.filter(
+          const oneDaySubjects = subjects?.filter(
             (v) => oneDayjs.format('YYYY-MM-DD') === String(v.date).slice(0, 10)
           )
           return (
@@ -79,7 +68,7 @@ export const ScheduleList: FC<Props> = ({ subjects: initSubjects, ...rest }) => 
               </Flex>
 
               <Wrap>
-                {oneDaySubjects.map((oneDaySubject) => (
+                {oneDaySubjects?.map((oneDaySubject) => (
                   <Subject key={oneDaySubject.id} subject={oneDaySubject} onSave={updateSubject} />
                 ))}
               </Wrap>
