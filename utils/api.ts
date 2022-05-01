@@ -42,7 +42,7 @@ const fetchApi = async <T>(
   }
 }
 
-export const getApi = async <T>(url: string, headers?: Record<string, unknown>) =>
+export const getApi = async <T>(url: string, headers?: Record<string, string>) =>
   fetchApi<T>(url, 'GET', headers)
 
 export const postApi = async <T>(url: string, params?: any, headers?: Record<string, string>) =>
