@@ -20,11 +20,7 @@ import {
 import React, { memo, useCallback, useState } from 'react'
 import { SubjectType, UpdateSubjectType } from '../../types/subject'
 
-const colors = {
-  1: '#d95759',
-  2: '#59d957',
-  3: 'gray',
-}
+const colors = ['#fff', '#d95759', '#59d957', 'gray']
 
 type Props = {
   subject: SubjectType
@@ -33,7 +29,7 @@ type Props = {
 
 export const Subject: React.FC<Props> = memo(({ subject, onSave, ...rest }) => {
   const toast = useToast()
-  const [status, setStatus] = useState(subject.status || 0)
+  const [status, setStatus] = useState(subject.status)
   const [memo, setMemo] = useState(subject.memo || '')
 
   const handleClick = useCallback(
@@ -57,8 +53,8 @@ export const Subject: React.FC<Props> = memo(({ subject, onSave, ...rest }) => {
       <Popover placement='bottom' closeOnBlur={true}>
         <PopoverTrigger>
           <Button
-            bg={status == 0 ? '#fff' : colors[status]}
-            color={status == 0 ? 'black.500' : 'white'}
+            bg={colors[status]}
+            color={status === 0 ? 'black.500' : 'white'}
             border='2px'
             borderColor={memo ? 'yellow.400' : 'gray.300'}
             _hover={{ opacity: 0.6 }}

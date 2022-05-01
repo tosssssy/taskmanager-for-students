@@ -4,7 +4,7 @@ export type SubjectType = {
   date: Date
   period: number
   day: string
-  status: number
+  status: 0 | 1 | 2 | 3
   memo?: string
 }
 
