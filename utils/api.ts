@@ -1,35 +1,64 @@
 type Method = 'GET' | 'POST' | 'PUT' | 'DELETE'
-
-const fetchApi = async <T>(url: string, method: Method, body?: any) => {
-  const headers: HeadersInit = {}
-  if (method !== 'GET') {
-    headers['Content-Type'] = 'application/json'
+class HttpError extends Error {
+  url: string
+  status: number
+  message: string
+  constructor(response: Response) {
+    super()
+    this.name = 'HttpError'
+    this.url = response.url
+    this.status = response.status
+    this.message = response.statusText
   }
+}
 
-  const response = await fetch(url, {
-    method,
-    headers,
-    body: JSON.stringify(body),
-  })
+const fetchApi = async <T>(
+  url: string,
+  method: Method,
+  params?: Record<string, unknown>,
+  headers?: Record<string, string>
+) => {
+  const requestHeaders = headers || {}
 
-  let result: T
-  if (!response.ok) {
-    throw new Error(response.status + 'エラー : ' + (await response.json()))
+  if (method !== 'GET') {
+    requestHeaders['Content-Type'] = 'application/json'
   }
 
   try {
-    result = response.status === 204 ? ({} as T) : ((await response.json()) as T)
-  } catch (e) {
-    throw new Error(e.message)
-  }
+    const res = await fetch(url, {
+      method,
+      body: JSON.stringify(params),
+      headers: { ...requestHeaders },
+    })
 
-  return result
+    if (!res.ok) {
+      throw new HttpError(res)
+    }
+    return (await res.json()) as T
+  } catch (error) {
+    if (error instanceof HttpError) {
+      throw error
+    }
+  }
 }
 
-export const getApi = async <T>(url: string) => fetchApi<T>(url, 'GET')
+export const getApi = async <T>(url: string, headers?: Record<string, unknown>) =>
+  fetchApi<T>(url, 'GET', headers)
 
-export const postApi = async (url: string, body?: any) => fetchApi(url, 'POST', body)
+export const postApi = async <T>(
+  url: string,
+  params?: Record<string, unknown>,
+  headers?: Record<string, string>
+) => fetchApi<T>(url, 'POST', params, headers)
 
-export const putApi = async (url: string, body?: any) => fetchApi(url, 'PUT', body)
+export const putApi = async <T>(
+  url: string,
+  params?: Record<string, unknown>,
+  headers?: Record<string, string>
+) => fetchApi<T>(url, 'PUT', params, headers)
 
-export const deleteApi = async (url: string, body?: any) => fetchApi(url, 'DELETE', body)
+export const deleteApi = async (
+  url: string,
+  params?: Record<string, unknown>,
+  headers?: Record<string, string>
+) => fetchApi(url, 'DELETE', params, headers)
