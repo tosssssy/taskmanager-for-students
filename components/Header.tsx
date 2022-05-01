@@ -29,7 +29,7 @@ export const Header: FC<Props> = ({ rightButtonName = '', rightButtonPath = '' }
 
       {session ? (
         <Flex direction='column'>
-          <Text>user：{session.user.name}</Text>
+          <Text>user：{session?.user?.name || ''}</Text>
           <Flex mt={3} direction='column' gap='2' justify={'end'}>
             <Link href={rightButtonPath} passHref>
               <Button as='a' w='120px' size='sm' variant='outline' color='gray.700'>

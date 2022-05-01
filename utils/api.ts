@@ -15,7 +15,7 @@ class HttpError extends Error {
 const fetchApi = async <T>(
   url: string,
   method: Method,
-  params?: Record<string, unknown>,
+  params?: any,
   headers?: Record<string, string>
 ) => {
   const requestHeaders = headers || {}
@@ -45,20 +45,11 @@ const fetchApi = async <T>(
 export const getApi = async <T>(url: string, headers?: Record<string, unknown>) =>
   fetchApi<T>(url, 'GET', headers)
 
-export const postApi = async <T>(
-  url: string,
-  params?: Record<string, unknown>,
-  headers?: Record<string, string>
-) => fetchApi<T>(url, 'POST', params, headers)
+export const postApi = async <T>(url: string, params?: any, headers?: Record<string, string>) =>
+  fetchApi<T>(url, 'POST', params, headers)
 
-export const putApi = async <T>(
-  url: string,
-  params?: Record<string, unknown>,
-  headers?: Record<string, string>
-) => fetchApi<T>(url, 'PUT', params, headers)
+export const putApi = async <T>(url: string, params?: any, headers?: Record<string, string>) =>
+  fetchApi<T>(url, 'PUT', params, headers)
 
-export const deleteApi = async (
-  url: string,
-  params?: Record<string, unknown>,
-  headers?: Record<string, string>
-) => fetchApi(url, 'DELETE', params, headers)
+export const deleteApi = async (url: string, params?: any, headers?: Record<string, string>) =>
+  fetchApi(url, 'DELETE', params, headers)

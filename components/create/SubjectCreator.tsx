@@ -16,7 +16,7 @@ export const SubjectCreator: FC<Props> = memo(({ newSubjectList, onAdd, onDelete
   const [day, setDay] = useState('Sun')
   const [period, setPeriod] = useState(1)
   const [name, setName] = useState('')
-  const date: Date = null
+  const date: Date = new Date() //後ほど書き換えられるのでここは仮の代入
 
   return (
     <>
@@ -67,7 +67,7 @@ export const SubjectCreator: FC<Props> = memo(({ newSubjectList, onAdd, onDelete
               date: date,
               period: period,
               day: day,
-              authorId: Number(session.id),
+              authorId: Number(session?.id),
             })
           }
           disabled={!name || !period || !day}
