@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import { GetServerSideProps } from 'next'
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { getSession } from 'next-auth/client'
 import Head from 'next/head'
 import { FC } from 'react'
@@ -9,11 +9,13 @@ import { PlzNew } from '../components/top/PlzNew'
 import { SubjectType } from '../types/subject'
 import prisma from './../lib/prisma'
 
-type Props = {
+type ServerSideProps = {
   subjects: SubjectType[]
 }
 
-const SchedulePage: FC<Props> = ({ subjects }) => {
+type PageProps = InferGetServerSidePropsType<typeof getServerSideProps>
+
+const SchedulePage: FC<PageProps> = ({ subjects }) => {
   return (
     <>
       <Head>
@@ -30,7 +32,7 @@ const SchedulePage: FC<Props> = ({ subjects }) => {
 export default SchedulePage
 
 //ユーザーのスケジュールを3週間分先に取得（subjectのリスト）
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+export const getServerSideProps: GetServerSideProps<ServerSideProps> = async ({ req }) => {
   const session = await getSession({ req })
   if (!session)
     return {
@@ -40,7 +42,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
       },
     }
 
-  const result = await prisma.subject.findMany({
+  const data = await prisma.subject.findMany({
     where: {
       author: { id: Number(session.id) },
       date: {
@@ -50,9 +52,11 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
     },
   })
 
+  // prismaの型定義は使わない方針のため
+  const subjects = JSON.parse(JSON.stringify(data)) as SubjectType[]
   return {
     props: {
-      result,
+      subjects,
     },
   }
 }
