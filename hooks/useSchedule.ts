@@ -30,6 +30,7 @@ export const useSchedule = () => {
 
   return {
     dateList,
+    currentWeekNum,
     setCurrentWeekNum,
   }
 }

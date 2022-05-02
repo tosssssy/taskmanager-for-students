@@ -3,6 +3,7 @@ import { NextPage } from 'next'
 import Head from 'next/head'
 import Router from 'next/router'
 import React, { useCallback, useState } from 'react'
+import { useSWRConfig } from 'swr'
 import { Header } from '../components/Header'
 import { Loading } from '../components/Loading'
 import { DateSelect } from '../components/create/DateSelect'
@@ -22,6 +23,7 @@ const CreatePage: NextPage = () => {
   const [newSubjectList, setNewSubjectList] = useState<NewSubjectType[]>([])
   const [dateList, setDateList] = useState<Date[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const { cache: c } = useSWRConfig()
 
   // ユーザーの全データを削除してから新規作成
   const createNewSchedule = useCallback(async () => {
@@ -33,8 +35,13 @@ const CreatePage: NextPage = () => {
     } catch (error) {
       console.error(error)
     }
+
+    // swrで型定義されていないため
+    const cache = c as any
+    cache.clear()
+
     Router.push('/schedule')
-  }, [dateList, newSubjectList])
+  }, [c, dateList, newSubjectList])
 
   return (
     <>

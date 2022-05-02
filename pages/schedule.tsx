@@ -29,7 +29,7 @@ const SchedulePage: FC<Props> = ({ subjects }) => {
 
 export default SchedulePage
 
-//ユーザーのスケジュールを2週間分先に取得（subjectのリスト）
+//ユーザーのスケジュールを3週間分先に取得（subjectのリスト）
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const session = await getSession({ req })
   if (!session)
@@ -40,20 +40,19 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
       },
     }
 
-  const data = await prisma.subject.findMany({
+  const result = await prisma.subject.findMany({
     where: {
       author: { id: Number(session.id) },
       date: {
-        gte: dayjs().add(-1, 'week').toISOString(),
-        lte: dayjs().add(1, 'week').toISOString(),
+        gte: dayjs().day(-1).add(-1, 'week').toISOString(),
+        lte: dayjs().day(6).add(1, 'week').toISOString(),
       },
-    },
-    orderBy: {
-      date: 'asc',
     },
   })
 
-  const subjects = JSON.parse(JSON.stringify(data))
-
-  return { props: { subjects } }
+  return {
+    props: {
+      result,
+    },
+  }
 }
