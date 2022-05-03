@@ -9,19 +9,21 @@ import {
   AlertDialogBody,
   AlertDialogFooter,
   Box,
+  BoxProps,
 } from '@chakra-ui/react'
 import React, { FC, memo, useRef } from 'react'
 
 type Props = {
+  disabled?: boolean
   onclick: () => void
-}
+} & BoxProps
 
-export const CreateButton: FC<Props> = memo(({ onclick }) => {
+export const CreateButton: FC<Props> = memo(({ disabled = false, onclick, ...rest }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const cancelRef = useRef(null)
   return (
     <>
-      <Box textAlign={'right'}>
+      <Box {...rest}>
         <Button
           p='10px 20px'
           color='white'
@@ -32,6 +34,7 @@ export const CreateButton: FC<Props> = memo(({ onclick }) => {
             opacity: 0.6,
           }}
           onClick={onOpen}
+          disabled={disabled}
         >
           完成
         </Button>

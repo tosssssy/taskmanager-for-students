@@ -56,7 +56,7 @@ const CreatePage: NextPage = () => {
       ) : (
         <Box my={'80px'} mx={'auto'} maxW='700px' px={5}>
           <Text {...textProps}>①授業の始まる日、終わる日を選択して下さい</Text>
-          <DateSelect onUpdate={(dateList) => setDateList(dateList)} />
+          <DateSelect onUpdate={setDateList} />
 
           <Text {...textProps}>②授業の曜日、時限を選択し、教科名を入力して下さい</Text>
           <SubjectCreator
@@ -69,8 +69,12 @@ const CreatePage: NextPage = () => {
             }
           />
 
-          <Text {...textProps}>③時間割を確認し、完成ボタンを押して下さい。</Text>
-          <CreateButton onclick={createNewSchedule} />
+          <CreateButton
+            mt={'20'}
+            textAlign={'center'}
+            onclick={createNewSchedule}
+            disabled={dateList.length === 0}
+          />
         </Box>
       )}
     </>
