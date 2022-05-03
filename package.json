@@ -20,6 +20,7 @@
     "@emotion/styled": "^11.8.1",
     "@prisma/client": "^3.13.0",
     "dayjs": "^1.11.1",
+    "framer-motion": "^4.1.17",
     "next": "^12.1.5",
     "next-auth": "^3.29.1",
     "next-pwa": "^5.5.2",
