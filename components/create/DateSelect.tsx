@@ -9,17 +9,28 @@ type Props = {
 
 export const DateSelect: FC<Props> = memo(({ onUpdate }) => {
   const [startDate, setStartDate] = useState('')
+  const [endDate, setEndDate] = useState('')
   return (
     <Box>
       <Flex align={'center'} h='40px'>
-        <Input type='date' bg='white' onChange={(e) => setStartDate(e.target.value)} />
+        <Input
+          type='date'
+          bg='white'
+          onChange={(e) => {
+            onUpdate(createDateList(e.target.value, endDate))
+            setStartDate(e.target.value)
+          }}
+        />
         <Text fontSize='38px' h='40px' mb='24px' color='blackAlpha.700'>
           ~
         </Text>
         <Input
           type='date'
           bg='white'
-          onChange={(e) => onUpdate(createDateList(startDate, e.target.value))}
+          onChange={(e) => {
+            onUpdate(createDateList(startDate, e.target.value))
+            setEndDate(e.target.value)
+          }}
         />
       </Flex>
     </Box>

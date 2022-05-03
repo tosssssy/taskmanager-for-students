@@ -32,18 +32,22 @@ export const Header: FC<Props> = ({ rightButtonName = '', rightButtonPath = '' }
           <Text>user：{session?.user?.name || ''}</Text>
           <Flex mt={3} direction='column' gap='2' justify={'end'}>
             <Link href={rightButtonPath} passHref>
-              <Button as='a' w='120px' size='sm' variant='outline' color='gray.700'>
+              <Button
+                as='a'
+                w='120px'
+                size='sm'
+                bgGradient='linear(to-l, #7928CA, #FF0080)'
+                _hover={{
+                  bgGradient: 'linear(to-r, #7928CA, #FF0080)',
+                }}
+                color={'white'}
+                shadow={'base'}
+              >
                 {rightButtonName}
               </Button>
             </Link>
-            <Button
-              w='120px'
-              size='sm'
-              variant='outline'
-              color='gray.700'
-              onClick={() => signOut()}
-            >
-              ログアウト
+            <Button w='120px' size='sm' shadow={'base'} onClick={() => signOut()}>
+              Log out
             </Button>
           </Flex>
         </Flex>
@@ -58,7 +62,7 @@ export const Header: FC<Props> = ({ rightButtonName = '', rightButtonPath = '' }
             borderRadius='md'
             bgGradient='linear(to-l, #7928CA, #FF0080)'
             _hover={{
-              opacity: 0.6,
+              bgGradient: 'linear(to-r, #7928CA, #FF0080)',
             }}
           >
             Log in
