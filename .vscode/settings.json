@@ -11,5 +11,6 @@
   "[markdown]": {
     "files.trimTrailingWhitespace": false
   },
-  "WillLuke.nextjs.hasPrompted": true
+  "WillLuke.nextjs.hasPrompted": true,
+  "cSpell.words": ["chakra"]
 }
