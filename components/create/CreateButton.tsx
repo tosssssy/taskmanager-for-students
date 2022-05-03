@@ -31,7 +31,7 @@ export const CreateButton: FC<Props> = memo(({ disabled = false, onclick, ...res
           borderRadius='md'
           bgGradient='linear(to-l, #7928CA, #FF0080)'
           _hover={{
-            opacity: 0.6,
+            bgGradient: 'linear(to-r, #7928CA, #FF0080)',
           }}
           onClick={onOpen}
           disabled={disabled}
