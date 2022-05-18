@@ -18,6 +18,8 @@ export const useSubjectsWithCache = (currentWeekNum: number, initSubjects: Subje
       const unique = Array.from(new Map(merged.map((v) => [v.id, v])).values())
       return unique
     })
+
+    return () => setSubjects([])
   }, [currentWeekData])
 
   const updateSubject = useCallback(
