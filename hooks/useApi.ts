@@ -13,7 +13,6 @@ export const useGetApi = <T>(url?: string, fallbackData?: T) => {
   }, [])
 
   return useSWR(url ?? null, fetcher, {
-    revalidateOnFocus: false,
     revalidateOnReconnect: false,
     fallbackData,
   })
