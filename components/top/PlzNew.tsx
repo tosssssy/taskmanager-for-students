@@ -4,12 +4,12 @@ import { FC } from 'react'
 export const PlzNew: FC = () => {
   return (
     <Box
-      fontSize={'5xl'}
+      fontSize={'2xl'}
       color={'gray.600'}
       w={'80%'}
       fontWeight={'bold'}
       p={10}
-      pt={300}
+      mt={'30%'}
       mx={'auto'}
       textAlign={'center'}
     >
