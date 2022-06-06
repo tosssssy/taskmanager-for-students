@@ -1,3 +1,5 @@
+import { isEmptyObj } from './isEmptyObj'
+
 type Method = 'GET' | 'POST' | 'PUT' | 'DELETE'
 class HttpError extends Error {
   url: string
@@ -27,7 +29,7 @@ const fetchApi = async <T>(
   try {
     const res = await fetch(url, {
       method,
-      body: JSON.stringify(params),
+      body: isEmptyObj(params) ? undefined : JSON.stringify(params),
       headers: { ...requestHeaders },
     })
 
