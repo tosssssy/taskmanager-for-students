@@ -6,9 +6,8 @@ import { useGetApi } from './useApi'
 export const useSubjectsWithCache = (currentWeekNum: number, initSubjects: SubjectType[]) => {
   const [subjects, setSubjects] = useState<SubjectType[]>(initSubjects)
   const { data: currentWeekData, mutate } = useGetApi<SubjectType[]>(
-    `api/subjects?page=${currentWeekNum}`
+    `/api/subjects?page=${currentWeekNum}`
   )
-
   useEffect(() => {
     setSubjects((postData) => {
       if (!currentWeekData) {
@@ -37,8 +36,8 @@ export const useSubjectsWithCache = (currentWeekNum: number, initSubjects: Subje
   )
 
   // プリフェッチしてキャッシュを保持しておく
-  useGetApi<SubjectType[]>(`api/subjects?page=${currentWeekNum - 1}`)
-  useGetApi<SubjectType[]>(`api/subjects?page=${currentWeekNum + 1}`)
+  useGetApi<SubjectType[]>(`/api/subjects?page=${currentWeekNum - 1}`)
+  useGetApi<SubjectType[]>(`/api/subjects?page=${currentWeekNum + 1}`)
 
   return { subjects, updateSubject }
 }
