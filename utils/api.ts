@@ -17,7 +17,7 @@ class HttpError extends Error {
 const fetchApi = async <T>(
   url: string,
   method: Method,
-  params?: any,
+  params?: object,
   headers?: Record<string, string>
 ) => {
   const requestHeaders = headers || {}
@@ -29,7 +29,7 @@ const fetchApi = async <T>(
   try {
     const res = await fetch(url, {
       method,
-      body: isEmptyObj(params) ? undefined : JSON.stringify(params),
+      body: isEmptyObj(params || {}) ? undefined : JSON.stringify(params),
       headers: { ...requestHeaders },
     })
 

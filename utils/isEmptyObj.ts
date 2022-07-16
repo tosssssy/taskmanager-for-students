@@ -1,3 +1,3 @@
-export const isEmptyObj = (obj: Record<any, any>) => {
+export const isEmptyObj = (obj: object) => {
   return Object.entries(obj).length === 0
 }
